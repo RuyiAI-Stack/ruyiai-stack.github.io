@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ruyi AI</title>
     <meta name="description" content="Ruyi AI — production-ready AI gateway and platform." />
-    <link rel="icon" href="./assets/logo-ruyi.svg" type="image/svg+xml" />
+    <link rel="icon" href="./assets/logo-ruyi-nav.png" type="image/png" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
 
@@ -13,48 +13,46 @@
     <!-- Top Nav -->
     <header class="nav">
       <div class="nav__inner">
-        <a class="brand" href="#">
-          <img class="brand__logo" src="./assets/logo-ruyi.svg" alt="Ruyi AI" />
-          <span class="brand__name">Ruyi AI</span>
+        <a class="brand" href="index.html">
+          <img class="brand__logo" src="./assets/logo-ruyi-title.svg" alt="Ruyi AI" />
         </a>
 
         <nav class="nav__links">
-          <a href="#pricing">Pricing</a>
-          <a href="#docs">Docs</a>
-          <a href="#models">Models</a>
+          <a href="index.html">首页</a>
           <div class="nav__dropdown">
             <button class="nav__dropbtn" type="button" aria-haspopup="true" aria-expanded="false">
-              Resources <span class="chev">▾</span>
+              项目 <span class="nav__chev" aria-hidden="true"></span>
             </button>
             <div class="nav__menu" role="menu">
-              <a role="menuitem" href="#blog">Blog</a>
-              <a role="menuitem" href="#status">Status</a>
-              <a role="menuitem" href="#community">Community</a>
+              <a role="menuitem" href="compiler.html" class="nav__menuitem">
+                <span class="nav__menuitem-title">Ruyi AI 编译器</span>
+                <span class="nav__menuitem-desc">基于 MLIR 桥接 PyTorch 和 RISC-V</span>
+              </a>
+              <a role="menuitem" href="operator-lang.html" class="nav__menuitem">
+                <span class="nav__menuitem-title">Ruyi AI 算子编程语言</span>
+                <span class="nav__menuitem-desc">面向 RISC-V 适配 Triton / TileLang</span>
+              </a>
+              <a role="menuitem" href="operator-lib.html" class="nav__menuitem">
+                <span class="nav__menuitem-title">Ruyi AI 算子库</span>
+                <span class="nav__menuitem-desc">面向 RISC-V 的原生高性能算子库</span>
+              </a>
+              <a role="menuitem" href="runtime.html" class="nav__menuitem">
+                <span class="nav__menuitem-title">Ruyi AI 运行时环境</span>
+                <span class="nav__menuitem-desc">面向 RISC-V 各类扩展的统一运行时环境</span>
+              </a>
             </div>
           </div>
+          <a href="docs.html">文档</a>
+          <a href="community.html">社区</a>
+          <a href="about.html">关于</a>
         </nav>
 
         <div class="nav__actions">
-          <button class="btn btn--ghost" type="button" aria-label="Language">
-            🌐 <span class="muted">EN</span>
-          </button>
-          <a class="btn btn--primary" href="#login">Login</a>
+          <a class="nav__github" href="https://github.com/RuyiAI-Stack" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            GitHub
+            <span class="nav__external" aria-hidden="true">↗</span>
+          </a>
         </div>
-
-        <button class="nav__burger" type="button" aria-label="Open menu">
-          ☰
-        </button>
-      </div>
-
-      <!-- Mobile drawer -->
-      <div class="nav__mobile" id="mobileMenu" hidden>
-        <a href="#pricing">Pricing</a>
-        <a href="#docs">Docs</a>
-        <a href="#models">Models</a>
-        <a href="#blog">Blog</a>
-        <a href="#status">Status</a>
-        <a href="#community">Community</a>
-        <a class="btn btn--primary nav__mobileLogin" href="#login">Login</a>
       </div>
     </header>
 
@@ -62,25 +60,14 @@
       <!-- Hero -->
       <section class="hero">
         <div class="hero__left">
-          <div class="pill">
-            <span>The Production-Ready AI Gateway</span>
-            <span class="pill__dot">•</span>
-            <a class="pill__link" href="#docs" aria-label="Learn more">→</a>
-          </div>
-
-          <h1 class="h1">
-            Use any model,<br />
-            from any provider<br />
-            — with just one API.
+          <h1 class="hero__heading">
+            <span class="hero__title-main">Ruyi AI</span>
+            <span class="hero__title-sub">面向 RISC-V 架构的<br />人工智能系统软件栈</span>
           </h1>
 
-          <p class="lead">
-            Route, manage, and analyze your AI requests across multiple providers with a unified API interface.
-          </p>
-
           <div class="cta">
-            <a class="btn btn--primary btn--xl" href="#get-key">Get your API key</a>
-            <a class="btn btn--ghost btn--xl" href="#docs">View documentation</a>
+            <a class="btn btn--primary btn--xl" href="install.html">立即安装</a>
+            <a class="btn btn--ghost btn--xl" href="tutorial.html">使用教程</a>
           </div>
         </div>
 
@@ -98,33 +85,43 @@
               </button>
             </div>
 
-            <pre class="code" id="codeBlock"><code><span class="kw">import</span> OpenAI <span class="kw">from</span> <span class="str">"openai"</span>;
+            <pre class="code" id="codeBlock"><code><span class="cm"># pip install ruyi-ai</span>
 
-<span class="kw">const</span> client = <span class="kw">new</span> OpenAI({
-  apiKey: process.env.<span class="hi">RUYI_AI_API_KEY</span>,
-  baseURL: <span class="str">"https://api.example.com/v1"</span>
-});
+<span class="kw">import</span> <span class="hi">torch</span>
+<span class="kw">from</span> <span class="hi">ruyiai</span> <span class="kw">import</span> <span class="hi">dynamo_compiler</span>
+<span class="hi">@torch.compile</span>(backend=<span class="hi">dynamo_compiler</span>)
+<span class="kw">def</span> <span class="hi">mse</span>(x, y):
+    z = (x - y) ** <span class="num">2</span>
+    <span class="kw">return</span> z.sum()
 
-<span class="kw">const</span> response = <span class="kw">await</span> client.chat.completions.create({
-  model: <span class="str">"gpt-5"</span>,
-  messages: [
-    { role: <span class="str">"user"</span>, content: <span class="str">"Hello, how are you?"</span> }
-  ]
-});</code></pre>
-
-            <div class="codecard__hint">
-              Tip: replace <span class="mono">baseURL</span> with your gateway endpoint.
-            </div>
+x = torch.randn(<span class="num">200</span>)
+y = torch.randn(<span class="num">200</span>)
+<span class="hi">mse</span>(x, y)</code></pre>
           </div>
         </div>
       </section>
 
-      <!-- Logo wall -->
-      <section class="logos" aria-label="Trusted by providers">
-        <img src="./assets/logo-openai.svg" alt="OpenAI" />
-        <img src="./assets/logo-anthropic.svg" alt="Anthropic" />
-        <img src="./assets/logo-google.svg" alt="Google" />
-        <img src="./assets/logo-groq.svg" alt="Groq" />
+      <!-- Overview image -->
+      <section class="overview" aria-label="项目架构">
+        <h2 class="overview__title">项目架构</h2>
+        <img src="./assets/ruyiai-overview.png" alt="Ruyi AI 架构概览" class="overview__img" />
+      </section>
+
+      <!-- Community Members -->
+      <section class="community" aria-label="社区成员">
+        <h2 class="community__title">社区成员</h2>
+        <div class="community__scroll">
+          <div class="community__track" id="communityTrack">
+            <div class="community__item"><img src="./assets/logo-ruyi-title.svg" alt="" /></div>
+            <div class="community__item"><img src="./assets/logo-ruyi-title.svg" alt="" /></div>
+            <div class="community__item"><img src="./assets/logo-ruyi-title.svg" alt="" /></div>
+            <div class="community__item"><img src="./assets/logo-ruyi-title.svg" alt="" /></div>
+            <div class="community__item"><img src="./assets/logo-ruyi-title.svg" alt="" /></div>
+            <div class="community__item"><img src="./assets/logo-ruyi-title.svg" alt="" /></div>
+            <div class="community__item"><img src="./assets/logo-ruyi-title.svg" alt="" /></div>
+            <div class="community__item"><img src="./assets/logo-ruyi-title.svg" alt="" /></div>
+          </div>
+        </div>
       </section>
     </main>
 

@@ -2,10 +2,15 @@
 const copyBtn = document.getElementById("copyBtn");
 const codeBlock = document.getElementById("codeBlock");
 const year = document.getElementById("year");
-const burger = document.querySelector(".nav__burger");
-const mobileMenu = document.getElementById("mobileMenu");
 
 year.textContent = String(new Date().getFullYear());
+
+// Community members: duplicate items for seamless auto-scroll
+const communityTrack = document.getElementById("communityTrack");
+if (communityTrack) {
+  const items = communityTrack.innerHTML;
+  communityTrack.insertAdjacentHTML("beforeend", items);
+}
 
 copyBtn?.addEventListener("click", async () => {
   const text = codeBlock?.innerText || "";
@@ -27,11 +32,4 @@ copyBtn?.addEventListener("click", async () => {
     document.execCommand("copy");
     document.body.removeChild(ta);
   }
-});
-
-// Mobile menu toggle
-burger?.addEventListener("click", () => {
-  const hidden = mobileMenu.hasAttribute("hidden");
-  if (hidden) mobileMenu.removeAttribute("hidden");
-  else mobileMenu.setAttribute("hidden", "");
 });
