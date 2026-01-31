@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ruyi AI</title>
+    <meta name="description" content="Ruyi AI — production-ready AI gateway and platform." />
+    <link rel="icon" href="./assets/logo-ruyi.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body>
+    <!-- Top Nav -->
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="brand" href="#">
+          <img class="brand__logo" src="./assets/logo-ruyi.svg" alt="Ruyi AI" />
+          <span class="brand__name">Ruyi AI</span>
+        </a>
+
+        <nav class="nav__links">
+          <a href="#pricing">Pricing</a>
+          <a href="#docs">Docs</a>
+          <a href="#models">Models</a>
+          <div class="nav__dropdown">
+            <button class="nav__dropbtn" type="button" aria-haspopup="true" aria-expanded="false">
+              Resources <span class="chev">▾</span>
+            </button>
+            <div class="nav__menu" role="menu">
+              <a role="menuitem" href="#blog">Blog</a>
+              <a role="menuitem" href="#status">Status</a>
+              <a role="menuitem" href="#community">Community</a>
+            </div>
+          </div>
+        </nav>
+
+        <div class="nav__actions">
+          <button class="btn btn--ghost" type="button" aria-label="Language">
+            🌐 <span class="muted">EN</span>
+          </button>
+          <a class="btn btn--primary" href="#login">Login</a>
+        </div>
+
+        <button class="nav__burger" type="button" aria-label="Open menu">
+          ☰
+        </button>
+      </div>
+
+      <!-- Mobile drawer -->
+      <div class="nav__mobile" id="mobileMenu" hidden>
+        <a href="#pricing">Pricing</a>
+        <a href="#docs">Docs</a>
+        <a href="#models">Models</a>
+        <a href="#blog">Blog</a>
+        <a href="#status">Status</a>
+        <a href="#community">Community</a>
+        <a class="btn btn--primary nav__mobileLogin" href="#login">Login</a>
+      </div>
+    </header>
+
+    <main class="page">
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero__left">
+          <div class="pill">
+            <span>The Production-Ready AI Gateway</span>
+            <span class="pill__dot">•</span>
+            <a class="pill__link" href="#docs" aria-label="Learn more">→</a>
+          </div>
+
+          <h1 class="h1">
+            Use any model,<br />
+            from any provider<br />
+            — with just one API.
+          </h1>
+
+          <p class="lead">
+            Route, manage, and analyze your AI requests across multiple providers with a unified API interface.
+          </p>
+
+          <div class="cta">
+            <a class="btn btn--primary btn--xl" href="#get-key">Get your API key</a>
+            <a class="btn btn--ghost btn--xl" href="#docs">View documentation</a>
+          </div>
+        </div>
+
+        <div class="hero__right">
+          <div class="codecard">
+            <div class="codecard__topbar">
+              <div class="traffic">
+                <span class="dot dot--red"></span>
+                <span class="dot dot--yellow"></span>
+                <span class="dot dot--green"></span>
+              </div>
+              <button class="copy" type="button" id="copyBtn">
+                <span class="copy__icon">⧉</span>
+                <span class="copy__text">Copy</span>
+              </button>
+            </div>
+
+            <pre class="code" id="codeBlock"><code><span class="kw">import</span> OpenAI <span class="kw">from</span> <span class="str">"openai"</span>;
+
+<span class="kw">const</span> client = <span class="kw">new</span> OpenAI({
+  apiKey: process.env.<span class="hi">RUYI_AI_API_KEY</span>,
+  baseURL: <span class="str">"https://api.example.com/v1"</span>
+});
+
+<span class="kw">const</span> response = <span class="kw">await</span> client.chat.completions.create({
+  model: <span class="str">"gpt-5"</span>,
+  messages: [
+    { role: <span class="str">"user"</span>, content: <span class="str">"Hello, how are you?"</span> }
+  ]
+});</code></pre>
+
+            <div class="codecard__hint">
+              Tip: replace <span class="mono">baseURL</span> with your gateway endpoint.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Logo wall -->
+      <section class="logos" aria-label="Trusted by providers">
+        <img src="./assets/logo-openai.svg" alt="OpenAI" />
+        <img src="./assets/logo-anthropic.svg" alt="Anthropic" />
+        <img src="./assets/logo-google.svg" alt="Google" />
+        <img src="./assets/logo-groq.svg" alt="Groq" />
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <span>© <span id="year"></span> Ruyi AI</span>
+        <span class="sep">·</span>
+        <a href="#privacy">Privacy</a>
+        <span class="sep">·</span>
+        <a href="#terms">Terms</a>
+      </div>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
