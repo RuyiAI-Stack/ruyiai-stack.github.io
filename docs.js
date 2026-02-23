@@ -119,6 +119,11 @@
     window.location.hash = id;
   }
 
+  function closeMobileNav() {
+    var layout = document.getElementById("docsLayout");
+    if (layout) layout.classList.remove("docs-nav-open");
+  }
+
   function initNav() {
     var contributorBtn = document.getElementById("docsNavContributor");
     if (contributorBtn) {
@@ -131,11 +136,31 @@
         }
       });
     }
+    var docsLayout = document.getElementById("docsLayout");
+    var docsNavToggle = document.getElementById("docsNavToggle");
+    var docsSidebarOverlay = document.getElementById("docsSidebarOverlay");
+    if (docsNavToggle && docsLayout) {
+      docsNavToggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        docsLayout.classList.toggle("docs-nav-open");
+        if (docsSidebarOverlay) {
+          docsSidebarOverlay.setAttribute("aria-hidden", docsLayout.classList.contains("docs-nav-open") ? "false" : "true");
+        }
+      });
+    }
+    if (docsSidebarOverlay && docsLayout) {
+      docsSidebarOverlay.addEventListener("click", function () {
+        docsLayout.classList.remove("docs-nav-open");
+        docsSidebarOverlay.setAttribute("aria-hidden", "true");
+      });
+    }
     document.querySelectorAll(".docs-nav__child").forEach(function (a) {
       a.addEventListener("click", function (e) {
         e.preventDefault();
         var id = a.getAttribute("data-doc");
         if (id) renderDoc(id);
+        closeMobileNav();
       });
     });
     document.querySelectorAll(".docs-nav__item[data-doc]").forEach(function (a) {
@@ -143,6 +168,7 @@
         e.preventDefault();
         var id = a.getAttribute("data-doc");
         if (id) renderDoc(id);
+        closeMobileNav();
       });
     });
   }
