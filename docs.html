@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文档 - Ruyi AI</title>
+    <meta name="description" content="Ruyi AI 技术文档" />
+    <link rel="icon" href="./assets/logo-ruyi-nav.png" type="image/png" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./docs.css" />
+  </head>
+
+  <body>
+    <!-- Top Nav -->
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="brand" href="index.html">
+          <img class="brand__logo" src="./assets/logo-ruyi-title.svg" alt="Ruyi AI" />
+        </a>
+
+        <nav class="nav__links">
+          <a href="index.html">首页</a>
+          <div class="nav__dropdown">
+            <button class="nav__dropbtn" type="button" aria-haspopup="true" aria-expanded="false">
+              项目 <span class="nav__chev" aria-hidden="true"></span>
+            </button>
+            <div class="nav__menu" role="menu">
+              <a role="menuitem" href="docs.html#compiler" class="nav__menuitem">
+                <span class="nav__menuitem-title">Ruyi AI 编译器</span>
+                <span class="nav__menuitem-desc">基于 MLIR 桥接 PyTorch 和 RISC-V</span>
+              </a>
+              <a role="menuitem" href="docs.html#operator-lang" class="nav__menuitem">
+                <span class="nav__menuitem-title">Ruyi AI 算子编程语言</span>
+                <span class="nav__menuitem-desc">面向 RISC-V 适配 Triton / TileLang</span>
+              </a>
+              <a role="menuitem" href="docs.html#operator-lib" class="nav__menuitem">
+                <span class="nav__menuitem-title">Ruyi AI 算子库</span>
+                <span class="nav__menuitem-desc">面向 RISC-V 的原生高性能算子库</span>
+              </a>
+              <a role="menuitem" href="docs.html#runtime" class="nav__menuitem">
+                <span class="nav__menuitem-title">Ruyi AI 运行时环境</span>
+                <span class="nav__menuitem-desc">面向 RISC-V 各类扩展的统一运行时环境</span>
+              </a>
+            </div>
+          </div>
+          <a href="docs.html#contributor-guide">贡献</a>
+          <a href="docs.html">文档</a>
+          <a href="https://ruyisdk.cn/" target="_blank" rel="noopener noreferrer">社区</a>
+          <a href="docs.html#about">关于</a>
+        </nav>
+
+        <div class="nav__actions">
+          <a class="nav__github" href="https://github.com/RuyiAI-Stack" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            GitHub
+            <span class="nav__external" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-layout">
+      <!-- Left sidebar -->
+      <aside class="docs-sidebar">
+        <nav class="docs-nav">
+          <a href="docs.html#overview" class="docs-nav__item" data-doc="overview">总览</a>
+          <a href="docs.html#install" class="docs-nav__item" data-doc="install">安装方式</a>
+          <a href="docs.html#tutorial" class="docs-nav__item" data-doc="tutorial">使用教程</a>
+          <div class="docs-nav__group">
+            <div class="docs-nav__group-row">
+              <a href="docs.html#contributor-guide" class="docs-nav__item" data-doc="contributor-guide">贡献者指引</a>
+              <button type="button" class="docs-nav__group-toggle" id="docsNavContributor" aria-label="展开或收起" aria-expanded="false">
+                <span class="docs-nav__chev" aria-hidden="true"></span>
+              </button>
+            </div>
+            <div class="docs-nav__children">
+              <a href="docs.html#code-style" class="docs-nav__child" data-doc="code-style">代码规范</a>
+            </div>
+          </div>
+          <a href="docs.html#compiler" class="docs-nav__item" data-doc="compiler">Ruyi AI 编译器</a>
+          <a href="docs.html#operator-lang" class="docs-nav__item" data-doc="operator-lang">Ruyi AI 算子编程语言</a>
+          <a href="docs.html#operator-lib" class="docs-nav__item" data-doc="operator-lib">Ruyi AI 算子库</a>
+          <a href="docs.html#runtime" class="docs-nav__item" data-doc="runtime">Ruyi AI 运行时环境</a>
+          <a href="docs.html#about" class="docs-nav__item" data-doc="about">关于</a>
+        </nav>
+      </aside>
+
+      <!-- Right content -->
+      <main class="docs-main">
+        <div class="docs-search">
+          <span class="docs-search__icon" aria-hidden="true">🔍</span>
+          <input type="search" class="docs-search__input" placeholder="搜索文档" aria-label="搜索文档" id="docsSearchInput" />
+        </div>
+        <article class="docs-content" id="docsContent">
+          <h1 class="docs-content__title" id="docsTitle">总览</h1>
+          <p class="docs-content__desc" id="docsDesc">Ruyi AI 文档总览</p>
+          <div class="docs-content__body markdown-body" id="docsBody"></div>
+        </article>
+      </main>
+    </div>
+
+    <footer class="footer docs-footer">
+      <div class="footer__inner">
+        <span>© <span id="year"></span> Ruyi AI</span>
+        <span class="sep">·</span>
+        <a href="#privacy">Privacy</a>
+        <span class="sep">·</span>
+        <a href="#terms">Terms</a>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+    <script src="./script.js"></script>
+    <script src="./docs.js"></script>
+  </body>
+</html>

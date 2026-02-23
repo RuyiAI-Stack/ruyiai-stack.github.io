@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ruyi AI</title>
+    <meta name="description" content="Ruyi AI — production-ready AI gateway and platform." />
+    <link rel="icon" href="./assets/logo-ruyi-nav.png" type="image/png" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body>
+    <!-- Top Nav -->
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="brand" href="index.html">
+          <img class="brand__logo" src="./assets/logo-ruyi-title.svg" alt="Ruyi AI" />
+        </a>
+
+        <nav class="nav__links">
+          <a href="index.html">首页</a>
+          <div class="nav__dropdown">
+            <button class="nav__dropbtn" type="button" aria-haspopup="true" aria-expanded="false">
+              项目 <span class="nav__chev" aria-hidden="true"></span>
+            </button>
+            <div class="nav__menu" role="menu">
+              <a role="menuitem" href="docs.html#compiler" class="nav__menuitem">
+                <span class="nav__menuitem-title">Ruyi AI 编译器</span>
+                <span class="nav__menuitem-desc">基于 MLIR 桥接 PyTorch 和 RISC-V</span>
+              </a>
+              <a role="menuitem" href="docs.html#operator-lang" class="nav__menuitem">
+                <span class="nav__menuitem-title">Ruyi AI 算子编程语言</span>
+                <span class="nav__menuitem-desc">面向 RISC-V 适配 Triton / TileLang</span>
+              </a>
+              <a role="menuitem" href="docs.html#operator-lib" class="nav__menuitem">
+                <span class="nav__menuitem-title">Ruyi AI 算子库</span>
+                <span class="nav__menuitem-desc">面向 RISC-V 的原生高性能算子库</span>
+              </a>
+              <a role="menuitem" href="docs.html#runtime" class="nav__menuitem">
+                <span class="nav__menuitem-title">Ruyi AI 运行时环境</span>
+                <span class="nav__menuitem-desc">面向 RISC-V 各类扩展的统一运行时环境</span>
+              </a>
+            </div>
+          </div>
+          <a href="docs.html#contributor-guide">贡献</a>
+          <a href="docs.html">文档</a>
+          <a href="https://ruyisdk.cn/" target="_blank" rel="noopener noreferrer">社区</a>
+          <a href="docs.html#about">关于</a>
+        </nav>
+
+        <div class="nav__actions">
+          <a class="nav__github" href="https://github.com/RuyiAI-Stack" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            GitHub
+            <span class="nav__external" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero__left">
+          <h1 class="hero__heading">
+            <span class="hero__title-main">Ruyi AI</span>
+            <span class="hero__title-sub">面向 RISC-V 架构的<br />人工智能系统软件栈</span>
+          </h1>
+
+          <div class="cta">
+            <a class="btn btn--primary btn--xl" href="docs.html#install">立即安装</a>
+            <a class="btn btn--ghost btn--xl" href="docs.html#tutorial">使用教程</a>
+          </div>
+        </div>
+
+        <div class="hero__right">
+          <div class="codecard">
+            <div class="codecard__topbar">
+              <div class="traffic">
+                <span class="dot dot--red"></span>
+                <span class="dot dot--yellow"></span>
+                <span class="dot dot--green"></span>
+              </div>
+              <button class="copy" type="button" id="copyBtn">
+                <span class="copy__icon">⧉</span>
+                <span class="copy__text">Copy</span>
+              </button>
+            </div>
+
+            <pre class="code" id="codeBlock"><code><span class="kw">import</span> <span class="hi">torch</span>
+<span class="kw">from</span> buddy.compiler.frontend <span class="kw">import</span> <span class="hi">dynamo_compiler</span>
+
+<span class="kw">def</span> <span class="hi">mm</span>(a, b):
+    <span class="kw">return</span> torch.matmul(a, b)
+
+a = torch.rand(<span class="num">2048</span>, <span class="num">2048</span>)
+b = torch.rand(<span class="num">2048</span>, <span class="num">2048</span>)
+
+compiled_mm = torch.compile(mm, backend=<span class="hi">dynamo_compiler</span>)
+y = compiled_mm(a, b)
+
+<span class="kw">print</span>(y)</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Overview image -->
+      <section class="overview" aria-label="项目架构">
+        <h2 class="overview__title">项目架构</h2>
+        <img src="./assets/ruyiai-overview.png" alt="Ruyi AI 架构概览" class="overview__img" />
+      </section>
+
+      <!-- Community Members（暂时隐藏，内容补充后可移除 is-hidden 显示） -->
+      <section class="community is-hidden" aria-label="社区成员">
+        <h2 class="community__title">社区成员</h2>
+        <div class="community__scroll">
+          <div class="community__track" id="communityTrack">
+            <div class="community__item"><img src="./assets/logo-ruyi-title.svg" alt="" /></div>
+            <div class="community__item"><img src="./assets/logo-ruyi-title.svg" alt="" /></div>
+            <div class="community__item"><img src="./assets/logo-ruyi-title.svg" alt="" /></div>
+            <div class="community__item"><img src="./assets/logo-ruyi-title.svg" alt="" /></div>
+            <div class="community__item"><img src="./assets/logo-ruyi-title.svg" alt="" /></div>
+            <div class="community__item"><img src="./assets/logo-ruyi-title.svg" alt="" /></div>
+            <div class="community__item"><img src="./assets/logo-ruyi-title.svg" alt="" /></div>
+            <div class="community__item"><img src="./assets/logo-ruyi-title.svg" alt="" /></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <span>© <span id="year"></span> Ruyi AI</span>
+        <span class="sep">·</span>
+        <a href="#privacy">Privacy</a>
+        <span class="sep">·</span>
+        <a href="#terms">Terms</a>
+      </div>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
