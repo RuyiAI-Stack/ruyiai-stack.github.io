@@ -352,6 +352,9 @@ a:hover{ text-decoration: underline; text-underline-offset: 4px; }
   margin-top: 56px;
   padding-bottom: 40px;
 }
+.community.is-hidden{
+  display: none;
+}
 .community__title{
   text-align: center;
   font-size: 24px;
