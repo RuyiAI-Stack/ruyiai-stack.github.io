@@ -17,7 +17,12 @@
         <a class="brand" href="index.html">
           <img class="brand__logo" src="./assets/logo-ruyi-title.svg" alt="Ruyi AI" />
         </a>
-
+        <button class="nav__toggle" type="button" id="navToggle" aria-label="菜单" aria-expanded="false">
+          <span class="nav__toggle-bar"></span>
+          <span class="nav__toggle-bar"></span>
+          <span class="nav__toggle-bar"></span>
+        </button>
+        <div class="nav__menu-wrap">
         <nav class="nav__links">
           <a href="index.html">首页</a>
           <div class="nav__dropdown">
@@ -55,10 +60,12 @@
             <span class="nav__external" aria-hidden="true">↗</span>
           </a>
         </div>
+        </div>
       </div>
     </header>
 
-    <div class="docs-layout">
+    <div class="docs-layout" id="docsLayout">
+      <div class="docs-sidebar-overlay" id="docsSidebarOverlay" aria-hidden="true"></div>
       <!-- Left sidebar -->
       <aside class="docs-sidebar">
         <nav class="docs-nav">
@@ -86,6 +93,7 @@
 
       <!-- Right content -->
       <main class="docs-main">
+        <button type="button" class="docs-nav-toggle" id="docsNavToggle" aria-label="展开或收起目录">目录</button>
         <div class="docs-search">
           <span class="docs-search__icon" aria-hidden="true">🔍</span>
           <input type="search" class="docs-search__input" placeholder="搜索文档" aria-label="搜索文档" id="docsSearchInput" />
