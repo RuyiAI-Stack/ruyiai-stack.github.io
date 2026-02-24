@@ -25,6 +25,11 @@
       desc: "Ruyi AI 项目代码规范与约定",
       markdownUrl: "docs/code-style.md"
     },
+    "git-workflow": {
+      title: "Git 开源工作流程",
+      desc: "RuyiAI 社区采用 Fork + Pull Request 的工作模式进行开源贡献。",
+      markdownUrl: "docs/git-workflow.md"
+    },
     compiler: {
       title: "Ruyi AI 编译器",
       desc: "基于 MLIR 桥接 PyTorch 和 RISC-V",
@@ -108,7 +113,7 @@
     document.querySelectorAll(".docs-nav__child").forEach(function (a) {
       a.classList.toggle("docs-nav__child--active", a.getAttribute("data-doc") === id);
     });
-    if (id === "contributor-guide" || id === "code-style") {
+    if (id === "contributor-guide" || id === "code-style" || id === "git-workflow") {
       var group = document.querySelector(".docs-nav__group");
       var contributorBtn = document.getElementById("docsNavContributor");
       if (group && contributorBtn) {
