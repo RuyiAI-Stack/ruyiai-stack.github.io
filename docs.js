@@ -23,12 +23,12 @@
     "code-style": {
       title: "代码规范",
       desc: "Ruyi AI 项目代码规范与约定",
-      markdownUrl: "docs/code-style.md"
+      markdownUrl: "docs/contributor-guide/code-style.md"
     },
     "git-workflow": {
       title: "Git 开源工作流程",
       desc: "RuyiAI 社区采用 Fork + Pull Request 的工作模式进行开源贡献。",
-      markdownUrl: "docs/git-workflow.md"
+      markdownUrl: "docs/contributor-guide/git-workflow.md"
     },
     compiler: {
       title: "Ruyi AI 编译器",
@@ -58,6 +58,15 @@
   };
 
   var defaultDocId = "overview";
+
+  /** 解析文档 URL：相对路径以当前页面地址为基准，与 fetch 默认行为一致 */
+  function resolveDocUrl(relativePath) {
+    try {
+      return new URL(relativePath, window.location.href).href;
+    } catch (e) {
+      return relativePath;
+    }
+  }
 
   function getDocIdFromHash() {
     var hash = window.location.hash.slice(1);
@@ -95,8 +104,9 @@
       setBodyHtml(bodyEl, item.markdown);
     } else if (item.markdownUrl) {
       setBodyHtml(bodyEl, "加载中…");
-      fetch(item.markdownUrl, { cache: "no-store" })
-        .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error(r.status)); })
+      var docUrl = resolveDocUrl(item.markdownUrl);
+      fetch(docUrl, { cache: "no-store" })
+        .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error(String(r.status))); })
         .then(function (md) {
           if (getDocIdFromHash() === id) setBodyHtml(bodyEl, md);
         })
