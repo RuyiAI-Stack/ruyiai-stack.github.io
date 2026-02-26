@@ -33,7 +33,7 @@
     compiler: {
       title: "Ruyi AI 编译器",
       desc: "基于 MLIR 桥接 PyTorch 和 RISC-V",
-      markdown: "欢迎查阅 Ruyi AI 编译器文档。\n\n（待补充TBD）"
+      markdownUrl: "docs/compiler/compiler.md"
     },
     "operator-lang": {
       title: "Ruyi AI 算子编程语言",
