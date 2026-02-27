@@ -50,10 +50,16 @@
       desc: "面向 RISC-V 各类扩展的统一运行时环境",
       markdown: "欢迎查阅 Ruyi AI 运行时环境文档。\n\n（待补充TBD）"
     },
-    about: {
-      title: "关于",
+    insights: {
+      title: "洞察",
       desc: "了解 Ruyi AI 的愿景与团队",
-      markdown: "欢迎了解 Ruyi AI。\n\n（待补充TBD）"
+      markdown: "欢迎了解 Ruyi AI 洞察与分享。\n\n（待补充TBD）"
+    },
+    C4ML2024: {
+      title: "C4ML2024",
+      desc: "Buddy Compiler at C4ML 2024",
+      markdownUrl: "docs/insights/C4ML2024.md",
+      bodyOnly: true
     }
   };
 
@@ -98,8 +104,13 @@
     var titleEl = document.getElementById("docsTitle");
     var descEl = document.getElementById("docsDesc");
     var bodyEl = document.getElementById("docsBody");
-    if (titleEl) titleEl.textContent = item.title;
-    if (descEl) descEl.textContent = item.desc;
+    if (item.bodyOnly) {
+      if (titleEl) { titleEl.style.display = "none"; titleEl.textContent = ""; }
+      if (descEl) { descEl.style.display = "none"; descEl.textContent = ""; }
+    } else {
+      if (titleEl) { titleEl.style.display = ""; titleEl.textContent = item.title; }
+      if (descEl) { descEl.style.display = ""; descEl.textContent = item.desc; }
+    }
     if (item.markdown != null && !item.markdownUrl) {
       setBodyHtml(bodyEl, item.markdown);
     } else if (item.markdownUrl) {
@@ -131,6 +142,15 @@
         contributorBtn.setAttribute("aria-expanded", "true");
       }
     }
+    if (id === "insights" || id === "C4ML2024") {
+      var groups = document.querySelectorAll(".docs-nav__group");
+      var insightsBtn = document.getElementById("docsNavInsights");
+      var insightsGroup = insightsBtn ? insightsBtn.closest(".docs-nav__group") : null;
+      if (insightsGroup && insightsBtn) {
+        insightsGroup.classList.add("docs-nav__group--open");
+        insightsBtn.setAttribute("aria-expanded", "true");
+      }
+    }
     window.location.hash = id;
   }
 
@@ -148,6 +168,17 @@
         if (group) {
           var open = group.classList.toggle("docs-nav__group--open");
           contributorBtn.setAttribute("aria-expanded", open);
+        }
+      });
+    }
+    var insightsBtn = document.getElementById("docsNavInsights");
+    if (insightsBtn) {
+      insightsBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        var group = insightsBtn.closest(".docs-nav__group");
+        if (group) {
+          var open = group.classList.toggle("docs-nav__group--open");
+          insightsBtn.setAttribute("aria-expanded", open);
         }
       });
     }
