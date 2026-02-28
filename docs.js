@@ -35,6 +35,11 @@
       desc: "基于 MLIR 桥接 PyTorch 和 RISC-V",
       markdownUrl: "docs/compiler/compiler.md"
     },
+    "rvv-environment": {
+      title: "RVV Environment",
+      desc: "MLIR 与 RVV 测试实验环境搭建指南",
+      markdownUrl: "docs/compiler/RVVEnvironment.md"
+    },
     "operator-lang": {
       title: "Ruyi AI 算子编程语言",
       desc: "面向 RISC-V 适配 Triton / TileLang",
@@ -135,11 +140,19 @@
       a.classList.toggle("docs-nav__child--active", a.getAttribute("data-doc") === id);
     });
     if (id === "contributor-guide" || id === "code-style" || id === "git-workflow") {
-      var group = document.querySelector(".docs-nav__group");
       var contributorBtn = document.getElementById("docsNavContributor");
-      if (group && contributorBtn) {
-        group.classList.add("docs-nav__group--open");
+      var contributorGroup = contributorBtn ? contributorBtn.closest(".docs-nav__group") : null;
+      if (contributorGroup && contributorBtn) {
+        contributorGroup.classList.add("docs-nav__group--open");
         contributorBtn.setAttribute("aria-expanded", "true");
+      }
+    }
+    if (id === "compiler" || id === "rvv-environment") {
+      var compilerBtn = document.getElementById("docsNavCompiler");
+      var compilerGroup = compilerBtn ? compilerBtn.closest(".docs-nav__group") : null;
+      if (compilerGroup && compilerBtn) {
+        compilerGroup.classList.add("docs-nav__group--open");
+        compilerBtn.setAttribute("aria-expanded", "true");
       }
     }
     if (id === "insights" || id === "C4ML2024") {
@@ -168,6 +181,17 @@
         if (group) {
           var open = group.classList.toggle("docs-nav__group--open");
           contributorBtn.setAttribute("aria-expanded", open);
+        }
+      });
+    }
+    var compilerBtn = document.getElementById("docsNavCompiler");
+    if (compilerBtn) {
+      compilerBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        var group = compilerBtn.closest(".docs-nav__group");
+        if (group) {
+          var open = group.classList.toggle("docs-nav__group--open");
+          compilerBtn.setAttribute("aria-expanded", open);
         }
       });
     }
