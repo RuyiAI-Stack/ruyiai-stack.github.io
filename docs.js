@@ -40,6 +40,11 @@
       desc: "MLIR 与 RVV 测试实验环境搭建指南",
       markdownUrl: "docs/compiler/RVVEnvironment.md"
     },
+    about: {
+      title: "关于",
+      desc: "了解 Ruyi AI 项目的背景、愿景与团队。",
+      markdownUrl: "docs/about/about.md"
+    },
     "operator-lang": {
       title: "Ruyi AI 算子编程语言",
       desc: "面向 RISC-V 适配 Triton / TileLang",
