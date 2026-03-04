@@ -96,6 +96,10 @@
 
   function getDocIdFromHash() {
     var hash = window.location.hash.slice(1);
+    if (!hash && window.location.href.indexOf("#") !== -1) {
+      var parts = window.location.href.split("#");
+      hash = (parts[1] || "").split("?")[0];
+    }
     return docItems[hash] ? hash : defaultDocId;
   }
 
@@ -262,7 +266,12 @@
     window.addEventListener("hashchange", function () {
       renderDoc(getDocIdFromHash());
     });
-    renderDoc(getDocIdFromHash());
+    var id = getDocIdFromHash();
+    renderDoc(id);
+    window.addEventListener("load", function () {
+      var idOnLoad = getDocIdFromHash();
+      if (idOnLoad !== id) renderDoc(idOnLoad);
+    });
   }
 
   if (document.readyState === "loading") {
