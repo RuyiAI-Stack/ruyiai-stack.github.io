@@ -55,6 +55,11 @@
       desc: "Gemmini 相关文档",
       markdownUrl: "docs/compiler/Gemmini.md"
     },
+    "triton-on-riscv": {
+      title: "Triton 的 RISC-V 适配",
+      desc: "Triton 在 RISC-V 平台上的移植与适配实践。",
+      markdownUrl: "docs/operator-lang/triton-on-riscv.md"
+    },
     "operator-lang": {
       title: "Ruyi AI 算子编程语言",
       desc: "面向 RISC-V 适配 Triton / TileLang",
@@ -162,12 +167,20 @@
         contributorBtn.setAttribute("aria-expanded", "true");
       }
     }
-    if (id === "compiler" || id === "rvv-environment" || id === "ime-dialect" || id === "ime-dialect") {
+    if (id === "compiler" || id === "rvv-environment" || id === "ime-dialect" || id === "gemmini") {
       var compilerBtn = document.getElementById("docsNavCompiler");
       var compilerGroup = compilerBtn ? compilerBtn.closest(".docs-nav__group") : null;
       if (compilerGroup && compilerBtn) {
         compilerGroup.classList.add("docs-nav__group--open");
         compilerBtn.setAttribute("aria-expanded", "true");
+      }
+    }
+    if (id === "operator-lang" || id === "triton-on-riscv") {
+      var operatorLangBtn = document.getElementById("docsNavOperatorLang");
+      var operatorLangGroup = operatorLangBtn ? operatorLangBtn.closest(".docs-nav__group") : null;
+      if (operatorLangGroup && operatorLangBtn) {
+        operatorLangGroup.classList.add("docs-nav__group--open");
+        operatorLangBtn.setAttribute("aria-expanded", "true");
       }
     }
     if (id === "insights" || id === "C4ML2024") {
@@ -207,6 +220,17 @@
         if (group) {
           var open = group.classList.toggle("docs-nav__group--open");
           compilerBtn.setAttribute("aria-expanded", open);
+        }
+      });
+    }
+    var operatorLangBtn = document.getElementById("docsNavOperatorLang");
+    if (operatorLangBtn) {
+      operatorLangBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        var group = operatorLangBtn.closest(".docs-nav__group");
+        if (group) {
+          var open = group.classList.toggle("docs-nav__group--open");
+          operatorLangBtn.setAttribute("aria-expanded", open);
         }
       });
     }
