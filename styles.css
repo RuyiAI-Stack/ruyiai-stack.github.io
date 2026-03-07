@@ -132,6 +132,24 @@ a:hover{ text-decoration: underline; text-underline-offset: 4px; }
   font-size: 14px;
   opacity: 0.7;
 }
+.nav__lang{
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-right: 4px;
+}
+.nav__lang-btn{
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.nav__lang-btn:hover{ color: var(--text); background: rgba(17,24,39,0.06); }
+.nav__lang-btn.is-active{ color: var(--text); font-weight: 600; }
+.nav__lang-sep{ color: var(--line); font-size: 12px; }
 
 /* Dropdown */
 .nav__dropdown{ position: relative; }
