@@ -26,42 +26,42 @@
         <a class="brand" href="index.html">
           <img class="brand__logo" src="./assets/logo-ruyi-title.svg" alt="Ruyi AI" />
         </a>
-        <button class="nav__toggle" type="button" id="navToggle" aria-label="菜单" aria-expanded="false">
+        <button class="nav__toggle" type="button" id="navToggle" aria-label="菜单" data-i18n="nav.menu" aria-expanded="false">
           <span class="nav__toggle-bar"></span>
           <span class="nav__toggle-bar"></span>
           <span class="nav__toggle-bar"></span>
         </button>
         <div class="nav__menu-wrap">
         <nav class="nav__links">
-          <a href="index.html">首页</a>
+          <a href="index.html" data-i18n="nav.home">首页</a>
           <div class="nav__dropdown">
             <button class="nav__dropbtn" type="button" aria-haspopup="true" aria-expanded="false">
-              项目 <span class="nav__chev" aria-hidden="true"></span>
+              <span data-i18n="nav.projects">项目</span> <span class="nav__chev" aria-hidden="true"></span>
             </button>
             <div class="nav__menu" role="menu">
               <a role="menuitem" href="docs.html#compiler" class="nav__menuitem">
-                <span class="nav__menuitem-title">Ruyi AI 编译器</span>
-                <span class="nav__menuitem-desc">基于 MLIR 桥接 PyTorch 和 RISC-V</span>
+                <span class="nav__menuitem-title" data-i18n="nav.compiler">Ruyi AI 编译器</span>
+                <span class="nav__menuitem-desc" data-i18n="nav.compilerDesc">基于 MLIR 桥接 PyTorch 和 RISC-V</span>
               </a>
               <a role="menuitem" href="docs.html#operator-lang" class="nav__menuitem">
-                <span class="nav__menuitem-title">Ruyi AI 算子编程语言</span>
-                <span class="nav__menuitem-desc">面向 RISC-V 适配 Triton / TileLang</span>
+                <span class="nav__menuitem-title" data-i18n="nav.operatorLang">Ruyi AI 算子编程语言</span>
+                <span class="nav__menuitem-desc" data-i18n="nav.operatorLangDesc">面向 RISC-V 适配 Triton / TileLang</span>
               </a>
               <a role="menuitem" href="docs.html#operator-lib" class="nav__menuitem">
-                <span class="nav__menuitem-title">Ruyi AI 算子库</span>
-                <span class="nav__menuitem-desc">面向 RISC-V 的原生高性能算子库</span>
+                <span class="nav__menuitem-title" data-i18n="nav.operatorLib">Ruyi AI 算子库</span>
+                <span class="nav__menuitem-desc" data-i18n="nav.operatorLibDesc">面向 RISC-V 的原生高性能算子库</span>
               </a>
               <a role="menuitem" href="docs.html#runtime" class="nav__menuitem">
-                <span class="nav__menuitem-title">Ruyi AI 运行时环境</span>
-                <span class="nav__menuitem-desc">面向 RISC-V 各类扩展的统一运行时环境</span>
+                <span class="nav__menuitem-title" data-i18n="nav.runtime">Ruyi AI 运行时环境</span>
+                <span class="nav__menuitem-desc" data-i18n="nav.runtimeDesc">面向 RISC-V 各类扩展的统一运行时环境</span>
               </a>
             </div>
           </div>
-          <a href="docs.html#contributor-guide">贡献</a>
-          <a href="docs.html">文档</a>
-          <a href="https://ruyisdk.cn/" target="_blank" rel="noopener noreferrer">社区</a>
-          <a href="docs.html#insights">洞察</a>
-          <a href="docs.html#about">关于</a>
+          <a href="docs.html#contributor-guide" data-i18n="nav.contribute">贡献</a>
+          <a href="docs.html" data-i18n="nav.docs">文档</a>
+          <a href="https://ruyisdk.cn/" target="_blank" rel="noopener noreferrer" data-i18n="nav.community">社区</a>
+          <a href="docs.html#insights" data-i18n="nav.insights">洞察</a>
+          <a href="docs.html#about" data-i18n="nav.about">关于</a>
         </nav>
 
         <div class="nav__actions">
@@ -79,51 +79,51 @@
       <!-- Left sidebar -->
       <aside class="docs-sidebar">
         <nav class="docs-nav">
-          <a href="docs.html#overview" class="docs-nav__item" data-doc="overview">总览</a>
-          <a href="docs.html#install" class="docs-nav__item" data-doc="install">安装方式</a>
-          <a href="docs.html#tutorial" class="docs-nav__item" data-doc="tutorial">使用教程</a>
+          <a href="docs.html#overview" class="docs-nav__item" data-doc="overview" data-i18n="doc.overview">总览</a>
+          <a href="docs.html#install" class="docs-nav__item" data-doc="install" data-i18n="doc.install">安装方式</a>
+          <a href="docs.html#tutorial" class="docs-nav__item" data-doc="tutorial" data-i18n="doc.tutorial">使用教程</a>
           <div class="docs-nav__group">
             <div class="docs-nav__group-row">
-              <a href="docs.html#contributor-guide" class="docs-nav__item" data-doc="contributor-guide">贡献者指引</a>
+              <a href="docs.html#contributor-guide" class="docs-nav__item" data-doc="contributor-guide" data-i18n="doc.contributorGuide">贡献者指引</a>
               <button type="button" class="docs-nav__group-toggle" id="docsNavContributor" aria-label="展开或收起" aria-expanded="false">
                 <span class="docs-nav__chev" aria-hidden="true"></span>
               </button>
             </div>
             <div class="docs-nav__children">
-              <a href="docs.html#code-style" class="docs-nav__child" data-doc="code-style">代码规范</a>
-              <a href="docs.html#git-workflow" class="docs-nav__child" data-doc="git-workflow">Git 开源工作流程</a>
+              <a href="docs.html#code-style" class="docs-nav__child" data-doc="code-style" data-i18n="doc.codeStyle">代码规范</a>
+              <a href="docs.html#git-workflow" class="docs-nav__child" data-doc="git-workflow" data-i18n="doc.gitWorkflow">Git 开源工作流程</a>
             </div>
           </div>
           <div class="docs-nav__group">
             <div class="docs-nav__group-row">
-              <a href="docs.html#compiler" class="docs-nav__item" data-doc="compiler">Ruyi AI 编译器</a>
+              <a href="docs.html#compiler" class="docs-nav__item" data-doc="compiler" data-i18n="doc.compiler">Ruyi AI 编译器</a>
               <button type="button" class="docs-nav__group-toggle" id="docsNavCompiler" aria-label="展开或收起" aria-expanded="false">
                 <span class="docs-nav__chev" aria-hidden="true"></span>
               </button>
             </div>
             <div class="docs-nav__children">
-              <a href="docs.html#rvv-environment" class="docs-nav__child" data-doc="rvv-environment">RVV Environment</a>
-              <a href="docs.html#ime-dialect" class="docs-nav__child" data-doc="ime-dialect">IME Dialect</a>
-              <a href="docs.html#gemmini" class="docs-nav__child" data-doc="gemmini">Gemmini</a>
-              <a href="docs.html#adding-operators" class="docs-nav__child" data-doc="adding-operators">增加算子支持</a>
+              <a href="docs.html#rvv-environment" class="docs-nav__child" data-doc="rvv-environment" data-i18n="doc.rvvEnv">RVV Environment</a>
+              <a href="docs.html#ime-dialect" class="docs-nav__child" data-doc="ime-dialect" data-i18n="doc.imeDialect">IME Dialect</a>
+              <a href="docs.html#gemmini" class="docs-nav__child" data-doc="gemmini" data-i18n="doc.gemmini">Gemmini</a>
+              <a href="docs.html#adding-operators" class="docs-nav__child" data-doc="adding-operators" data-i18n="doc.addingOperators">增加算子支持</a>
             </div>
           </div>
           <div class="docs-nav__group">
             <div class="docs-nav__group-row">
-              <a href="docs.html#operator-lang" class="docs-nav__item" data-doc="operator-lang">Ruyi AI 算子编程语言</a>
+              <a href="docs.html#operator-lang" class="docs-nav__item" data-doc="operator-lang" data-i18n="doc.operatorLang">Ruyi AI 算子编程语言</a>
               <button type="button" class="docs-nav__group-toggle" id="docsNavOperatorLang" aria-label="展开或收起" aria-expanded="false">
                 <span class="docs-nav__chev" aria-hidden="true"></span>
               </button>
             </div>
             <div class="docs-nav__children">
-              <a href="docs.html#triton-on-riscv" class="docs-nav__child" data-doc="triton-on-riscv">Triton 的 RISC-V 适配</a>
+              <a href="docs.html#triton-on-riscv" class="docs-nav__child" data-doc="triton-on-riscv" data-i18n="doc.tritonOnRiscv">Triton 的 RISC-V 适配</a>
             </div>
           </div>
-          <a href="docs.html#operator-lib" class="docs-nav__item" data-doc="operator-lib">Ruyi AI 算子库</a>
-          <a href="docs.html#runtime" class="docs-nav__item" data-doc="runtime">Ruyi AI 运行时环境</a>
+          <a href="docs.html#operator-lib" class="docs-nav__item" data-doc="operator-lib" data-i18n="doc.operatorLib">Ruyi AI 算子库</a>
+          <a href="docs.html#runtime" class="docs-nav__item" data-doc="runtime" data-i18n="doc.runtime">Ruyi AI 运行时环境</a>
           <div class="docs-nav__group">
             <div class="docs-nav__group-row">
-              <a href="docs.html#insights" class="docs-nav__item" data-doc="insights">洞察</a>
+              <a href="docs.html#insights" class="docs-nav__item" data-doc="insights" data-i18n="doc.insights">洞察</a>
               <button type="button" class="docs-nav__group-toggle" id="docsNavInsights" aria-label="展开或收起" aria-expanded="false">
                 <span class="docs-nav__chev" aria-hidden="true"></span>
               </button>
@@ -132,16 +132,16 @@
               <a href="docs.html#C4ML2024" class="docs-nav__child" data-doc="C4ML2024">C4ML2024</a>
             </div>
           </div>
-          <a href="docs.html#about" class="docs-nav__item" data-doc="about">关于</a>
+          <a href="docs.html#about" class="docs-nav__item" data-doc="about" data-i18n="doc.about">关于</a>
         </nav>
       </aside>
 
       <!-- Right content -->
       <main class="docs-main">
-        <button type="button" class="docs-nav-toggle" id="docsNavToggle" aria-label="展开或收起目录">目录</button>
+        <button type="button" class="docs-nav-toggle" id="docsNavToggle" aria-label="展开或收起目录" data-i18n="doc.toc">目录</button>
         <div class="docs-search">
           <span class="docs-search__icon" aria-hidden="true">🔍</span>
-          <input type="search" class="docs-search__input" placeholder="搜索文档" aria-label="搜索文档" id="docsSearchInput" />
+          <input type="search" class="docs-search__input" placeholder="搜索文档" aria-label="搜索文档" id="docsSearchInput" data-i18n="doc.search" />
         </div>
         <article class="docs-content" id="docsContent">
           <h1 class="docs-content__title" id="docsTitle">总览</h1>
@@ -163,6 +163,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
     <script src="./script.js"></script>
+    <script src="./i18n.js"></script>
     <script src="./docs.js"></script>
   </body>
 </html>

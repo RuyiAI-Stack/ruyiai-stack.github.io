@@ -25,42 +25,42 @@
         <a class="brand" href="index.html">
           <img class="brand__logo" src="./assets/logo-ruyi-title.svg" alt="Ruyi AI" />
         </a>
-        <button class="nav__toggle" type="button" id="navToggle" aria-label="菜单" aria-expanded="false">
+        <button class="nav__toggle" type="button" id="navToggle" aria-label="菜单" data-i18n="nav.menu" aria-expanded="false">
           <span class="nav__toggle-bar"></span>
           <span class="nav__toggle-bar"></span>
           <span class="nav__toggle-bar"></span>
         </button>
         <div class="nav__menu-wrap">
         <nav class="nav__links">
-          <a href="index.html">首页</a>
+          <a href="index.html" data-i18n="nav.home">首页</a>
           <div class="nav__dropdown">
             <button class="nav__dropbtn" type="button" aria-haspopup="true" aria-expanded="false">
-              项目 <span class="nav__chev" aria-hidden="true"></span>
+              <span data-i18n="nav.projects">项目</span> <span class="nav__chev" aria-hidden="true"></span>
             </button>
             <div class="nav__menu" role="menu">
               <a role="menuitem" href="docs.html#compiler" class="nav__menuitem">
-                <span class="nav__menuitem-title">Ruyi AI 编译器</span>
-                <span class="nav__menuitem-desc">基于 MLIR 桥接 PyTorch 和 RISC-V</span>
+                <span class="nav__menuitem-title" data-i18n="nav.compiler">Ruyi AI 编译器</span>
+                <span class="nav__menuitem-desc" data-i18n="nav.compilerDesc">基于 MLIR 桥接 PyTorch 和 RISC-V</span>
               </a>
               <a role="menuitem" href="docs.html#operator-lang" class="nav__menuitem">
-                <span class="nav__menuitem-title">Ruyi AI 算子编程语言</span>
-                <span class="nav__menuitem-desc">面向 RISC-V 适配 Triton / TileLang</span>
+                <span class="nav__menuitem-title" data-i18n="nav.operatorLang">Ruyi AI 算子编程语言</span>
+                <span class="nav__menuitem-desc" data-i18n="nav.operatorLangDesc">面向 RISC-V 适配 Triton / TileLang</span>
               </a>
               <a role="menuitem" href="docs.html#operator-lib" class="nav__menuitem">
-                <span class="nav__menuitem-title">Ruyi AI 算子库</span>
-                <span class="nav__menuitem-desc">面向 RISC-V 的原生高性能算子库</span>
+                <span class="nav__menuitem-title" data-i18n="nav.operatorLib">Ruyi AI 算子库</span>
+                <span class="nav__menuitem-desc" data-i18n="nav.operatorLibDesc">面向 RISC-V 的原生高性能算子库</span>
               </a>
               <a role="menuitem" href="docs.html#runtime" class="nav__menuitem">
-                <span class="nav__menuitem-title">Ruyi AI 运行时环境</span>
-                <span class="nav__menuitem-desc">面向 RISC-V 各类扩展的统一运行时环境</span>
+                <span class="nav__menuitem-title" data-i18n="nav.runtime">Ruyi AI 运行时环境</span>
+                <span class="nav__menuitem-desc" data-i18n="nav.runtimeDesc">面向 RISC-V 各类扩展的统一运行时环境</span>
               </a>
             </div>
           </div>
-          <a href="docs.html#contributor-guide">贡献</a>
-          <a href="docs.html">文档</a>
-          <a href="https://ruyisdk.cn/" target="_blank" rel="noopener noreferrer">社区</a>
-          <a href="docs.html#insights">洞察</a>
-          <a href="docs.html#about">关于</a>
+          <a href="docs.html#contributor-guide" data-i18n="nav.contribute">贡献</a>
+          <a href="docs.html" data-i18n="nav.docs">文档</a>
+          <a href="https://ruyisdk.cn/" target="_blank" rel="noopener noreferrer" data-i18n="nav.community">社区</a>
+          <a href="docs.html#insights" data-i18n="nav.insights">洞察</a>
+          <a href="docs.html#about" data-i18n="nav.about">关于</a>
         </nav>
 
         <div class="nav__actions">
@@ -95,5 +95,6 @@
     </footer>
 
     <script src="./script.js"></script>
+    <script src="./i18n.js"></script>
   </body>
 </html>
