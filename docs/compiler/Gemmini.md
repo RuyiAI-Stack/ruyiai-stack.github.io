@@ -48,7 +48,7 @@ make -C software/libgemmini clean
 make -C software/libgemmini install
 ```
 
-This script ensures `libgemmini/gemmini_params.h` and `gemmini-rocc-tests/include/gemmini.h` always the same，and recompiles `libgemmini.so` which `spike` dependents on. So, we can just focus on repo `gemmini-rocc-tests`. There are two important header files in this repo:
+This script ensures `libgemmini/gemmini_params.h` and `gemmini-rocc-tests/include/gemmini.h` always the same, and recompiles `libgemmini.so` which `spike` dependents on. So, we can just focus on repo `gemmini-rocc-tests`. There are two important header files in this repo:
 
 - `gemmini.h`
 

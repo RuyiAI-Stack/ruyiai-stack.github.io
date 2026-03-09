@@ -3,7 +3,7 @@
     overview: {
       title: "总览",
       desc: "Ruyi AI 文档总览",
-      markdown: "欢迎查阅 Ruyi AI 文档。\n\n（待补充TBD）"
+      markdown: "欢迎查阅 Ruyi AI 文档。\n\n（待补充 TBD）"
     },
     install: {
       title: "安装方式",
@@ -13,12 +13,12 @@
     tutorial: {
       title: "使用教程",
       desc: "Ruyi AI 使用教程与示例",
-      markdown: "欢迎查阅 Ruyi AI 使用教程。\n\n（待补充TBD）"
+      markdown: "欢迎查阅 Ruyi AI 使用教程。\n\n（待补充 TBD）"
     },
     "contributor-guide": {
       title: "贡献者指引",
       desc: "如何参与 Ruyi AI 项目贡献",
-      markdown: "欢迎参与 Ruyi AI 贡献。\n\n（待补充TBD）"
+      markdown: "欢迎参与 Ruyi AI 贡献。\n\n（待补充 TBD）"
     },
     "code-style": {
       title: "代码规范",
@@ -68,22 +68,22 @@
     "operator-lang": {
       title: "Ruyi AI 算子编程语言",
       desc: "面向 RISC-V 适配 Triton / TileLang",
-      markdown: "欢迎查阅 Ruyi AI 算子编程语言文档。\n\n（待补充TBD）"
+      markdown: "欢迎查阅 Ruyi AI 算子编程语言文档。\n\n（待补充 TBD）"
     },
     "operator-lib": {
       title: "Ruyi AI 算子库",
       desc: "面向 RISC-V 的原生高性能算子库",
-      markdown: "欢迎查阅 Ruyi AI 算子库文档。\n\n（待补充TBD）"
+      markdown: "欢迎查阅 Ruyi AI 算子库文档。\n\n（待补充 TBD）"
     },
     runtime: {
       title: "Ruyi AI 运行时环境",
       desc: "面向 RISC-V 各类扩展的统一运行时环境",
-      markdown: "欢迎查阅 Ruyi AI 运行时环境文档。\n\n（待补充TBD）"
+      markdown: "欢迎查阅 Ruyi AI 运行时环境文档。\n\n（待补充 TBD）"
     },
     insights: {
       title: "洞察",
       desc: "了解 Ruyi AI 的愿景与团队",
-      markdown: "欢迎了解 Ruyi AI 洞察与分享。\n\n（待补充TBD）"
+      markdown: "欢迎了解 Ruyi AI 洞察与分享。\n\n（待补充 TBD）"
     },
     C4ML2024: {
       title: "C4ML2024",
