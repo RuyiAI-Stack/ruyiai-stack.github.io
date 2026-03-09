@@ -8,7 +8,7 @@
     install: {
       title: "安装方式",
       desc: "Ruyi AI 的安装与配置",
-      markdown: "欢迎查阅 Ruyi AI 安装方式文档。\n\n（待补充TBD）"
+      markdownUrl: "docs/install/install.md"
     },
     tutorial: {
       title: "使用教程",
