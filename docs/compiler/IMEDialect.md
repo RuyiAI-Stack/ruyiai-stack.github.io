@@ -1,147 +1,147 @@
 <!-- # SpacemiT IME Dialect
 
-This document provides a comprehensive guide for using the IME (Integrated Matrix Extension) dialect in buddy-mlir. -->
+本文档提供了在 buddy-mlir 中使用 IME（集成矩阵扩展）方言的全面指南。 -->
 
-## Table of Contents
+## 目录
 
-1. [File Structure](#file-structure)
-2. [Introduction](#introduction)
-3. [Quick Start](#quick-start)
-4. [Reference](#reference)
+1. [文件结构](#file-structure)
+2. [简介](#introduction)
+3. [快速开始](#quick-start)
+4. [参考资料](#reference)
 
-### File Structure
+### 文件结构
 
-The IMEDialect example folder contains the following key files:
+IMEDialect 示例文件夹包含以下关键文件：
 
-**MLIR Source Files:**
-- **`vmadot.mlir`, `vmadotu.mlir`, `vmadotsu.mlir`, `vmadotus.mlir`, `vfmadot.mlir`**: Minimal MLIR files demonstrating each IME operation. Use these to verify assembly code generation.
-- **`vmadot_print_test.mlir`, `vmadotu_print_test.mlir`, etc.**: Extended test MLIR files with additional code for printing input/output matrices on hardware. Use these for hardware validation with visible results.
+**MLIR 源文件：**
+- **`vmadot.mlir`、`vmadotu.mlir`、`vmadotsu.mlir`、`vmadotus.mlir`、`vfmadot.mlir`**：演示每个 IME 操作的最小 MLIR 文件。用于验证汇编代码生成。
+- **`vmadot_print_test.mlir`、`vmadotu_print_test.mlir` 等**：扩展测试 MLIR 文件，包含在硬件上打印输入/输出矩阵的附加代码。用于带有可见结果的硬件验证。
 
-**Runtime and Build Files:**
-- **`runtime_*.c`**: C runtime files providing `main()` entry point, matrix initialization, and result verification for hardware testing.
-- **`makefile`**: Build automation for generating lowered MLIR, LLVM IR, and assembly code.
-- **`build_all_tests.sh`**: Convenience script to build all hardware test executables at once.
+**运行时和构建文件：**
+- **`runtime_*.c`**：C 运行时文件，提供 `main()` 入口点、矩阵初始化和硬件测试的结果验证。
+- **`makefile`**：构建自动化，用于生成降级后的 MLIR、LLVM IR 和汇编代码。
+- **`build_all_tests.sh`**：一次性构建所有硬件测试可执行文件的便捷脚本。
 
-## Introduction
+## 简介
 
-The IME dialect provides MLIR operations that map to SpacemiT's Intelligent Matrix Extension for RISC-V.
+IME 方言提供了映射到 SpacemiT 的 RISC-V 智能矩阵扩展的 MLIR 操作。
 
-### Matrix Operations
+### 矩阵操作
 
-All IME instructions perform the following core matrix multiply-accumulate operation:
+所有 IME 指令执行以下核心矩阵乘累加操作：
 
 ```
 C (M×N) += A (M×K) × B (K×N)
 ```
 
-Where:
-- **M, N, K**: Matrix dimensions (determined by VLEN configuration)
-- **A (vs1)**: Left operand matrix (int8/int4/int16 or fp16/fp8/fp4/bfp16)
-- **B (vs2)**: Right operand matrix (int8/int4/int16 or fp16/fp8/fp4/bfp16)
-- **C (vd)**: Accumulator/result matrix (int32 for integer ops, fp16/bfp16 for float ops)
+其中：
+- **M、N、K**：矩阵维度（由 VLEN 配置决定）
+- **A (vs1)**：左操作数矩阵（int8/int4/int16 或 fp16/fp8/fp4/bfp16）
+- **B (vs2)**：右操作数矩阵（int8/int4/int16 或 fp16/fp8/fp4/bfp16）
+- **C (vd)**：累加器/结果矩阵（整数操作为 int32，浮点操作为 fp16/bfp16）
 
-### Matrix Dimensions by Configuration
+### 按配置划分的矩阵维度
 
-IME operates on fixed tile sizes determined by VLEN (Vector Register Length):
+IME 操作的固定分块大小由 VLEN（向量寄存器长度）决定：
 
-| VLEN | Data Type | M | K | N | Description |
-|------|-----------|---|---|---|-------------|
+| VLEN | 数据类型 | M | K | N | 描述 |
+|------|----------|---|---|---|------|
 | 256 | int8 | 4 | 8 | 4 | 4×8 × 8×4 → 4×4 |
 | 256 | fp16 | 4 | 4 | 4 | 4×4 × 4×4 → 4×4 |
 | 128 | int8 | 4 | 4 | 4 | 4×4 × 4×4 → 4×4 |
 | 128 | fp16 | 4 | 2 | 4 | 4×2 × 2×4 → 4×4 |
 
 
-## Quick Start
+## 快速开始
 
-### Prerequisites
+### 前置条件
 
-Before you start, ensure you have the following prerequisites installed:
+开始之前，请确保已安装以下前置条件：
 
 ```bash
-# Download and setup SpacemiT cross-compiler toolchain
+# 下载并设置 SpacemiT 交叉编译工具链
 wget https://archive.spacemit.com/toolchain/spacemit-toolchain-linux-glibc-x86_64-v1.1.2.tar.xz
 tar -xvf spacemit-toolchain-linux-glibc-x86_64-v1.1.2.tar.xz
 export PATH=$PWD/spacemit-toolchain-linux-glibc-x86_64-v1.1.2/bin:$PATH
 ```
 
-### 1. Build buddy-mlir with IME Support
+### 1. 构建支持 IME 的 buddy-mlir
 
-Before you start trying the IR level examples, please make sure you have completed the [get started part](../../README.md).
+在开始尝试 IR 级别的示例之前，请确保已完成[入门部分](../../README.md)。
 
 
-### 2. Build and Test IME Examples
+### 2. 构建和测试 IME 示例
 
-Navigate to the IME dialect examples directory:
+进入 IME 方言示例目录：
 
 ```bash
 cd buddy-mlir/examples/IMEDialect
 ```
 
-#### Option A: Verify Assembly Generation (Quick Test)
+#### 选项 A：验证汇编生成（快速测试）
 
-Use this option to verify that IME operations are correctly lowered to RISC-V assembly. This uses the minimal `*.mlir` files.
+使用此选项验证 IME 操作是否正确降级为 RISC-V 汇编。这使用最小的 `*.mlir` 文件。
 
-**Generate Lowered MLIR:**
+**生成降级后的 MLIR：**
 ```bash
 make vmadot-lower
 ```
-This generates `log.mlir` containing the lowered representation.
+这将生成包含降级表示的 `log.mlir`。
 
-**Generate LLVM IR:**
+**生成 LLVM IR：**
 ```bash
 make vmadot-translate
 ```
-This generates `log.ll` containing LLVM IR code.
+这将生成包含 LLVM IR 代码的 `log.ll`。
 
-**Generate Assembly:**
+**生成汇编：**
 ```bash
 make vmadot-asm
 ```
-This generates `log.s` containing RISC-V assembly. You can inspect this file to verify correct IME instruction generation.
+这将生成包含 RISC-V 汇编的 `log.s`。您可以检查此文件以验证 IME 指令生成是否正确。
 
-#### Option B: Build Hardware Test Executables (Full Test)
+#### 选项 B：构建硬件测试可执行文件（完整测试）
 
-Use this option to build executables that can run on SpacemiT hardware with printed output for verification. This uses the `*_print_test.mlir` files which include matrix printing functionality.
+使用此选项构建可在 SpacemiT 硬件上运行的可执行文件，带有打印输出用于验证。这使用包含矩阵打印功能的 `*_print_test.mlir` 文件。
 
-**Build a single test executable:**
+**构建单个测试可执行文件：**
 ```bash
 export PATH=$PWD/spacemit-toolchain-linux-glibc-x86_64-v1.1.2/bin:$PATH
-make vmadot-run    # Generates vmadot.s and vmadot_test executable
-make vmadotu-run   # Generates vmadotu.s and vmadotu_test executable
-make vmadotsu-run  # Generates vmadotsu.s and vmadotsu_test executable
-make vmadotus-run  # Generates vmadotus.s and vmadotus_test executable
+make vmadot-run    # 生成 vmadot.s 和 vmadot_test 可执行文件
+make vmadotu-run   # 生成 vmadotu.s 和 vmadotu_test 可执行文件
+make vmadotsu-run  # 生成 vmadotsu.s 和 vmadotsu_test 可执行文件
+make vmadotus-run  # 生成 vmadotus.s 和 vmadotus_test 可执行文件
 ```
 
-**Build all test executables at once:**
+**一次性构建所有测试可执行文件：**
 ```bash
 ./build_all_tests.sh
 ```
 
-This will generate executable binaries: `vmadot_test`, `vmadotu_test`, `vmadotsu_test`, `vmadotus_test`
+这将生成可执行二进制文件：`vmadot_test`、`vmadotu_test`、`vmadotsu_test`、`vmadotus_test`
 
-> **Note**: The `-run` targets require the SpacemiT cross-compiler (`riscv64-unknown-linux-gnu-gcc`) to be in your PATH.
+> **注意**：`-run` 目标需要 SpacemiT 交叉编译器（`riscv64-unknown-linux-gnu-gcc`）在您的 PATH 中。
 
 ---
 
-## Run on Hardware
+## 在硬件上运行
 
-After compiling the test executables, you can run them on SpacemiT hardware:
+编译测试可执行文件后，您可以在 SpacemiT 硬件上运行它们：
 
-**Step 1: Transfer files to hardware**
+**步骤 1：将文件传输到硬件**
 
 ```bash
 scp vmadot_test vmadotu_test vmadotsu_test vmadotus_test \
     user@spacemit-hardware:/path/to/test_dir/
 ```
 
-**Step 2: Execute on hardware**
+**步骤 2：在硬件上执行**
 
 ```bash
-# SSH into the SpacemiT hardware
+# SSH 连接到 SpacemiT 硬件
 ssh user@spacemit-hardware
 
-# Navigate to test directory and run tests
+# 进入测试目录并运行测试
 cd /path/to/test_dir/
 ./vmadot_test
 ./vmadotu_test
@@ -149,40 +149,40 @@ cd /path/to/test_dir/
 ./vmadotus_test
 ```
 
-Each test will output:
-- Input matrices A and B
-- Expected and computed results
-- Verification status (PASS/FAIL)
+每个测试将输出：
+- 输入矩阵 A 和 B
+- 预期结果和计算结果
+- 验证状态（通过/失败）
 
-**Note**: `vfmadot` floating-point instruction tests cannot yet be executed as standalone binaries and are available only for assembly generation and inspection.
+**注意**：`vfmadot` 浮点指令测试目前还不能作为独立二进制文件执行，仅可用于汇编生成和检查。
 
 
 
-## Reference
-- [SpacemiT IME Extension Specification](https://github.com/spacemit-com/riscv-ime-extension-spec)
+## 参考资料
+- [SpacemiT IME 扩展规范](https://github.com/spacemit-com/riscv-ime-extension-spec)
 
 ---
 
-## Operations Reference
+## 操作参考
 
-This section provides detailed information about each IME operation type and how to use them in MLIR.
+本节提供每种 IME 操作类型的详细信息以及如何在 MLIR 中使用它们。
 
-### Instruction Categories
+### 指令分类
 
-IME instructions are categorized into two main types:
+IME 指令分为两大类：
 
-#### 1. Integer Matrix Multiply-Accumulate Instructions
+#### 1. 整数矩阵乘累加指令
 
-These instructions perform signed or unsigned integer matrix operations:
+这些指令执行有符号或无符号整数矩阵操作：
 
-| Instruction | Operand A Type | Operand B Type | Accumulator Type | Description |
-|-------------|---|---|---|---|
-| `vmadot` | int4/int8/int16 | int4/int8/int16 | int32 | signed × signed |
-| `vmadotu` | uint4/uint8/uint16 | uint4/uint8/uint16 | int32 | unsigned × unsigned |
-| `vmadotsu` | int4/int8/int16 | uint4/uint8/uint16 | int32 | signed × unsigned |
-| `vmadotus` | uint4/uint8/uint16 | int4/int8/int16 | int32 | unsigned × signed |
+| 指令 | 操作数 A 类型 | 操作数 B 类型 | 累加器类型 | 描述 |
+|------|--------------|--------------|-----------|------|
+| `vmadot` | int4/int8/int16 | int4/int8/int16 | int32 | 有符号 × 有符号 |
+| `vmadotu` | uint4/uint8/uint16 | uint4/uint8/uint16 | int32 | 无符号 × 无符号 |
+| `vmadotsu` | int4/int8/int16 | uint4/uint8/uint16 | int32 | 有符号 × 无符号 |
+| `vmadotus` | uint4/uint8/uint16 | int4/int8/int16 | int32 | 无符号 × 有符号 |
 
-**Assembly Format**:
+**汇编格式**：
 ```assembly
 vmadot   vd, vs1, vs2    # vd(C) += vs1(A) × vs2(B)
 vmadotu  vd, vs1, vs2
@@ -190,63 +190,63 @@ vmadotsu vd, vs1, vs2
 vmadotus vd, vs1, vs2
 ```
 
-**Register Constraints**:
-- `vd` (destination): Target register for result matrix C, **index must be even**
-- `vs1` (source 1): Input matrix A
-- `vs2` (source 2): Input matrix B
-- Results are stored in two consecutive registers (vd and vd+1)
+**寄存器约束**：
+- `vd`（目的）：结果矩阵 C 的目标寄存器，**索引必须为偶数**
+- `vs1`（源 1）：输入矩阵 A
+- `vs2`（源 2）：输入矩阵 B
+- 结果存储在两个连续寄存器中（vd 和 vd+1）
 
-#### 2. Floating-Point Matrix Multiply-Accumulate Instructions
+#### 2. 浮点矩阵乘累加指令
 
-This instruction performs floating-point matrix operations:
+此指令执行浮点矩阵操作：
 
-| Instruction | Operand A Type | Operand B Type | Accumulator Type | Description |
-|---|---|---|---|---|
-| `vfmadot` | fp4/fp8/fp16/bfp16 | fp4/fp8/fp16/bfp16 | fp16/bfp16 | Floating-point matrix multiply |
+| 指令 | 操作数 A 类型 | 操作数 B 类型 | 累加器类型 | 描述 |
+|------|--------------|--------------|-----------|------|
+| `vfmadot` | fp4/fp8/fp16/bfp16 | fp4/fp8/fp16/bfp16 | fp16/bfp16 | 浮点矩阵乘法 |
 
-**Assembly Format**:
+**汇编格式**：
 ```assembly
 vfmadot vd, vs1, vs2    # vd(C) += vs1(A) × vs2(B)
 ```
 
-**Register Constraints**:
-- `vd` (destination): Target register for result matrix C
-- `vs1` (source 1): Input matrix A
-- `vs2` (source 2): Input matrix B
-- Result is stored in a single register (different from integer instructions)
+**寄存器约束**：
+- `vd`（目的）：结果矩阵 C 的目标寄存器
+- `vs1`（源 1）：输入矩阵 A
+- `vs2`（源 2）：输入矩阵 B
+- 结果存储在单个寄存器中（与整数指令不同）
 
-### MLIR Operation Syntax
+### MLIR 操作语法
 
-All IME operations in MLIR follow this pattern:
+MLIR 中所有 IME 操作遵循以下模式：
 
 ```mlir
 ime.vmadot %accumulator, %matrix_a, %matrix_b : memref<...>, memref<...>, memref<...>
 ```
 
-Where:
-- `%accumulator`: Destination memref (2D, element type matches result type)
-- `%matrix_a`: Left operand matrix A memref (2D)
-- `%matrix_b`: Right operand matrix B memref (2D)
+其中：
+- `%accumulator`：目的 memref（二维，元素类型与结果类型匹配）
+- `%matrix_a`：左操作数矩阵 A 的 memref（二维）
+- `%matrix_b`：右操作数矩阵 B 的 memref（二维）
 
-### Example MLIR Code
+### MLIR 代码示例
 
-Complete example showing IME operations in MLIR:
+展示 IME 操作的完整 MLIR 示例：
 
 ```mlir
 func.func @vmadot_example(%arg0: memref<4x4xi32>, %arg1: memref<4x8xi8>, %arg2: memref<8x4xi8>) {
-  // Perform matrix multiply-accumulate: arg0 += arg1 × arg2
+  // 执行矩阵乘累加：arg0 += arg1 × arg2
   ime.vmadot %arg0, %arg1, %arg2 : memref<4x4xi32>, memref<4x8xi8>, memref<8x4xi8>
   return
 }
 
 func.func @vmadotu_example(%arg0: memref<4x4xi32>, %arg1: memref<4x8xui8>, %arg2: memref<8x4xui8>) {
-  // Unsigned integer version
+  // 无符号整数版本
   ime.vmadotu %arg0, %arg1, %arg2 : memref<4x4xi32>, memref<4x8xui8>, memref<8x4xui8>
   return
 }
 
 func.func @vfmadot_example(%arg0: memref<4x4xf16>, %arg1: memref<4x4xf16>, %arg2: memref<4x4xf16>) {
-  // Floating-point version
+  // 浮点版本
   ime.vfmadot %arg0, %arg1, %arg2 : memref<4x4xf16>, memref<4x4xf16>, memref<4x4xf16>
   return
 }

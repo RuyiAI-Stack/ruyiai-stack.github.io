@@ -41,6 +41,7 @@
       "doc.runtime": "Ruyi AI 运行时环境",
       "doc.insights": "洞察",
       "doc.about": "关于",
+      "hero.subtitle": "面向 RISC-V 架构的<br />人工智能系统软件栈",
       "hero.install": "立即安装",
       "hero.tutorial": "使用教程",
       "hero.overview": "项目架构",
@@ -85,6 +86,7 @@
       "doc.runtime": "Ruyi AI Runtime",
       "doc.insights": "Insights",
       "doc.about": "About",
+      "hero.subtitle": "AI System Software Stack<br />for RISC-V Architecture",
       "hero.install": "Get Started",
       "hero.tutorial": "Tutorial",
       "hero.overview": "Project Overview",
@@ -108,9 +110,13 @@
         else el.textContent = text;
       }
     });
-    document.querySelectorAll(".nav__lang [data-lang]").forEach(function (btn) {
-      btn.classList.toggle("is-active", btn.getAttribute("data-lang") === LANG);
+    document.querySelectorAll("[data-i18n-html]").forEach(function (el) {
+      var key = el.getAttribute("data-i18n-html");
+      var html = getText(key);
+      if (html) el.innerHTML = html;
     });
+    var toggle = document.getElementById("navLangWrap");
+    if (toggle) toggle.classList.toggle("lang-toggle--en", LANG === "en");
     if (typeof window.dispatchEvent === "function") {
       window.dispatchEvent(new CustomEvent("languagechange", { detail: { lang: LANG } }));
     }
@@ -119,6 +125,7 @@
   function setLang(lang) {
     if (lang !== "zh" && lang !== "en") return;
     LANG = lang;
+    window.ruyiaiLang = LANG;
     localStorage.setItem(STORAGE_KEY, LANG);
     applyLanguage();
   }
@@ -128,17 +135,21 @@
     if (!actions) return;
     var existing = document.getElementById("navLangWrap");
     if (existing) return;
-    var wrap = document.createElement("span");
+    var wrap = document.createElement("button");
     wrap.id = "navLangWrap";
-    wrap.className = "nav__lang";
+    wrap.type = "button";
+    wrap.className = "lang-toggle" + (LANG === "en" ? " lang-toggle--en" : "");
+    wrap.setAttribute("aria-label", "Switch language");
     wrap.innerHTML =
-      '<button type="button" class="nav__lang-btn" data-lang="zh" data-i18n="nav.langZh" aria-label="中文">中文</button>' +
-      '<span class="nav__lang-sep" aria-hidden="true">/</span>' +
-      '<button type="button" class="nav__lang-btn" data-lang="en" data-i18n="nav.langEn" aria-label="English">English</button>';
-    wrap.querySelectorAll("[data-lang]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        setLang(btn.getAttribute("data-lang"));
-      });
+      '<span class="lang-toggle__track">' +
+        '<span class="lang-toggle__label lang-toggle__label--zh">中</span>' +
+        '<span class="lang-toggle__label lang-toggle__label--en">En</span>' +
+        '<span class="lang-toggle__thumb"></span>' +
+      '</span>';
+    wrap.addEventListener("click", function () {
+      var next = LANG === "zh" ? "en" : "zh";
+      setLang(next);
+      wrap.classList.toggle("lang-toggle--en", next === "en");
     });
     actions.insertBefore(wrap, actions.firstChild);
     applyLanguage();

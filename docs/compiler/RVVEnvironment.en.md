@@ -1,21 +1,21 @@
-# MLIR 与 RVV 测试实验环境搭建指南
+# Environment Setup Guide for MLIR and RVV Testing and Experiments
 
-本指南提供使用 buddy-mlir 项目测试 RISC-V 向量扩展的环境搭建说明。
-仿真目标平台为 QEMU。
+This guide provides instructions on setting up an environment to test the RISC-V Vector Extension using the buddy-mlir project.
+The target platform for emulation is QEMU.
 
-## 前置要求
+## Requirements
 
-在继续之前，请确保已安装以下依赖：
+Before proceed any further make sure that you installed dependencies below
 
-* [LLVM 依赖](https://llvm.org/docs/GettingStarted.html#requirements)
-* [GNU 工具链依赖](https://github.com/riscv-collab/riscv-gnu-toolchain#prerequisites)
-* [QEMU 依赖](https://wiki.qemu.org/Hosts/Linux)
+* [LLVM dependecies](https://llvm.org/docs/GettingStarted.html#requirements)
+* [GNU Toolchain dependecies](https://github.com/riscv-collab/riscv-gnu-toolchain#prerequisites)
+* [QEMU dependecies](https://wiki.qemu.org/Hosts/Linux)
 
-## 构建步骤
+## Build Steps
 
-> **_注意：_** 构建过程包含多个较重的阶段，克隆和构建所有组件可能需要较长时间。
+> **_NOTE:_** The build process includes several heavy stages. It may take significant time to clone and build all components.
 
-0. 准备 `buddy-mlir` 及其子模块
+0. Prepare `buddy-mlir` and Submodules
 
 ```
 $ git clone https://github.com/buddy-compiler/buddy-mlir.git
@@ -23,7 +23,7 @@ $ cd buddy-mlir
 $ git submodule update --init
 ```
 
-1. 构建本地 LLVM/MLIR
+1. Build Local LLVM/MLIR
 
 ```
 $ cd buddy-mlir
@@ -41,7 +41,7 @@ $ ninja check-clang check-mlir omp
 $ export BUILD_LOCAL_LLVM_DIR=$PWD
 ```
 
-2. 构建本地 `buddy-mlir`
+2. Build Local `buddy-mlir`
 
 ```
 $ cd buddy-mlir
@@ -61,7 +61,7 @@ $ export BUILD_RISCV_GNU_TOOLCHAIN_DIR=$PWD/thirdparty/riscv-gnu-toolchain/
 $ export RISCV_GNU_TOOLCHAIN_SYSROOT_DIR=${BUILD_RISCV_GNU_TOOLCHAIN_DIR}/sysroot/
 ```
 
-3. 构建交叉编译 Clang
+3. Build Cross-Compiled Clang
 
 ```
 $ cd buddy-mlir
@@ -84,7 +84,7 @@ $ cmake -G Ninja ../llvm \
 $ ninja clang lli
 ```
 
-4. 构建交叉编译 MLIR
+4. Build Cross-Compiled MLIR
 
 ```
 $ cd buddy-mlir
@@ -115,7 +115,7 @@ $ ninja
 $ export BUILD_CROSS_MLIR_DIR=$PWD
 ```
 
-5. 构建交叉编译 `buddy-mlir`
+5. Build Cross-Compiled `buddy-mlir`
 
 ```
 $ cd buddy-mlir
@@ -139,16 +139,16 @@ $ cmake -G Ninja .. \
 $ ninja StaticMLIRCRunnerUtils StaticMLIRRunnerUtils
 ```
 
-## 测试 RVV 环境
+## Testing RVV Environment
 
 ```
 $ cd buddy-mlir
 $ cd examples/RVVDialect/
 $ make rvv-mul-add-run
 
-// 预期输出：
+// Expected Output:
 Unranked Memref base@ = 0x55555729aaa0 rank = 1 offset = 0 sizes = [20] strides = [1] data =
 [0,  12,  26,  42,  60,  80,  102,  126,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0]
 ```
 
-恭喜！您的 RVV 环境现已完全搭建完成，尽情探索和测试吧！
+Congratulations! Your RVV environment is now fully set up. Enjoy exploring and testing!

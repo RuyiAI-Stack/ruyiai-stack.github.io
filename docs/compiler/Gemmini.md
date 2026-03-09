@@ -1,44 +1,44 @@
-The Gemmini project is developing a full-system, full-stack DNN hardware exploration and evaluation platform. Gemmini enables architects to make useful insights into how different components of the system and software stack (outside of just the accelerator itself) interact to affect overall DNN performance.
+Gemmini 项目正在开发一个全系统、全栈的深度神经网络硬件探索与评估平台。Gemmini 使架构师能够深入了解系统和软件栈的不同组件（不仅仅是加速器本身）如何交互影响整体 DNN 性能。
 
-Gemmini is part of the [Chipyard](https://github.com/ucb-bar/chipyard) ecosystem, and was developed using the [Chisel](https://www.chisel-lang.org/) hardware description language. This document is intended to provide information for beginners who want to try Gemmini in [buddy-mlir](https://github.com/buddy-compiler/buddy-mlir) project.We present this document from the following aspects.
+Gemmini 是 [Chipyard](https://github.com/ucb-bar/chipyard) 生态系统的一部分，使用 [Chisel](https://www.chisel-lang.org/) 硬件描述语言开发。本文档旨在为想在 [buddy-mlir](https://github.com/buddy-compiler/buddy-mlir) 项目中尝试 Gemmini 的初学者提供信息。我们从以下几个方面进行介绍：
 
-- Architecture of Gemmini
-- Gemmini in chipyard
-- Gemmini in buddy-mlir
+- Gemmini 架构
+- Chipyard 中的 Gemmini
+- buddy-mlir 中的 Gemmini
 
-### Architecture of Gemmini
+### Gemmini 架构
 
 <img src="../../Resources/gemmini-arch.png" style="zoom: 67%;" />
 
-Gemmini is implemented as a RoCC accelerator with non-standard RISC-V custom instructions. The Gemmini unit uses the RoCC port of a Rocket or BOOM *tile*, and by default connects to the memory system through the System Bus (i.e., directly to the L2 cache).
+Gemmini 作为 RoCC 加速器实现，使用非标准的 RISC-V 自定义指令。Gemmini 单元使用 Rocket 或 BOOM *tile* 的 RoCC 端口，默认通过系统总线（即直接连接到 L2 缓存）接入存储系统。
 
-At the heart of the accelerator lies a systolic array which performs matrix multiplications. By default, the matrix multiplication support both *output-stationary* and *weight-stationary* dataflows, which programmers can pick between at runtime. However, the dataflow can also be hardened at elaboration time.
+加速器的核心是一个执行矩阵乘法的脉动阵列。默认情况下，矩阵乘法支持*输出固定*和*权重固定*两种数据流，程序员可以在运行时选择。不过，数据流也可以在设计生成时固化。
 
-The systolic array's inputs and outputs are stored in an explicitly managed scratchpad, made up of banked SRAMs. A DMA engine facilitates the transfer of data between main memory (which is visible to the host CPU) and the scratchpad.
+脉动阵列的输入和输出存储在一个显式管理的暂存器中，由分块 SRAM 组成。DMA 引擎负责在主存（对主机 CPU 可见）和暂存器之间传输数据。
 
-Because weight-stationary dataflows require an accumulator outside the systolic array, we add a final SRAM bank, equipped with adder units, which can be conceptually considered an extension of the scratchpad memory space. The systolic array can store results to any address in the accumulator, and can also read new inputs from any address in the accumulator. The DMA engine can also transfer data directly between the accumulator and main memory, which is often necessary to load in biases.
+由于权重固定数据流需要在脉动阵列外部有一个累加器，我们添加了一个最终的 SRAM 块，配备了加法器单元，可以在概念上视为暂存器内存空间的扩展。脉动阵列可以将结果存储到累加器的任意地址，也可以从累加器的任意地址读取新输入。DMA 引擎也可以在累加器和主存之间直接传输数据，这在加载偏置时经常需要。
 
-Gemmini also includes peripheral circuitry to optionally apply activation functions such as ReLU or ReLU6, scale results down by powers-of-2 to support quantized workloads, or to transpose matrices before feeding them into the systolic array to support the output-stationary dataflow.
+Gemmini 还包括外围电路，可选择性地应用激活函数（如 ReLU 或 ReLU6）、按 2 的幂次缩放结果以支持量化工作负载，或在将矩阵送入脉动阵列之前进行转置以支持输出固定数据流。
 
-**Details of architecture and ISA are presented in the** **[gemmini](https://github.com/ucb-bar/gemmini#architecture)** **project.**
+**架构和 ISA 的详细信息请参阅** **[gemmini](https://github.com/ucb-bar/gemmini#architecture)** **项目。**
 
-### Gemmini in chipyard
+### Chipyard 中的 Gemmini
 
-#### Three repos
+#### 三个仓库
 
-- [gemmini : Berkeley's Spatial Array Generator](https://github.com/ucb-bar/gemmini)
+- [gemmini：Berkeley 的空间阵列生成器](https://github.com/ucb-bar/gemmini)
 
-  - [gemmini-rocc-tests](https://github.com/ucb-bar/gemmini-rocc-tests) （submodule of gemmini）
+  - [gemmini-rocc-tests](https://github.com/ucb-bar/gemmini-rocc-tests)（gemmini 的子模块）
 
-     Fork of seldridge/rocket-rocc-examples with tests for a systolic array based matmul accelerator
+     Fork 自 seldridge/rocket-rocc-examples，包含基于脉动阵列的矩阵乘法加速器测试
 
-  - [libgemmini : Gemmini extensions for Spike](https://github.com/ucb-bar/libgemmini) （submodule of gemmini）
+  - [libgemmini：Gemmini 的 Spike 扩展](https://github.com/ucb-bar/libgemmini)（gemmini 的子模块）
 
-      This repository builds libgemmini.so, which can be dynamically linked into Spike to support executing custom Gemmini instructions.
+      此仓库构建 libgemmini.so，可以动态链接到 Spike 以支持执行自定义 Gemmini 指令。
 
-Because both `gemmini-rocc-tests` and `libgemmini` are submodules of gemmini, we take `gemmini` as the root directory.
+由于 `gemmini-rocc-tests` 和 `libgemmini` 都是 gemmini 的子模块，我们以 `gemmini` 作为根目录。
 
-And in `scripts/build-spike.sh`, there is the following logic:
+在 `scripts/build-spike.sh` 中，有以下逻辑：
 
 ```shell
 # scripts/build-spike.sh
@@ -48,15 +48,15 @@ make -C software/libgemmini clean
 make -C software/libgemmini install
 ```
 
-This script ensures `libgemmini/gemmini_params.h` and `gemmini-rocc-tests/include/gemmini.h` always the same, and recompiles `libgemmini.so` which `spike` dependents on. So, we can just focus on repo `gemmini-rocc-tests`. There are two important header files in this repo:
+此脚本确保 `libgemmini/gemmini_params.h` 和 `gemmini-rocc-tests/include/gemmini.h` 始终一致，并重新编译 `spike` 所依赖的 `libgemmini.so`。因此，我们只需关注仓库 `gemmini-rocc-tests`。该仓库中有两个重要的头文件：
 
 - `gemmini.h`
 
-  - This header is a C library which wraps the calls to the custom Gemmini instructions into common DNN operators like matmuls, convolutions (with or without pooling), matrix-additions, etc. Note that the DNN tests rely upon this C library of common DNN operators. They call very few direct Gemmini ISA instructions, and mostly call the wrappers around them found in the C library.
+  - 此头文件是一个 C 库，将自定义 Gemmini 指令的调用封装为常见的 DNN 算子，如矩阵乘法、卷积（带或不带池化）、矩阵加法等。请注意，DNN 测试依赖于这个常见 DNN 算子的 C 库。它们很少直接调用 Gemmini ISA 指令，主要调用 C 库中的封装函数。
 
 - `gemmini_params.h`
 
-  - The Gemmini generator generates a C header file (`gemmini_params.h`) based on the generator parameters when we run `build-spike.sh`. This header files gets compiled together with the C library to tune library performance.
+  - Gemmini 生成器在运行 `build-spike.sh` 时根据生成器参数生成一个 C 头文件（`gemmini_params.h`）。此头文件与 C 库一起编译以调优库性能。
 
     ```shell
     # scripts/build-spike.sh
@@ -66,11 +66,11 @@ This script ensures `libgemmini/gemmini_params.h` and `gemmini-rocc-tests/includ
     make verilog CONFIG=CustomGemminiSoCConfig &> build.log
     ```
 
-#### Build Simulator & C Library
+#### 构建模拟器和 C 库
 
-For `gemmini` project, the complete build logic should be as following:
+对于 `gemmini` 项目，完整的构建逻辑如下：
 
-1. Run `scripts/setup-paths.sh` script which complete the copy (symlink) of the configuration file, and now we have `configs` folder. A total of four configuration files will be copied to the new directory.
+1. 运行 `scripts/setup-paths.sh` 脚本，完成配置文件的复制（符号链接），然后我们就有了 `configs` 文件夹。共有四个配置文件会被复制到新目录。
 
    1. `src/main/scala/gemmini/Configs.scala`
       1.    -> `configs/GemminiDefaultConfigs.scala`
@@ -81,7 +81,7 @@ For `gemmini` project, the complete build logic should be as following:
    4. `src/main/scala/gemmini/CustomSoCConfigs.scala`
       1.   -> `configs/SoCConfigs.scala`
 
-   The corresponding script code is as follows. The command `sed '1,1d; $d'` is used to delete the comment tags at the beginning and end of the source file.
+   对应的脚本代码如下。命令 `sed '1,1d; $d'` 用于删除源文件开头和末尾的注释标签。
 
    ```shell
    if [ ! -f configs/GemminiDefaultConfigs.scala ]; then
@@ -103,7 +103,7 @@ For `gemmini` project, the complete build logic should be as following:
    fi
    ```
 
-2. Run `scripts/build-verilator.sh` and `scripts/build-spike.sh`，Both of these scripts will ultimately land in the `../../sims/verilator` directory to execute the  `make`  command with the specified parameter `CONFIG=CustomGemminiSoCConfig`.
+2. 运行 `scripts/build-verilator.sh` 和 `scripts/build-spike.sh`，这两个脚本最终都会进入 `../../sims/verilator` 目录，使用指定参数 `CONFIG=CustomGemminiSoCConfig` 执行 `make` 命令。
 
    ```shell
    # build-spike.sh
@@ -125,7 +125,7 @@ For `gemmini` project, the complete build logic should be as following:
    make -j$j ${debug} CONFIG=CustomGemminiSoCConfig
    ```
 
-   The `CustomGemminiSoCConfig` mentioned here appears in the above configuration file `configs/SoCConfigs.scala`，Additionally, we notice the `help()` functions in both of these scripts:
+   这里提到的 `CustomGemminiSoCConfig` 出现在上面的配置文件 `configs/SoCConfigs.scala` 中。此外，我们注意到这两个脚本中的 `help()` 函数：
 
    ```shell
    # build-verilator.sh
@@ -143,64 +143,64 @@ For `gemmini` project, the complete build logic should be as following:
    }
    ```
 
-   They both indicate that during compilation, we are matching with the `customConfig` in `configs/GemminiCustomConfigs.scala`. When we need to modify the Gemmini configuration later, we should:
+   它们都表明在编译时，我们匹配的是 `configs/GemminiCustomConfigs.scala` 中的 `customConfig`。当我们后续需要修改 Gemmini 配置时，应该：
 
-   1. Assign the new config to `customConfig`.
-   2. Re-run `build-spike.sh` to take effect.
+   1. 将新配置赋给 `customConfig`。
+   2. 重新运行 `build-spike.sh` 使其生效。
 
-### Gemmini in buddy-mlir
+### buddy-mlir 中的 Gemmini
 
-[Buddy-mlir](https://github.com/buddy-compiler/buddy-mlir) is an MLIR-based compiler framework designed for a co-design ecosystem from DSL (domain-specific languages) to DSA (domain-specific architectures).
+[Buddy-mlir](https://github.com/buddy-compiler/buddy-mlir) 是一个基于 MLIR 的编译器框架，旨在从 DSL（领域特定语言）到 DSA（领域特定架构）的协同设计生态系统。
 
-#### Gemmini Dialect
+#### Gemmini 方言
 
-Gemmini dialect is a basic dialect to target RISC-V Gemmini extension.
+Gemmini 方言是面向 RISC-V Gemmini 扩展的基础方言。
 
-##### Operation definitions
+##### 操作定义
 
-We define operation for `gemmini` dialect in file `midend/include/Dialect/Gemmini/Gemmini.td`.
+我们在文件 `midend/include/Dialect/Gemmini/Gemmini.td` 中定义 `gemmini` 方言的操作。
 
 - `flush`
-- `config_st` , `config_ld` , `config_ex` , `config_norm`
-- `mvin` , `mvin2` , `mvin3` , `mvout`
+- `config_st`、`config_ld`、`config_ex`、`config_norm`
+- `mvin`、`mvin2`、`mvin3`、`mvout`
 - `print`
-- `preload_zeros` , `preload` , `compute_preloaded` , `compute_accumulated`
-- `tile_matmul` , `tile_conv`
+- `preload_zeros`、`preload`、`compute_preloaded`、`compute_accumulated`
+- `tile_matmul`、`tile_conv`
 
-|    **Operator Name**    |                 **Description**                 |
-| :---------------------: | :---------------------------------------------: |
-|        **flush**        |      **Flush operation flushes the TLB.**       |
-|      **config_st**      |           **Config store operation**            |
-|      **config_ld**      |            **Config load operation**            |
-|      **config_ex**      | **ConfigExOp configures the execute pipeline.** |
-|     **config_norm**     | **ConfigNormOp configures normalized pipeline** |
-|        **mvin**         |  **Move data from main memory to scratchpad**   |
-|        **mvin2**        |  **Move data from main memory to scratchpad**   |
-|        **mvin3**        |  **Move data from main memory to scratchpad**   |
-|        **mvout**        |    **Move data from scratchpad to L2/DRAM**     |
-|        **print**        |             **Print memref value.**             |
-|    **preload_zeros**    |         **Preload zeros in scratchpad**         |
-|       **preload**       |        **Preload matrix in scratchpad**         |
-|  **compute_preloaded**  |            **Explicitly Preloaded**             |
-| **compute_accumulated** |        **compute accumulated opertion**         |
-|     **tile_matmul**     |       **Perform matrix multiplication.**        |
-|      **tile_conv**      |            **Perform convolution.**             |
+|      **算子名称**       |                   **描述**                    |
+| :---------------------: | :-------------------------------------------: |
+|        **flush**        |      **Flush 操作刷新 TLB。**                 |
+|      **config_st**      |           **配置存储操作**                     |
+|      **config_ld**      |            **配置加载操作**                    |
+|      **config_ex**      | **ConfigExOp 配置执行流水线。**               |
+|     **config_norm**     | **ConfigNormOp 配置归一化流水线**             |
+|        **mvin**         |  **从主存移动数据到暂存器**                   |
+|        **mvin2**        |  **从主存移动数据到暂存器**                   |
+|        **mvin3**        |  **从主存移动数据到暂存器**                   |
+|        **mvout**        |    **从暂存器移动数据到 L2/DRAM**             |
+|        **print**        |             **打印 memref 值。**              |
+|    **preload_zeros**    |         **在暂存器中预加载零值**              |
+|       **preload**       |        **在暂存器中预加载矩阵**              |
+|  **compute_preloaded**  |            **显式预加载计算**                 |
+| **compute_accumulated** |           **累加计算操作**                    |
+|     **tile_matmul**     |          **执行矩阵乘法。**                  |
+|      **tile_conv**      |             **执行卷积。**                    |
 
-After the build, we can find the files generated by TableGen in the  `build/midend/include/Dialect/Gemmini/*` folder.
+构建完成后，可以在 `build/midend/include/Dialect/Gemmini/*` 文件夹中找到 TableGen 生成的文件。
 
-##### Intrinsic operation definitions
+##### 内置操作定义
 
-We define intrinsic operations for `gemmini` dialect in file `midend/include/Dialect/Gemmini/Gemmini.td`.
+我们在文件 `midend/include/Dialect/Gemmini/Gemmini.td` 中定义 `gemmini` 方言的内置操作。
 
 - `flush`
-- `config_st` , `config_ld` , `config_ex` , `config_norm`
-- `mvin` , `mvin2` , `mvin3` , `mvout`
-- `preload` , `compute_preloaded` , `compute_accumulated`
-- `loop_ws_config_bounds` , `loop_ws_config_addrs_ab` , `loop_ws_config_addrs_dc` , `loop_ws_config_strides_ab` , `loop_ws_config_strides_dc`
-- `loop_ws` , `loop_conv_ws`
-- `loop_conv_ws_config1` , `loop_conv_ws_config2` , `loop_conv_ws_config3` , `loop_conv_ws_config4` , `loop_conv_ws_config5` , `loop_conv_ws_config6`
+- `config_st`、`config_ld`、`config_ex`、`config_norm`
+- `mvin`、`mvin2`、`mvin3`、`mvout`
+- `preload`、`compute_preloaded`、`compute_accumulated`
+- `loop_ws_config_bounds`、`loop_ws_config_addrs_ab`、`loop_ws_config_addrs_dc`、`loop_ws_config_strides_ab`、`loop_ws_config_strides_dc`
+- `loop_ws`、`loop_conv_ws`
+- `loop_conv_ws_config1`、`loop_conv_ws_config2`、`loop_conv_ws_config3`、`loop_conv_ws_config4`、`loop_conv_ws_config5`、`loop_conv_ws_config6`
 
-The logic is in `midend/include/Dialect/Gemmini/CMakeLists.txt`
+逻辑位于 `midend/include/Dialect/Gemmini/CMakeLists.txt`
 
 ```shell
 add_mlir_dialect(Gemmini gemmini)
@@ -211,7 +211,7 @@ mlir_tablegen(GemminiConversions.inc -gen-llvmir-conversions)
 add_public_tablegen_target(BuddyGemminiConversionsIncGen)
 ```
 
-We use `tablegen` to generate the relevant files, and it also generates `GemminiConversions.inc`. This file guides the conversion of the preceding Intrinsic ops. Below is an example, refer to the complete code in file`build/midend/include/Dialect/Gemmini/GemminiConversions.inc`。
+我们使用 `tablegen` 生成相关文件，同时还会生成 `GemminiConversions.inc`。此文件指导前述 Intrinsic 操作的转换。以下是一个示例，完整代码请参阅文件 `build/midend/include/Dialect/Gemmini/GemminiConversions.inc`。
 
 ```c++
 if (auto op = dyn_cast<::buddy::gemmini::ComputeAccumulated_IntrOp>(opInst)) {
@@ -231,13 +231,13 @@ if (auto op = dyn_cast<::buddy::gemmini::ComputeAccumulated_IntrOp>(opInst)) {
 }
 ```
 
-It's clear that if `opInst` type is `::buddy::gemmini::ComputeAccumulated_IntrOp`，then we will try to replace it with `llvm::Intrinsic::riscv_compute_accumulated`. In fact，in file `backend/include/llvm/IR/IntrinsicsRISCVBuddyExt.td`，we have defined `RISC-V buddy extension`. After the build, we can find the extended RISC-V instruction set in `build/backend/include/llvm/IR/IntrinsicsRISCV.h`, which includes the custom instructions we defined earlier.
+可以清楚看到，如果 `opInst` 的类型是 `::buddy::gemmini::ComputeAccumulated_IntrOp`，那么我们会尝试将其替换为 `llvm::Intrinsic::riscv_compute_accumulated`。实际上，在文件 `backend/include/llvm/IR/IntrinsicsRISCVBuddyExt.td` 中，我们定义了 `RISC-V buddy 扩展`。构建完成后，可以在 `build/backend/include/llvm/IR/IntrinsicsRISCV.h` 中找到扩展的 RISC-V 指令集，其中包含我们之前定义的自定义指令。
 
 ```c++
 namespace llvm {
 namespace Intrinsic {
 enum RISCVIntrinsics : unsigned {
-// Enum values for intrinsics
+// 内置函数枚举值
 //  ......
     riscv_compute_accumulated,                 // llvm.riscv.compute.accumulated
     riscv_compute_preloaded,                   // llvm.riscv.compute.preloaded
@@ -267,34 +267,34 @@ enum RISCVIntrinsics : unsigned {
 
 #### Pass
 
-##### Linalg Lowering
+##### Linalg 降级
 
-The main logic is in `midend/lib/Conversion/LowerLinalgToGemmini/LowerLinalgToGemmini.cpp`. This file defines the logic for lowering from the `linalg` dialect to the `gemmini` dialect.
+主要逻辑在 `midend/lib/Conversion/LowerLinalgToGemmini/LowerLinalgToGemmini.cpp` 中。此文件定义了从 `linalg` 方言到 `gemmini` 方言的降级逻辑。
 
-It mainly includes the lowering of the following operators (due to gemmini's systolic array architecture, which is suitable for matrix multiplication, these common operators are lowered to gemmini):
+主要包括以下算子的降级（由于 gemmini 的脉动阵列架构适合矩阵乘法，这些常见算子被降级到 gemmini）：
 
 - `linalg::MatmulOp - MatmulLowering`
-  - Replaced using `gemmini::TileMatMulOp`.
+  - 使用 `gemmini::TileMatMulOp` 替换。
 - `linalg::Conv2DNchwFchwOp - Conv2DNchwFchwLowering`
-  - Convert input from NCHW to NHWC, weights from FCHW to CHWF, and output from NCHW to NHWC.
-  - Replaced using `gemmini::TileConvOp`.
+  - 将输入从 NCHW 转换为 NHWC，权重从 FCHW 转换为 CHWF，输出从 NCHW 转换为 NHWC。
+  - 使用 `gemmini::TileConvOp` 替换。
 - `linalg::Conv2DNhwcHwcfOp - Conv2DNhwcHwcfLowering`
-  - Layout conversion.
-  - Replaced using `gemmini::TileConvOp`.
+  - 布局转换。
+  - 使用 `gemmini::TileConvOp` 替换。
 - `linalg::BatchMatmulOp - BatchMatMulOpLowering`
-  - Extract the batch dimension and iterate over `linalg::MatmulOp`.
+  - 提取 batch 维度并遍历 `linalg::MatmulOp`。
 
-You can find the specific implementations in the mentioned file. Details are not repeated here.
+具体实现请查看上述文件，此处不再赘述。
 
-##### Gemmini Lowering
+##### Gemmini 降级
 
-The main logic is in `midend/lib/Dialect/Gemmini/Transforms/LegalizeForLLVMExport.cpp`. This file defines the lowering logic for all `gemmini operations`, replacing `gemmini operations` with `gemmini intrinsic operations`. You can find the specific implementations in this file. Here, we focus on the last two functions:
+主要逻辑在 `midend/lib/Dialect/Gemmini/Transforms/LegalizeForLLVMExport.cpp` 中。此文件定义了所有 `gemmini 操作` 的降级逻辑，将 `gemmini 操作` 替换为 `gemmini 内置操作`。具体实现请查看此文件。这里我们重点关注最后两个函数：
 
 - `configureGemminiLegalizeForExportTarget`
-  - This function explains that after lowering, all `gemmini operations` are illegal, while `gemmini intrinsic operations` are legal.
-  - This indicates that after completing all lowerings, only `gemmini intrinsic operations` will remain, and `gemmini operations` will no longer appear.
+  - 此函数说明降级后，所有 `gemmini 操作` 都是非法的，而 `gemmini 内置操作` 是合法的。
+  - 这表明完成所有降级后，只会保留 `gemmini 内置操作`，`gemmini 操作` 将不再出现。
 - `populateGemminiLegalizeForLLVMExportPatterns`
-* This function defines the patterns for lowering, adding all `gemmini operation` lowerings to the patterns.
+  - 此函数定义降级模式，将所有 `gemmini 操作` 的降级添加到模式中。
 
 ```c++
 void mlir::configureGemminiLegalizeForExportTarget(
@@ -340,19 +340,19 @@ void mlir::populateGemminiLegalizeForLLVMExportPatterns(
 }
 ```
 
-Meanwhile, we noticed that the preceding `print` does not have corresponding `lowering` functions, and there is no `runOnOperation` function in the above files. Finally, we found these missing parts in the `midend/lib/Conversion/LowerGemmini/LowerGemminiPass.cpp` file (**in fact, I believe these two files should be merged into one**).
+同时，我们注意到前面的 `print` 没有对应的 `lowering` 函数，上述文件中也没有 `runOnOperation` 函数。最终，我们在 `midend/lib/Conversion/LowerGemmini/LowerGemminiPass.cpp` 文件中找到了这些缺失的部分（**实际上，我认为这两个文件应该合并为一个**）。
 
 ```c++
 void LowerGemminiToLLVMPass::runOnOperation() {
   MLIRContext *context = &getContext();
   ModuleOp module = getOperation();
-  // The default elem_t is int8_t,
-  // so the default size of elem_t is 1 type.
+  // 默认的 elem_t 是 int8_t，
+  // 因此默认的 elem_t 大小为 1 字节。
   size_t sizeOfElemT = sizeof(int8_t);
   if (elemType == "f32")
     sizeOfElemT = sizeof(float);
-  // The default acc_t is int32_t,
-  // so the default size of acc_t is 4 type.
+  // 默认的 acc_t 是 int32_t，
+  // 因此默认的 acc_t 大小为 4 字节。
   size_t sizeOfAccT = sizeof(int32_t);
   if (accType == "f32")
     sizeOfAccT = sizeof(float);
@@ -374,21 +374,20 @@ void LowerGemminiToLLVMPass::runOnOperation() {
 }
 ```
 
-#### Translation
+#### Translation（翻译）
 
-The main logic is in `midend/lib/Target/LLVMIR/Dialect/Gemmini/GemminiToLLVMIRTranslation.cpp`. This file implements the translation interface from the `Gemmini dialect` to `LLVM IR`. Since the code is minimal, we'll directly bring it over:
+主要逻辑在 `midend/lib/Target/LLVMIR/Dialect/Gemmini/GemminiToLLVMIRTranslation.cpp` 中。此文件实现了从 `Gemmini 方言` 到 `LLVM IR` 的翻译接口。由于代码量较少，我们直接列出：
 
 ```c++
 namespace {
-/// Implementation of the dialect interface that converts operations belonging
-/// to the Gemmini dialect to LLVM IR.
+/// 实现方言接口，将属于 Gemmini 方言的操作转换为 LLVM IR。
 class GemminiDialectLLVMIRTranslationInterface
     : public LLVMTranslationDialectInterface {
 public:
   using LLVMTranslationDialectInterface::LLVMTranslationDialectInterface;
 
-  /// Translates the given operation to LLVM IR using the provided IR builder
-  /// and saving the state in `moduleTranslation`.
+  /// 使用提供的 IR 构建器将给定操作翻译为 LLVM IR，
+  /// 并在 moduleTranslation 中保存状态。
   LogicalResult
   convertOperation(Operation *op, llvm::IRBuilderBase &builder,
                    LLVM::ModuleTranslation &moduleTranslation) const final {
@@ -415,15 +414,15 @@ void buddy::registerGemminiDialectTranslation(MLIRContext &context) {
 }
 ```
 
-We find that below are two `registration` functions, and the actual conversion logic is in the `convertOperation()` function. Here, we encounter a familiar figure:`Gemmini/GemminiConversions.inc`. As mentioned earlier, this file guides how to convert `gemmini intrinsic operations`. Interestingly, during gemmini lowering,`gemmini operations` are eliminated, but `gemmini intrinsic operaions` still exist. At this stage, we will completely transform them into `LLVM IR`.
+我们发现下面有两个 `registration` 函数，实际的转换逻辑在 `convertOperation()` 函数中。这里，我们再次遇到了熟悉的 `Gemmini/GemminiConversions.inc`。如前所述，此文件指导如何转换 `gemmini 内置操作`。有趣的是，在 gemmini 降级过程中，`gemmini 操作` 被消除了，但 `gemmini 内置操作` 仍然存在。在这个阶段，我们将它们完全转换为 `LLVM IR`。
 
-#### Execution
+#### 执行
 
-There are three ways to interact with `gemmini dialect`. We demonstrate three typical examples below, you can find them in `examples/GemminiDialect/`:
+有三种方式与 `gemmini 方言` 交互。我们在下面演示三个典型示例，可以在 `examples/GemminiDialect/` 中找到它们：
 
-- `performance-test.c `
+- `performance-test.c`
 
-  Invoking functions from `gemmini-rocc-tests/include/gemmini.h`. This directly calls the interfaces encapsulated by gemmini, and has nothing to do with MLIR.
+  调用 `gemmini-rocc-tests/include/gemmini.h` 中的函数。这直接调用 gemmini 封装的接口，与 MLIR 无关。
 
   ```makefile
   c-matmul-32x32-gemmini-run:
@@ -434,9 +433,9 @@ There are three ways to interact with `gemmini dialect`. We demonstrate three ty
       @spike --extension=gemmini pk a.out
   ```
 
-- `performance-test.cpp `
+- `performance-test.cpp`
 
-  Writing interface functions through MLIR, lowering to generate a shared library, and then calling functions from the linked library in a CPP file.
+  通过 MLIR 编写接口函数，降级生成共享库，然后在 CPP 文件中调用链接库中的函数。
 
   ```makefile
   linalg-matmul-32x32-cpu-run:
@@ -460,7 +459,7 @@ There are three ways to interact with `gemmini dialect`. We demonstrate three ty
 
 - `batch_matmul.mlir`
 
-  Directly writing the `main` function using MLIR, without the need for interaction with C/C++ code.
+  直接使用 MLIR 编写 `main` 函数，无需与 C/C++ 代码交互。
 
   ```makefile
   gemmini-linalg-batch-matmul-run:
@@ -476,5 +475,3 @@ There are three ways to interact with `gemmini dialect`. We demonstrate three ty
       @riscv64-unknown-linux-gnu-gcc log.o -O2 -static -o a.out
       @spike --extension=gemmini pk a.out
   ```
-
-

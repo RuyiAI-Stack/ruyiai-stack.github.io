@@ -5,28 +5,32 @@
       titleEn: "Overview",
       desc: "Ruyi AI 文档总览",
       descEn: "Ruyi AI documentation overview",
-      markdown: "欢迎查阅 Ruyi AI 文档。\n\n（待补充TBD）"
+      markdown: "欢迎查阅 Ruyi AI 文档。\n\n（待补充TBD）",
+      markdownEn: "Welcome to Ruyi AI documentation.\n\n(TBD)"
     },
     install: {
       title: "安装方式",
       titleEn: "Install",
       desc: "Ruyi AI 的安装与配置",
       descEn: "Installation and configuration",
-      markdown: "欢迎查阅 Ruyi AI 安装方式文档。\n\n（待补充TBD）"
+      markdown: "欢迎查阅 Ruyi AI 安装方式文档。\n\n（待补充TBD）",
+      markdownEn: "Welcome to Ruyi AI installation guide.\n\n(TBD)"
     },
     tutorial: {
       title: "使用教程",
       titleEn: "Tutorial",
       desc: "Ruyi AI 使用教程与示例",
       descEn: "Tutorial and examples",
-      markdown: "欢迎查阅 Ruyi AI 使用教程。\n\n（待补充TBD）"
+      markdown: "欢迎查阅 Ruyi AI 使用教程。\n\n（待补充TBD）",
+      markdownEn: "Welcome to Ruyi AI tutorial.\n\n(TBD)"
     },
     "contributor-guide": {
       title: "贡献者指引",
       titleEn: "Contributor Guide",
       desc: "如何参与 Ruyi AI 项目贡献",
       descEn: "How to contribute to Ruyi AI",
-      markdown: "欢迎参与 Ruyi AI 贡献。\n\n（待补充TBD）"
+      markdown: "欢迎参与 Ruyi AI 贡献。\n\n（待补充TBD）",
+      markdownEn: "Welcome to contribute to Ruyi AI.\n\n(TBD)"
     },
     "code-style": {
       title: "代码规范",
@@ -101,28 +105,32 @@
       titleEn: "Ruyi AI Operator Language",
       desc: "面向 RISC-V 适配 Triton / TileLang",
       descEn: "Triton / TileLang for RISC-V",
-      markdown: "欢迎查阅 Ruyi AI 算子编程语言文档。\n\n（待补充TBD）"
+      markdown: "欢迎查阅 Ruyi AI 算子编程语言文档。\n\n（待补充TBD）",
+      markdownEn: "Welcome to Ruyi AI Operator Language documentation.\n\n(TBD)"
     },
     "operator-lib": {
       title: "Ruyi AI 算子库",
       titleEn: "Ruyi AI Operator Library",
       desc: "面向 RISC-V 的原生高性能算子库",
       descEn: "Native high-performance operator library for RISC-V",
-      markdown: "欢迎查阅 Ruyi AI 算子库文档。\n\n（待补充TBD）"
+      markdown: "欢迎查阅 Ruyi AI 算子库文档。\n\n（待补充TBD）",
+      markdownEn: "Welcome to Ruyi AI Operator Library documentation.\n\n(TBD)"
     },
     runtime: {
       title: "Ruyi AI 运行时环境",
       titleEn: "Ruyi AI Runtime",
       desc: "面向 RISC-V 各类扩展的统一运行时环境",
       descEn: "Unified runtime for RISC-V extensions",
-      markdown: "欢迎查阅 Ruyi AI 运行时环境文档。\n\n（待补充TBD）"
+      markdown: "欢迎查阅 Ruyi AI 运行时环境文档。\n\n（待补充TBD）",
+      markdownEn: "Welcome to Ruyi AI Runtime documentation.\n\n(TBD)"
     },
     insights: {
       title: "洞察",
       titleEn: "Insights",
       desc: "了解 Ruyi AI 的愿景与团队",
       descEn: "Ruyi AI insights and team",
-      markdown: "欢迎了解 Ruyi AI 洞察与分享。\n\n（待补充TBD）"
+      markdown: "欢迎了解 Ruyi AI 洞察与分享。\n\n（待补充TBD）",
+      markdownEn: "Welcome to Ruyi AI insights.\n\n(TBD)"
     },
     C4ML2024: {
       title: "C4ML2024",
@@ -189,19 +197,43 @@
       if (titleEl) { titleEl.style.display = ""; titleEl.textContent = title; }
       if (descEl) { descEl.style.display = ""; descEl.textContent = desc; }
     }
-    if (item.markdown != null && !item.markdownUrl) {
-      setBodyHtml(bodyEl, item.markdown);
-    } else if (item.markdownUrl) {
-      setBodyHtml(bodyEl, "加载中…");
-      var docUrl = resolveDocUrl(item.markdownUrl);
-      fetch(docUrl, { cache: "no-store" })
+    var mdInline = (lang === "en" && item.markdownEn != null) ? item.markdownEn : item.markdown;
+    var mdUrl = item.markdownUrl || null;
+    var mdUrlEn = null;
+    if (mdUrl) {
+      mdUrlEn = mdUrl.replace(/\.md$/, ".en.md");
+    }
+
+    if (mdInline != null && !mdUrl) {
+      setBodyHtml(bodyEl, mdInline);
+    } else if (mdUrl) {
+      setBodyHtml(bodyEl, lang === "en" ? "Loading…" : "加载中…");
+      var primaryUrl = (lang === "en" && mdUrlEn) ? mdUrlEn : mdUrl;
+      var fallbackUrl = (lang === "en" && mdUrlEn) ? mdUrl : null;
+      fetch(resolveDocUrl(primaryUrl), { cache: "no-store" })
         .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error(String(r.status))); })
         .then(function (md) {
           if (getDocIdFromHash() === id) setBodyHtml(bodyEl, md);
         })
         .catch(function () {
-          var msg = "无法加载文档。请通过 HTTP 访问本页（如本地运行 <code>python3 -m http.server</code> 后打开）或访问已部署的网站。";
-          if (getDocIdFromHash() === id) setBodyHtml(bodyEl, "<p>" + msg + "</p>");
+          if (fallbackUrl) {
+            fetch(resolveDocUrl(fallbackUrl), { cache: "no-store" })
+              .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error(String(r.status))); })
+              .then(function (md) {
+                if (getDocIdFromHash() === id) setBodyHtml(bodyEl, md);
+              })
+              .catch(function () {
+                var msg = lang === "en"
+                  ? "Unable to load document. Please access via HTTP or the deployed site."
+                  : "无法加载文档。请通过 HTTP 访问本页（如本地运行 <code>python3 -m http.server</code> 后打开）或访问已部署的网站。";
+                if (getDocIdFromHash() === id) setBodyHtml(bodyEl, "<p>" + msg + "</p>");
+              });
+          } else {
+            var msg = lang === "en"
+              ? "Unable to load document. Please access via HTTP or the deployed site."
+              : "无法加载文档。请通过 HTTP 访问本页（如本地运行 <code>python3 -m http.server</code> 后打开）或访问已部署的网站。";
+            if (getDocIdFromHash() === id) setBodyHtml(bodyEl, "<p>" + msg + "</p>");
+          }
         });
     } else {
       setBodyHtml(bodyEl, "");

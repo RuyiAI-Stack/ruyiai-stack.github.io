@@ -1,41 +1,41 @@
-## Guide: Adding Operators and Integrating Models in Buddy-MLIR
+## 指南：在 Buddy-MLIR 中添加算子与集成模型
 
-This guide targets developers who want to add frontend operator mappings (PyTorch → Buddy Graph → MLIR) and import/integrate models in Buddy-MLIR. It is based on the repository directories `examples` and `frontend/Python`. After reading, you will be able to:
+本指南面向希望在 Buddy-MLIR 中添加前端算子映射（PyTorch → Buddy Graph → MLIR）以及导入/集成模型的开发者。内容基于仓库目录 `examples` 和 `frontend/Python`。阅读后，您将能够：
 
-- Add a Buddy Graph-level operator and lower it to MLIR (TOSA/Linalg/Math, etc.).
-- Import PyTorch functions/models via TorchDynamo or the Export API into Buddy Graph and MLIR modules, and obtain/package parameters.
+- 添加 Buddy Graph 层级的算子并将其降级到 MLIR（TOSA/Linalg/Math 等）。
+- 通过 TorchDynamo 或 Export API 将 PyTorch 函数/模型导入到 Buddy Graph 和 MLIR 模块中，并获取/打包参数。
 
-### Relevant Directory Overview
+### 相关目录概览
 
 - `frontend/Python/frontend.py`
-  - Frontend entry `DynamoCompiler`: imports FX Graph → Buddy Graph, assembles registries, and wraps execution/compilation.
+  - 前端入口 `DynamoCompiler`：导入 FX Graph → Buddy Graph，组装注册表，并封装执行/编译。
 - `frontend/Python/graph/`
-  - `operation.py`: Buddy Graph operator classes (op types, metadata, etc.).
-  - `graph.py`: Graph structure, symbol table, and MLIR module generation driver.
-  - `transform/`: Graph-level transforms (e.g., `maxpool2d_simplify`).
+  - `operation.py`：Buddy Graph 算子类（算子类型、元数据等）。
+  - `graph.py`：图结构、符号表和 MLIR 模块生成驱动。
+  - `transform/`：图级别变换（如 `maxpool2d_simplify`）。
 - `frontend/Python/ops/`
-  - `tosa.py` / `linalg.py` / `math.py` / `func.py`: Lowering from Buddy Graph ops to MLIR dialect ops, registered via `ops_registry`.
-  - `utils.py`: Helpers for types/attributes.
+  - `tosa.py` / `linalg.py` / `math.py` / `func.py`：从 Buddy Graph 算子到 MLIR 方言算子的降级，通过 `ops_registry` 注册。
+  - `utils.py`：类型/属性辅助函数。
 - `examples/BuddyPython/`
-  - `module_gen.py`: Minimal import demo (function → MLIR).
-  - `bert.py`: HuggingFace BERT import demo.
+  - `module_gen.py`：最小导入演示（函数 → MLIR）。
+  - `bert.py`：HuggingFace BERT 导入演示。
 - `examples/MLIRPython/`
-  - `README.md`: How to build MLIR Python bindings and a TorchDynamo custom backend demo.
+  - `README.md`：如何构建 MLIR Python 绑定和 TorchDynamo 自定义后端演示。
 
 ---
 
-## 1. Environment Setup (MLIR Python Bindings)
+## 1. 环境设置（MLIR Python 绑定）
 
-Buddy's Python frontend depends on MLIR Python bindings. Build highlights (see `examples/BuddyPython/README.md` and `examples/MLIRPython/README.md`):
+Buddy 的 Python 前端依赖 MLIR Python 绑定。构建要点（参见 `examples/BuddyPython/README.md` 和 `examples/MLIRPython/README.md`）：
 
-1) Build MLIR Python bindings under `buddy-mlir/llvm` and verify with `ninja check-mlir`.
-2) Add the build output to `PYTHONPATH`:
+1) 在 `buddy-mlir/llvm` 下构建 MLIR Python 绑定，并使用 `ninja check-mlir` 验证。
+2) 将构建输出添加到 `PYTHONPATH`：
 
 ```bash
 export PYTHONPATH=$(pwd)/tools/mlir/python_packages/mlir_core
 ```
 
-Then verify in Python:
+然后在 Python 中验证：
 
 ```python
 from mlir.ir import Context, Module
@@ -43,41 +43,41 @@ from mlir.ir import Context, Module
 
 ---
 
-## 2. Adding an Operator (Torch → Buddy Graph → MLIR)
+## 2. 添加算子（Torch → Buddy Graph → MLIR）
 
-Adding a new operator typically involves three layers:
+添加新算子通常涉及三个层次：
 
-1) Define the operator at the Buddy Graph layer (if a suitable class does not already exist).
-2) Implement the lowering function to MLIR (TOSA/Linalg/Math, etc.) and register it into `ops_registry`.
-3) Map the Torch Aten/Prims symbol to the Buddy Graph operator class in the frontend import map (`DynamoCompiler._ops_map`).
+1) 在 Buddy Graph 层定义算子（如果没有合适的现有类）。
+2) 实现到 MLIR（TOSA/Linalg/Math 等）的降级函数并注册到 `ops_registry`。
+3) 在前端导入映射（`DynamoCompiler._ops_map`）中将 Torch Aten/Prims 符号映射到 Buddy Graph 算子类。
 
-### Step 1: Define the Operator in Buddy Graph
+### 步骤 1：在 Buddy Graph 中定义算子
 
-File: `frontend/Python/graph/operation.py`
+文件：`frontend/Python/graph/operation.py`
 
-If an existing class can be reused, skip this step. Otherwise, add a new class and set the operator type (impacts fusion/scheduling):
+如果现有类可以复用，跳过此步骤。否则，添加新类并设置算子类型（影响融合/调度）：
 
 ```python
 class MyNewOp(Op):
     def __init__(self) -> None:
         super().__init__()
-        self._op_type = OpType.ElementwiseType  # or ReduceType/ReshapeType/...
+        self._op_type = OpType.ElementwiseType  # 或 ReduceType/ReshapeType/...
 ```
 
-For conv/pool, you can also carry layout fields (see `Conv2dOp`, `MaxPool2dOp`).
+对于卷积/池化，还可以携带布局字段（参见 `Conv2dOp`、`MaxPool2dOp`）。
 
-### Step 2: Implement Lowering and Register to `ops_registry`
+### 步骤 2：实现降级并注册到 `ops_registry`
 
-In the target dialect file (e.g., `frontend/Python/ops/tosa.py`), implement the conversion from the Buddy op to the MLIR op:
+在目标方言文件（如 `frontend/Python/ops/tosa.py`）中，实现从 Buddy 算子到 MLIR 算子的转换：
 
 ```python
 def my_new_op(node: MyNewOp, symbol_table):
-    # 1) Fetch inputs (or constants) from symbol_table
+    # 1) 从 symbol_table 获取输入（或常量）
     input1 = symbol_table.get((str(node.args[0]), 0), node.args[0])
-    # 2) Read output shape/dtype
+    # 2) 读取输出形状/数据类型
     output_shape = list(node.tensor_meta["shape"])
     mlir_dtype = mlir_element_type_get(node.tensor_meta["dtype"])  # utils.py
-    # 3) Build MLIR type and op
+    # 3) 构建 MLIR 类型和算子
     tensor_type = ir.RankedTensorType.get(output_shape, mlir_dtype)
     op = tosa.SomeOp(tensor_type, input1, ...)
     return op
@@ -88,34 +88,34 @@ ops_registry = {
 }
 ```
 
-Practical tips:
-- Reuse helpers from `tosa.py` (e.g., `_gen_arith_binary_op`, `_normalize_binary_operator_args`).
-- Handle broadcasting, dtype alignment, and necessary `tosa.CastOp`.
-- For reshape/transpose, skip no-op transforms when shapes already match (see `reshape_op` optimization).
+实用技巧：
+- 复用 `tosa.py` 中的辅助函数（如 `_gen_arith_binary_op`、`_normalize_binary_operator_args`）。
+- 处理广播、数据类型对齐以及必要的 `tosa.CastOp`。
+- 对于 reshape/transpose，当形状已匹配时跳过无操作变换（参见 `reshape_op` 优化）。
 
-### Step 3: Map Torch Operator to Buddy Operator
+### 步骤 3：映射 Torch 算子到 Buddy 算子
 
-File: `frontend/Python/frontend.py`, in `DynamoCompiler.__init__` under `_ops_map`:
+文件：`frontend/Python/frontend.py`，在 `DynamoCompiler.__init__` 的 `_ops_map` 中：
 
 ```python
 self._ops_map = {
-    # examples:
+    # 示例：
     "add.Tensor": AddOp,
     "addmm.default": AddMMOp,
-    # new:
+    # 新增：
     "aten_symbol_name": MyNewOp,
 }
 ```
 
-Notes: Keys are the FX/Aten symbols emitted by Torch (inspectable by running the import flow and printing `gm.graph.print_tabular()`); values are Buddy Graph operator classes.
+注意：键是 Torch 发出的 FX/Aten 符号（可通过运行导入流程并打印 `gm.graph.print_tabular()` 来查看）；值是 Buddy Graph 算子类。
 
-After these three steps, validate the operator path with the sample script (see next section).
+完成这三个步骤后，使用示例脚本验证算子路径（参见下一节）。
 
 ---
 
-## 3. Minimal Import and Validation (Function → MLIR)
+## 3. 最小导入与验证（函数 → MLIR）
 
-See `examples/BuddyPython/module_gen.py`:
+参见 `examples/BuddyPython/module_gen.py`：
 
 ```python
 import torch
@@ -133,24 +133,24 @@ dynamo_compiler = DynamoCompiler(
 
 graphs = dynamo_compiler.importer(foo, torch.randn(10), torch.randn(10))
 graph = graphs[0]
-graph.lower_to_top_level_ir()  # generate high-level MLIR (TOSA/Linalg/…)
+graph.lower_to_top_level_ir()  # 生成高层 MLIR（TOSA/Linalg/…）
 print(graph._imported_module)
 ```
 
-Key points:
-- `primary_registry` controls the preferred dialect/registry (e.g., TOSA). If not found, the importer falls back to other merged registries (`math`, `linalg`, `func`, etc.).
-- Setting `aot_autograd_decomposition` pre-decomposes FX graphs into ATen/Prims for easier mappings.
+要点：
+- `primary_registry` 控制首选方言/注册表（如 TOSA）。如果未找到，导入器会回退到其他合并的注册表（`math`、`linalg`、`func` 等）。
+- 设置 `aot_autograd_decomposition` 可将 FX 图预分解为 ATen/Prims，便于映射。
 
 ---
 
-## 4. Integrating PyTorch Models (with Parameters)
+## 4. 集成 PyTorch 模型（含参数）
 
-Two import paths are provided:
+提供两种导入路径：
 
-1) Dynamo path (default): `DynamoCompiler.importer(model, *args, **kwargs)`
-2) Export path (preserves input order): `DynamoCompiler.importer_by_export(module, *args, **kwargs)`
+1) Dynamo 路径（默认）：`DynamoCompiler.importer(model, *args, **kwargs)`
+2) Export 路径（保留输入顺序）：`DynamoCompiler.importer_by_export(module, *args, **kwargs)`
 
-Example: `examples/BuddyPython/bert.py`:
+示例：`examples/BuddyPython/bert.py`：
 
 ```python
 from transformers import BertModel, BertTokenizer
@@ -175,43 +175,43 @@ print(graph._imported_module)
 print(params)
 ```
 
-Notes:
-- `imported_params` returns buffers/weights for the model; `do_params_pack=True` packs them during lowering if needed.
-- To preserve the original module's input argument order, use `importer_by_export` (see comments/implementation in `frontend.py`).
-- For complex models, check `examples/BuddyLlama/`, `examples/BuddyResNet18/`, etc.
+注意：
+- `imported_params` 返回模型的缓冲区/权重；`do_params_pack=True` 会在降级时打包它们。
+- 若要保留原始模块的输入参数顺序，使用 `importer_by_export`（参见 `frontend.py` 中的注释/实现）。
+- 对于复杂模型，请查看 `examples/BuddyLlama/`、`examples/BuddyResNet18/` 等。
 
-### Execute the Graph (Optional)
+### 执行图（可选）
 
-`DynamoCompiler.dynamo_run()` returns a Python callable (based on MLIR ExecutionEngine) that can be invoked with tensors:
+`DynamoCompiler.dynamo_run()` 返回一个 Python 可调用对象（基于 MLIR ExecutionEngine），可以使用张量调用：
 
 ```python
 runner = dynamo_compiler.dynamo_run()
 out_tensors = runner(input_tensor_0, input_tensor_1, ...)
 ```
 
-Note: Ensure shared libraries like `libmlir_runner_utils`, `libmlir_c_runner_utils`, and `libomp` are visible locally (paths composed in `frontend.py` for `llvm/build/lib`).
+注意：确保共享库如 `libmlir_runner_utils`、`libmlir_c_runner_utils` 和 `libomp` 在本地可见（路径在 `frontend.py` 中为 `llvm/build/lib` 组合）。
 
 ---
 
-## 5. Debugging and FAQs
+## 5. 调试与常见问题
 
-- How to find the Torch → Buddy mapping key?
-  - In `DynamoCompiler._compile_fx`, enable `verbose=True` and inspect `gm.graph.print_tabular()` (`target`/`op`/`name`) to determine keys for `_ops_map`.
-- Types/broadcasting issues:
-  - Reuse the binary-op wrappers in `tosa.py` (alignment, broadcasting, reshape).
-- Performance/correctness:
-  - Skip redundant transforms when possible during lowering (e.g., `reshape_op` directly returns on equal shapes).
+- 如何找到 Torch → Buddy 的映射键？
+  - 在 `DynamoCompiler._compile_fx` 中启用 `verbose=True`，检查 `gm.graph.print_tabular()`（`target`/`op`/`name`）以确定 `_ops_map` 的键。
+- 类型/广播问题：
+  - 复用 `tosa.py` 中的二元算子包装器（对齐、广播、reshape）。
+- 性能/正确性：
+  - 在降级时尽量跳过冗余变换（如 `reshape_op` 在形状相同时直接返回）。
 
 ---
 
-## 6. Pre-Submission Checklist
+## 6. 提交前检查清单
 
-- For the new Buddy Graph operator class, is `OpType` set appropriately?
-- For the corresponding lowering function, does it:
-  - Fetch inputs correctly from `symbol_table` and handle dtype/shape?
-  - Use appropriate MLIR dialect(s) and ops?
-  - Register into the target dialect's `ops_registry`?
-- Is `DynamoCompiler._ops_map` updated with the Torch symbol mapping?
-- Do minimal/model examples run and print a reasonable MLIR module?
+- 新的 Buddy Graph 算子类，`OpType` 是否设置正确？
+- 对应的降级函数是否：
+  - 正确从 `symbol_table` 获取输入并处理数据类型/形状？
+  - 使用了合适的 MLIR 方言和算子？
+  - 注册到了目标方言的 `ops_registry`？
+- `DynamoCompiler._ops_map` 是否更新了 Torch 符号映射？
+- 最小/模型示例是否能运行并打印合理的 MLIR 模块？
 
-For more background and build instructions, see `docs/PythonEnvironment.md`, `examples/*/README.md`, and the implementations in `ops/*.py`.
+更多背景和构建说明，请参阅 `docs/PythonEnvironment.md`、`examples/*/README.md` 以及 `ops/*.py` 中的实现。
