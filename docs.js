@@ -60,6 +60,11 @@
       desc: "增加算子与模型集成相关文档",
       markdownUrl: "docs/compiler/AddingOperatorsAndModelIntegration.md"
     },
+    "convolution-vectorization": {
+      title: "Convolution Vectorization",
+      desc: "Convolution vectorization documentation",
+      markdownUrl: "docs/compiler/ConvolutionVectorization.md"
+    },
     "triton-on-riscv": {
       title: "Triton 的 RISC-V 适配",
       desc: "Triton 在 RISC-V 平台上的移植与适配实践。",
@@ -176,7 +181,7 @@
         contributorBtn.setAttribute("aria-expanded", "true");
       }
     }
-    if (id === "compiler" || id === "rvv-environment" || id === "ime-dialect" || id === "gemmini" || id === "adding-operators") {
+    if (id === "compiler" || id === "rvv-environment" || id === "ime-dialect" || id === "gemmini" || id === "adding-operators" || id === "convolution-vectorization") {
       var compilerBtn = document.getElementById("docsNavCompiler");
       var compilerGroup = compilerBtn ? compilerBtn.closest(".docs-nav__group") : null;
       if (compilerGroup && compilerBtn) {
