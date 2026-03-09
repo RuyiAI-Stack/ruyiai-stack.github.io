@@ -36,7 +36,7 @@ Gemmini also includes peripheral circuitry to optionally apply activation functi
 
       This repository builds libgemmini.so, which can be dynamically linked into Spike to support executing custom Gemmini instructions.
 
-Because both `gemmini-rocc-tests` and `libgemmini` are submodules of gemmini, we take `gemmini` as the root directory. 
+Because both `gemmini-rocc-tests` and `libgemmini` are submodules of gemmini, we take `gemmini` as the root directory.
 
 And in `scripts/build-spike.sh`, there is the following logic:
 
@@ -56,11 +56,11 @@ This script ensures `libgemmini/gemmini_params.h` and `gemmini-rocc-tests/includ
 
 - `gemmini_params.h`
 
-  - The Gemmini generator generates a C header file (`gemmini_params.h`) based on the generator parameters when we run `build-spike.sh`. This header files gets compiled together with the C library to tune library performance. 
+  - The Gemmini generator generates a C header file (`gemmini_params.h`) based on the generator parameters when we run `build-spike.sh`. This header files gets compiled together with the C library to tune library performance.
 
     ```shell
     # scripts/build-spike.sh
-    
+
     cd ../../sims/verilator/
     echo Generating new gemmini_params.h file...
     make verilog CONFIG=CustomGemminiSoCConfig &> build.log
@@ -87,16 +87,16 @@ For `gemmini` project, the complete build logic should be as following:
    if [ ! -f configs/GemminiDefaultConfigs.scala ]; then
        ln -s $PWD/src/main/scala/gemmini/Configs.scala configs/GemminiDefaultConfigs.scala
    fi
-   
+
    if [ ! -f configs/GemminiCustomConfigs.scala ]; then
        ln -s $PWD/src/main/scala/gemmini/CustomConfigs.scala configs/GemminiCustomConfigs.scala
    fi
-   
+
    if [ ! -f configs/CPUConfigs.scala ]; then
        sed '1,1d; $d' $PWD/src/main/scala/gemmini/CustomCPUConfigs.scala > ../chipyard/src/main/scala/config/GemminiCPUConfigs.scala
        ln -s $PWD/../chipyard/src/main/scala/config/GemminiCPUConfigs.scala configs/CPUConfigs.scala
    fi
-   
+
    if [ ! -f configs/SoCConfigs.scala ]; then
        sed '1,1d; $d' $PWD/src/main/scala/gemmini/CustomSoCConfigs.scala > ../chipyard/src/main/scala/config/GemminiSoCConfigs.scala
        ln -s $PWD/../chipyard/src/main/scala/config/GemminiSoCConfigs.scala configs/SoCConfigs.scala
@@ -107,20 +107,20 @@ For `gemmini` project, the complete build logic should be as following:
 
    ```shell
    # build-spike.sh
-   
+
    cd ../../sims/verilator/
    echo Generating new gemmini_params.h file...
    make verilog CONFIG=CustomGemminiSoCConfig &> build.log
-   
+
    cd -
    cp software/gemmini-rocc-tests/include/gemmini_params.h software/libgemmini/gemmini_params.h
    make -C software/libgemmini clean
    make -C software/libgemmini install
-   
+
    # ----------------------------------------------------------------------------------
-   
+
    # build-verilator.sh
-   
+
    cd ../../sims/verilator/
    make -j$j ${debug} CONFIG=CustomGemminiSoCConfig
    ```
@@ -134,7 +134,7 @@ For `gemmini` project, the complete build logic should be as following:
      echo 'matching `customConfig` in `configs/GemminiCustomConfigs.scala`.'
      ......
    }
-   
+
    # build-spike.sh
    help () {
      echo "Build a functional simulator for RISCV Gemmini programs, matching"
@@ -200,7 +200,7 @@ We define intrinsic operations for `gemmini` dialect in file `midend/include/Dia
 - `loop_ws` , `loop_conv_ws`
 - `loop_conv_ws_config1` , `loop_conv_ws_config2` , `loop_conv_ws_config3` , `loop_conv_ws_config4` , `loop_conv_ws_config5` , `loop_conv_ws_config6`
 
-The logic is in `midend/include/Dialect/Gemmini/CMakeLists.txt` 
+The logic is in `midend/include/Dialect/Gemmini/CMakeLists.txt`
 
 ```shell
 add_mlir_dialect(Gemmini gemmini)
@@ -220,13 +220,13 @@ if (auto op = dyn_cast<::buddy::gemmini::ComputeAccumulated_IntrOp>(opInst)) {
     llvm::Function *fn = llvm::Intrinsic::getDeclaration(
         module,
         llvm::Intrinsic::riscv_compute_accumulated,
-        { 
+        {
         });
     auto operands = moduleTranslation.lookupValues(opInst.getOperands());
-    
+
     auto *inst = builder.CreateCall(fn, operands);
     (void) inst;
-    
+
   return success();
 }
 ```
@@ -291,7 +291,7 @@ You can find the specific implementations in the mentioned file. Details are not
 The main logic is in `midend/lib/Dialect/Gemmini/Transforms/LegalizeForLLVMExport.cpp`. This file defines the lowering logic for all `gemmini operations`, replacing `gemmini operations` with `gemmini intrinsic operations`. You can find the specific implementations in this file. Here, we focus on the last two functions:
 
 - `configureGemminiLegalizeForExportTarget`
-  - This function explains that after lowering, all `gemmini operations` are illegal, while `gemmini intrinsic operations` are legal. 
+  - This function explains that after lowering, all `gemmini operations` are illegal, while `gemmini intrinsic operations` are legal.
   - This indicates that after completing all lowerings, only `gemmini intrinsic operations` will remain, and `gemmini operations` will no longer appear.
 - `populateGemminiLegalizeForLLVMExportPatterns`
 * This function defines the patterns for lowering, adding all `gemmini operation` lowerings to the patterns.
@@ -430,8 +430,8 @@ There are three ways to interact with `gemmini dialect`. We demonstrate three ty
       @riscv64-unknown-linux-gnu-gcc performance-test.c \
       -I${RISCV}/../../generators/gemmini/software/gemmini-rocc-tests/include \
       -I${RISCV}/../../generators/gemmini/software/gemmini-rocc-tests  \
-      -DMATMUL=1 -O2 -static 
-      @spike --extension=gemmini pk a.out 
+      -DMATMUL=1 -O2 -static
+      @spike --extension=gemmini pk a.out
   ```
 
 - `performance-test.cpp `
@@ -451,10 +451,10 @@ There are three ways to interact with `gemmini dialect`. We demonstrate three ty
       ${BUDDY_TRANSLATE} -buddy-to-llvmir | \
       ${BUDDY_LLC} -filetype=obj -mtriple=riscv64 \
           -mattr=+buddyext,+D -float-abi=hard \
-          -o log.o 
+          -o log.o
       @riscv64-unknown-linux-gnu-g++ log.o -DMATMUL=1 \
       -DDIALECT=1 performance-test.cpp \
-      -O2 -static -o a.out -I${INTERFACES} 
+      -O2 -static -o a.out -I${INTERFACES}
       @spike --extension=gemmini pk a.out
   ```
 
@@ -477,4 +477,4 @@ There are three ways to interact with `gemmini dialect`. We demonstrate three ty
       @spike --extension=gemmini pk a.out
   ```
 
-  
+
