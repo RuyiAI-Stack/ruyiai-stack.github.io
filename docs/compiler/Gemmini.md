@@ -48,11 +48,7 @@ make -C software/libgemmini clean
 make -C software/libgemmini install
 ```
 
-<<<<<<< HEAD
 此脚本确保 `libgemmini/gemmini_params.h` 和 `gemmini-rocc-tests/include/gemmini.h` 始终一致，并重新编译 `spike` 所依赖的 `libgemmini.so`。因此，我们只需关注仓库 `gemmini-rocc-tests`。该仓库中有两个重要的头文件：
-=======
-This script ensures `libgemmini/gemmini_params.h` and `gemmini-rocc-tests/include/gemmini.h` always the same, and recompiles `libgemmini.so` which `spike` dependents on. So, we can just focus on repo `gemmini-rocc-tests`. There are two important header files in this repo:
->>>>>>> 9e9801b (Add CI and pre-commit (#21))
 
 - `gemmini.h`
 
