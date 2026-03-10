@@ -476,5 +476,3 @@ There are three ways to interact with `gemmini dialect`. We demonstrate three ty
       @riscv64-unknown-linux-gnu-gcc log.o -O2 -static -o a.out
       @spike --extension=gemmini pk a.out
   ```
-
-
