@@ -16,7 +16,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-使用 Buddy 前端导入 PyTorch 模型需要先安装 PyTorch。请以 PyTorch 官方安装页为准：https://pytorch.org/get-started/locally/
+使用 Buddy 前端导入 PyTorch 模型需要先安装 PyTorch。请以官方安装页为准：https://pytorch.org/get-started/locally/
 
 最简单的 CPU 版本安装方式如下：
 
@@ -24,22 +24,17 @@ source .venv/bin/activate
 python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
 ```
 
+对于 RISC-V, 由于 PyTorch 官方尚未支持 RISC-V, 可以自行从源码构建或者直接使用第三方构建：https://community-ci.openruyi.cn/pypi/riscv64/dev/+simple/torch/
+
 然后请前往 [release](https://github.com/buddy-compiler/buddy-mlir/releases) 页面，安装与您的 Python 版本和系统架构匹配的 wheel。
 
-wheel 文件名通常类似：
-
-```text
-buddy-<version>-cp310-cp310-manylinux_2_28_x86_64.whl
-```
-
-例如，`x86_64 + Python 3.10`：
-
+例如对于 `x86_64 + Python 3.10`：
 ```bash
 python -m pip install \
   https://github.com/buddy-compiler/buddy-mlir/releases/download/v0.0.1/buddy-0.0.1-cp310-cp310-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
 ```
 
-例如，`riscv64 + Python 3.12`：
+例如对于 `riscv64 + Python 3.12`：
 
 ```bash
 python -m pip install \
