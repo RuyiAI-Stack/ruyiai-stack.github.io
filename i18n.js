@@ -184,4 +184,3 @@
   window.ruyiaiSetLang = setLang;
   window.ruyiaiGetText = getText;
 })();
-
