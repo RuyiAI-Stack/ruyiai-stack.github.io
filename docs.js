@@ -80,6 +80,13 @@
       descEn: "Gemmini documentation",
       markdownUrl: "docs/compiler/Gemmini.md"
     },
+    "add-pass": {
+      title: "Add Pass",
+      titleEn: "Add Pass",
+      desc: "以 BatchMatMul 为例，在中端实现并集成优化 Pass 的完整流程。",
+      descEn: "End-to-end guide to adding an optimization pass in the midend using BatchMatMul as an example.",
+      markdownUrl: "docs/compiler/AddPass.md"
+    },
     "adding-operators": {
       title: "增加算子支持",
       titleEn: "Adding Operators",
