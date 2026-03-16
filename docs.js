@@ -87,6 +87,13 @@
       descEn: "End-to-end guide to adding an optimization pass in the midend using BatchMatMul as an example.",
       markdownUrl: "docs/compiler/AddPass.md"
     },
+    "build-methods": {
+      title: "构建方法",
+      titleEn: "Build Methods",
+      desc: "除标准方式外的其他构建配置与替代构建方法。",
+      descEn: "Additional build configurations and alternative methods for building buddy-mlir.",
+      markdownUrl: "docs/compiler/BuildMethods.md"
+    },
     "adding-operators": {
       title: "增加算子支持",
       titleEn: "Adding Operators",
