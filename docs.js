@@ -80,6 +80,13 @@
       descEn: "Gemmini documentation",
       markdownUrl: "docs/compiler/Gemmini.md"
     },
+    "conv-opt": {
+      title: "卷积优化",
+      titleEn: "Convolution Optimization",
+      desc: "基于系数广播算法的二维卷积优化工具 conv-opt 介绍。",
+      descEn: "Introduction to the 2D convolution optimization tool conv-opt based on the coefficients broadcasting algorithm.",
+      markdownUrl: "docs/compiler/conv-opt.md"
+    },
     "add-pass": {
       title: "Add Pass",
       titleEn: "Add Pass",
