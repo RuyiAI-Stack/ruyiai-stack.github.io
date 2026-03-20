@@ -101,6 +101,20 @@
       descEn: "Additional build configurations and alternative methods for building buddy-mlir.",
       markdownUrl: "docs/compiler/BuildMethods.md"
     },
+    "dynamic-vector": {
+      title: "动态向量表示",
+      titleEn: "Dynamic Vector Representation",
+      desc: "为 MLIR Vector Dialect 引入动态向量：类型、操作与语义。",
+      descEn: "Dynamic vectors for the MLIR Vector dialect: types, operations, and semantics.",
+      markdownUrl: "docs/compiler/DynamicVector.md"
+    },
+    "conv-opt": {
+      title: "卷积优化",
+      titleEn: "Convolution Optimization",
+      desc: "卷积优化工具 conv-opt：系数广播算法与所需 Vector/affine 操作概览。",
+      descEn: "Convolution optimization tool conv-opt: coefficients broadcasting algorithm and required Vector/affine ops.",
+      markdownUrl: "docs/compiler/conv-opt.md"
+    },
     "adding-operators": {
       title: "增加算子支持",
       titleEn: "Adding Operators",
