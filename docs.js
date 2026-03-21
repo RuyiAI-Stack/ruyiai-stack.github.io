@@ -134,6 +134,13 @@
       descEn: "Porting and adapting Triton for RISC-V",
       markdownUrl: "docs/operator-lang/triton-on-riscv.md"
     },
+    "triton-riscv-overview": {
+      title: "triton-riscv 总览",
+      titleEn: "Triton RISC-V Overview",
+      desc: "Triton 共享中间层：独立使用、后端集成与参考 CPU 后端概览。",
+      descEn: "Triton shared middle layer: stand-alone use, backend integration, and reference CPU backend overview.",
+      markdownUrl: "docs/operator-lang/Triton-Risc-V-Overview.md"
+    },
     "operator-lang": {
       title: "Ruyi AI 算子编程语言",
       titleEn: "Ruyi AI Operator Language",
@@ -294,7 +301,7 @@
         compilerBtn.setAttribute("aria-expanded", "true");
       }
     }
-    if (id === "operator-lang" || id === "triton-on-riscv") {
+    if (id === "operator-lang" || id === "triton-on-riscv" || id === "triton-riscv-overview") {
       var operatorLangBtn = document.getElementById("docsNavOperatorLang");
       var operatorLangGroup = operatorLangBtn ? operatorLangBtn.closest(".docs-nav__group") : null;
       if (operatorLangGroup && operatorLangBtn) {
