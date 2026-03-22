@@ -5,7 +5,7 @@
       titleEn: "Overview",
       desc: "Ruyi AI 文档总览",
       descEn: "Ruyi AI documentation overview",
-      markdown: "欢迎查阅 Ruyi AI 文档。\n\n（待补充TBD）",
+      markdown: "欢迎查阅 Ruyi AI 文档。\n\n（待补充 TBD）",
       markdownEn: "Welcome to Ruyi AI documentation.\n\n(TBD)"
     },
     install: {
@@ -20,7 +20,7 @@
       titleEn: "Tutorial",
       desc: "Ruyi AI 使用教程与示例",
       descEn: "Tutorial and examples",
-      markdown: "欢迎查阅 Ruyi AI 使用教程。\n\n（待补充TBD）",
+      markdown: "欢迎查阅 Ruyi AI 使用教程。\n\n（待补充 TBD）",
       markdownEn: "Welcome to Ruyi AI tutorial.\n\n(TBD)"
     },
     "contributor-guide": {
@@ -28,7 +28,7 @@
       titleEn: "Contributor Guide",
       desc: "如何参与 Ruyi AI 项目贡献",
       descEn: "How to contribute to Ruyi AI",
-      markdown: "欢迎参与 Ruyi AI 贡献。\n\n（待补充TBD）",
+      markdown: "欢迎参与 Ruyi AI 贡献。\n\n（待补充 TBD）",
       markdownEn: "Welcome to contribute to Ruyi AI.\n\n(TBD)"
     },
     "code-style": {
@@ -139,7 +139,7 @@
       titleEn: "Ruyi AI Operator Language",
       desc: "面向 RISC-V 适配 Triton / TileLang",
       descEn: "Triton / TileLang for RISC-V",
-      markdown: "欢迎查阅 Ruyi AI 算子编程语言文档。\n\n（待补充TBD）",
+      markdown: "欢迎查阅 Ruyi AI 算子编程语言文档。\n\n（待补充 TBD）",
       markdownEn: "Welcome to Ruyi AI Operator Language documentation.\n\n(TBD)"
     },
     "operator-lib": {
@@ -147,7 +147,7 @@
       titleEn: "Ruyi AI Operator Library",
       desc: "面向 RISC-V 的原生高性能算子库",
       descEn: "Native high-performance operator library for RISC-V",
-      markdown: "欢迎查阅 Ruyi AI 算子库文档。\n\n（待补充TBD）",
+      markdown: "欢迎查阅 Ruyi AI 算子库文档。\n\n（待补充 TBD）",
       markdownEn: "Welcome to Ruyi AI Operator Library documentation.\n\n(TBD)"
     },
     runtime: {
@@ -155,7 +155,7 @@
       titleEn: "Ruyi AI Runtime",
       desc: "面向 RISC-V 各类扩展的统一运行时环境",
       descEn: "Unified runtime for RISC-V extensions",
-      markdown: "欢迎查阅 Ruyi AI 运行时环境文档。\n\n（待补充TBD）",
+      markdown: "欢迎查阅 Ruyi AI 运行时环境文档。\n\n（待补充 TBD）",
       markdownEn: "Welcome to Ruyi AI Runtime documentation.\n\n(TBD)"
     },
     insights: {
@@ -163,7 +163,7 @@
       titleEn: "Insights",
       desc: "了解 Ruyi AI 的愿景与团队",
       descEn: "Ruyi AI insights and team",
-      markdown: "欢迎了解 Ruyi AI 洞察与分享。\n\n（待补充TBD）",
+      markdown: "欢迎了解 Ruyi AI 洞察与分享。\n\n（待补充 TBD）",
       markdownEn: "Welcome to Ruyi AI insights.\n\n(TBD)"
     },
     C4ML2024: {
