@@ -134,6 +134,13 @@
       descEn: "Porting and adapting Triton for RISC-V",
       markdownUrl: "docs/operator-lang/triton-on-riscv.md"
     },
+    debug: {
+      title: "调试",
+      titleEn: "Debug",
+      desc: "使用 ASan/TSan 检测 Triton 程序中的内存安全与并发问题。",
+      descEn: "Use ASan/TSan to detect memory safety and concurrency issues in Triton programs.",
+      markdownUrl: "docs/operator-lang/Debug.md"
+    },
     "operator-lang": {
       title: "Ruyi AI 算子编程语言",
       titleEn: "Ruyi AI Operator Language",
@@ -294,7 +301,7 @@
         compilerBtn.setAttribute("aria-expanded", "true");
       }
     }
-    if (id === "operator-lang" || id === "triton-on-riscv") {
+    if (id === "operator-lang" || id === "triton-on-riscv" || id === "debug") {
       var operatorLangBtn = document.getElementById("docsNavOperatorLang");
       var operatorLangGroup = operatorLangBtn ? operatorLangBtn.closest(".docs-nav__group") : null;
       if (operatorLangGroup && operatorLangBtn) {
