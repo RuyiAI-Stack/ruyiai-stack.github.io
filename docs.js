@@ -127,6 +127,12 @@
       descEn: "Porting and adapting Triton for RISC-V",
       markdownUrl: "docs/operator-lang/triton-on-riscv.md"
     },
+    "ir-output": {
+      title: "中间表示输出",
+      titleEn: "Intermediate Representation (IR) Output",
+      desc: "Triton 共享中间表示（IR）转储：通过环境变量控制输出目录。",
+      descEn: "Triton shared IR dumping: control the output directory via environment variables.",
+      markdownUrl: "docs/operator-lang/IR.md"
     "triton-riscv-overview": {
       title: "triton-riscv 总览",
       titleEn: "Triton RISC-V Overview",
@@ -301,6 +307,7 @@
         compilerBtn.setAttribute("aria-expanded", "true");
       }
     }
+    if (id === "operator-lang" || id === "triton-on-riscv" || id === "ir-output") {
     if (id === "operator-lang" || id === "triton-on-riscv" || id === "triton-riscv-overview" || id === "implementation") {
       var operatorLangBtn = document.getElementById("docsNavOperatorLang");
       var operatorLangGroup = operatorLangBtn ? operatorLangBtn.closest(".docs-nav__group") : null;
