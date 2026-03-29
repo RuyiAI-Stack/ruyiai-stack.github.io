@@ -80,13 +80,6 @@
       descEn: "Gemmini documentation",
       markdownUrl: "docs/compiler/Gemmini.md"
     },
-    "conv-opt": {
-      title: "卷积优化",
-      titleEn: "Convolution Optimization",
-      desc: "基于系数广播算法的二维卷积优化工具 conv-opt 介绍。",
-      descEn: "Introduction to the 2D convolution optimization tool conv-opt based on the coefficients broadcasting algorithm.",
-      markdownUrl: "docs/compiler/conv-opt.md"
-    },
     "add-pass": {
       title: "Add Pass",
       titleEn: "Add Pass",
@@ -140,6 +133,19 @@
       desc: "使用 ASan/TSan 检测 Triton 程序中的内存安全与并发问题。",
       descEn: "Use ASan/TSan to detect memory safety and concurrency issues in Triton programs.",
       markdownUrl: "docs/operator-lang/Debug.md"
+    "triton-riscv-overview": {
+      title: "triton-riscv 总览",
+      titleEn: "Triton RISC-V Overview",
+      desc: "Triton 中间层在独立使用、后端集成与参考 CPU 后端方面的整体介绍。",
+      descEn: "Overview of Triton middle layer usage in stand-alone mode, backend integration, and reference CPU backend.",
+      markdownUrl: "docs/operator-lang/Triton-Risc-V-Overview.md"
+    },
+    implementation: {
+      title: "实现方案",
+      titleEn: "Implementation",
+      desc: "Triton 到 Linalg 的分析流程与转换策略实现细节。",
+      descEn: "Implementation details of analyses and conversion strategy from Triton to Linalg.",
+      markdownUrl: "docs/operator-lang/Implementation.md"
     },
     "operator-lang": {
       title: "Ruyi AI 算子编程语言",
@@ -301,7 +307,7 @@
         compilerBtn.setAttribute("aria-expanded", "true");
       }
     }
-    if (id === "operator-lang" || id === "triton-on-riscv" || id === "debug") {
+    if (id === "operator-lang" || id === "triton-on-riscv" || id === "triton-riscv-overview" || id === "implementation" || id === "debug") {
       var operatorLangBtn = document.getElementById("docsNavOperatorLang");
       var operatorLangGroup = operatorLangBtn ? operatorLangBtn.closest(".docs-nav__group") : null;
       if (operatorLangGroup && operatorLangBtn) {
