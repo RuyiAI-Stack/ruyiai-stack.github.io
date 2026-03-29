@@ -127,6 +127,12 @@
       descEn: "Porting and adapting Triton for RISC-V",
       markdownUrl: "docs/operator-lang/triton-on-riscv.md"
     },
+    debug: {
+      title: "调试",
+      titleEn: "Debug",
+      desc: "使用 ASan/TSan 检测 Triton 程序中的内存安全与并发问题。",
+      descEn: "Use ASan/TSan to detect memory safety and concurrency issues in Triton programs.",
+      markdownUrl: "docs/operator-lang/Debug.md"
     "ir-output": {
       title: "中间表示输出",
       titleEn: "Intermediate Representation (IR) Output",
@@ -307,8 +313,7 @@
         compilerBtn.setAttribute("aria-expanded", "true");
       }
     }
-    if (id === "operator-lang" || id === "triton-on-riscv" || id === "ir-output") {
-    if (id === "operator-lang" || id === "triton-on-riscv" || id === "triton-riscv-overview" || id === "implementation") {
+    if (id === "operator-lang" || id === "triton-on-riscv" || id === "triton-riscv-overview" || id === "implementation" || id === "ir-output" || id === "debug") {
       var operatorLangBtn = document.getElementById("docsNavOperatorLang");
       var operatorLangGroup = operatorLangBtn ? operatorLangBtn.closest(".docs-nav__group") : null;
       if (operatorLangGroup && operatorLangBtn) {
