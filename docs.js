@@ -228,6 +228,7 @@
 
   function parseInlineMarkdown(text) {
     var html = escapeHtml(text);
+    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
     html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
     html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
     html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
@@ -243,6 +244,7 @@
     var codeBuf = [];
     var paraBuf = [];
     var listBuf = [];
+    var listType = null;
 
     function flushParagraph() {
       if (!paraBuf.length) return;
@@ -252,12 +254,14 @@
 
     function flushList() {
       if (!listBuf.length) return;
-      out.push("<ul>");
+      var tag = listType === "ol" ? "ol" : "ul";
+      out.push("<" + tag + ">");
       listBuf.forEach(function (item) {
         out.push("<li>" + parseInlineMarkdown(item) + "</li>");
       });
-      out.push("</ul>");
+      out.push("</" + tag + ">");
       listBuf = [];
+      listType = null;
     }
 
     function flushCode() {
@@ -280,6 +284,10 @@
 
     function isLikelyTableRow(line) {
       return /^\s*\|.*\|\s*$/.test(line || "");
+    }
+
+    function isHtmlStartWithoutClose(line) {
+      return /^\s*<[A-Za-z][^>]*$/.test(line || "");
     }
 
     for (var i = 0; i < lines.length; i += 1) {
@@ -324,11 +332,42 @@
         continue;
       }
 
+      // Horizontal rules like --- *** ___
+      if (/^\s*([-*_]\s*){3,}\s*$/.test(line)) {
+        flushParagraph();
+        flushList();
+        out.push("<hr>");
+        continue;
+      }
+
+      // Blockquote lines like: > note
+      var blockquote = line.match(/^\s*>\s?(.*)$/);
+      if (blockquote) {
+        flushParagraph();
+        flushList();
+        out.push("<blockquote><p>" + parseInlineMarkdown(blockquote[1]) + "</p></blockquote>");
+        continue;
+      }
+
       // Keep raw HTML blocks (e.g. <img ... />) as-is in fallback mode.
       if (/^\s*<[^>]+>\s*$/.test(line)) {
         flushParagraph();
         flushList();
         out.push(line.trim());
+        continue;
+      }
+
+      // Keep multi-line raw HTML tags (e.g. <iframe ... \n ... >) in fallback mode.
+      if (isHtmlStartWithoutClose(line)) {
+        flushParagraph();
+        flushList();
+        var htmlBuf = [line];
+        while (i + 1 < lines.length) {
+          i += 1;
+          htmlBuf.push(lines[i]);
+          if (lines[i].indexOf(">") !== -1) break;
+        }
+        out.push(htmlBuf.join("\n"));
         continue;
       }
 
@@ -366,11 +405,15 @@
       var orderedItem = line.match(/^\s*\d+\.\s+(.*)$/);
       if (listItem) {
         flushParagraph();
+        if (listType && listType !== "ul") flushList();
+        listType = "ul";
         listBuf.push(listItem[1]);
         continue;
       }
       if (orderedItem) {
         flushParagraph();
+        if (listType && listType !== "ol") flushList();
+        listType = "ol";
         listBuf.push(orderedItem[1]);
         continue;
       }
