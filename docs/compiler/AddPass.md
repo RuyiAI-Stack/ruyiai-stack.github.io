@@ -1,10 +1,10 @@
-## Add Pass in the midend
+## 在中端添加 Pass（Add Pass）
 
-This document uses `BatchMatMul` as an example to demonstrate the complete process of how to add an optimization for a particular operator to the midrange in a buddy project.
+本文以 `BatchMatMul` 为例，介绍在 buddy 项目中为特定算子添加优化 Pass 的整体流程。
 
-### Implement and test the `kernel` function file
+### 编写并测试 `kernel` 函数文件
 
-1. Determine the operator to be optimized from the mlir representing the computation graph, and implement the `kernel` function using the syntax of the mlir based on the operator, as an example of using this operator.
+1. 从计算图对应的 MLIR 中确定待优化算子，并基于该算子实现 `kernel` 函数，作为示例输入。
 
    ```mlir
    // linalg-batchmatmul-f32.mlir
@@ -21,9 +21,9 @@ This document uses `BatchMatMul` as an example to demonstrate the complete proce
    }
    ```
 
-   where `@printMemrefF32` is used to print 1D vectors.
+   其中 `@printMemrefF32` 用于打印一维向量。
 
-2. Implement the main function, call the `kernel` function, and test that it executes correctly and is used as a source file.
+2. 实现 `main` 函数，调用 `kernel`，并验证其执行正确，作为源文件输入。
 
    ```mlir
    // linalg-batchmatmul-f32.mlir
@@ -48,7 +48,7 @@ This document uses `BatchMatMul` as an example to demonstrate the complete proce
    }
    ```
 
-3. Add build rules and validation data to ensure check-buddy passes checks correctly.
+3. 添加构建规则与校验数据，确保 `check-buddy` 能正确通过。
 
    ```mlir
    // linalg-batchmatmul-f32.mlir
@@ -86,7 +86,7 @@ This document uses `BatchMatMul` as an example to demonstrate the complete proce
    ...
    ```
 
-4. Add build rules to makefile for building source mlir files(linalg-batchmatmul-f32.mlir).
+4. 在 makefile 中添加构建源 MLIR 文件（`linalg-batchmatmul-f32.mlir`）的规则。
 
    ```makefile
 
@@ -164,11 +164,11 @@ This document uses `BatchMatMul` as an example to demonstrate the complete proce
    - `linalg-batchmatmul-f32-run`: Build and execute linalg-batchmatmul-f32.mlir via JIT.
    - `linalg-batchmatmul-f32-aot`: Build linalg-batchmatmul-f32.mlir to get the corresponding AOT file.
 
-For the full source code, please check [batchmatmul-f32.mlir](../examples/BuddyMatmul/linalg-batchmatmul-f32.mlir) and [makefile](../examples/BuddyMatmul/makefile).
+完整源码请参考 [batchmatmul-f32.mlir](../examples/BuddyMatmul/linalg-batchmatmul-f32.mlir) 和 [makefile](../examples/BuddyMatmul/makefile)。
 
-### Implementing optimized handwritten mlir files
+### 编写手工优化后的 MLIR 文件
 
-1. The optimized mlir code is implemented manually using the syntax of mlir based on the characteristics and ways of computing the operators in `kernel`through various optimizations.
+1. 基于 `kernel` 中算子的计算特征，通过多种优化策略，使用 MLIR 语法手工实现优化后的 MLIR 代码。
 
    ```mlir
    // batchmatmul-vectorization.mlir
@@ -221,17 +221,17 @@ For the full source code, please check [batchmatmul-f32.mlir](../examples/BuddyM
    }
    ```
 
-2. Implement the rest of the target mlir file(batchmatmul-vectorization.mlir) as described in [Implement and test the kernel function file](#Implement and test the kernel function file) and add the build rules for the target mlir file.
+2. 按照「[编写并测试 `kernel` 函数文件](#编写并测试-kernel-函数文件)」中的方式补全目标 MLIR 文件（`batchmatmul-vectorization.mlir`）其余部分，并添加对应构建规则。
 
-3. Verify the correctness of the manually optimized mlir file.
+3. 验证手工优化后 MLIR 文件的正确性。
 
-   * *Generally by comparing the data printed from the two files before and after optimization*
+   *通常通过对比优化前后两个文件输出的数据来验证。*
 
-For the full source code, please check [batchmatmul-vectorization.mlir](../examples/BuddyMatmul/batchmatmul-vectorization.mlir) and [makefile](../examples/BuddyMatmul/makefile)
+完整源码请参考 [batchmatmul-vectorization.mlir](../examples/BuddyMatmul/batchmatmul-vectorization.mlir) 和 [makefile](../examples/BuddyMatmul/makefile)。
 
-### Implement Pass
+### 实现 Pass
 
-1. According to the optimized mlir file implemented in [Implementing optimized handwritten mlir files](#Implementing optimized handwritten mlir files), use the C interface provided by MLIR to complete the lowering pass from the source Op to the target Op.
+1. 根据「[编写手工优化后的 MLIR 文件](#编写手工优化后的-mlir-文件)」中实现的优化版 MLIR，使用 MLIR 提供的 C++ 接口完成从源 Op 到目标 Op 的 lowering Pass。
 
    ```Cpp
    // BatchMatMulOptimize.cpp
@@ -314,7 +314,7 @@ For the full source code, please check [batchmatmul-vectorization.mlir](../examp
    } // namespace mlir
    ```
 
-2. In CMakeLists.txt in the current file directory, add the source files to the corresponding libraries.
+2. 在当前目录的 `CMakeLists.txt` 中，将源文件添加到对应库目标中。
 
    ```cmake
    // CMakeLists.txt
@@ -328,7 +328,7 @@ For the full source code, please check [batchmatmul-vectorization.mlir](../examp
    )
    ```
 
-3. Register implemented passes in buddy-opt.
+3. 在 `buddy-opt` 中注册已实现的 Pass。
 
    ```cpp
    // buddy-opt.cpp
@@ -351,11 +351,11 @@ For the full source code, please check [batchmatmul-vectorization.mlir](../examp
    }
    ```
 
-For the full source code, please check [BatchMatMulOptimize.cpp](../midend/lib/Conversion/MatMulOptimization/BatchMatMulOptimize.cpp), [CMakeLists.txt](../midend/lib/Conversion/MatMulOptimization/CMakeLists.txt) and [buddy-opt.cpp](../tools/buddy-opt/buddy-opt.cpp)
+完整源码请参考 [BatchMatMulOptimize.cpp](../midend/lib/Conversion/MatMulOptimization/BatchMatMulOptimize.cpp)、[CMakeLists.txt](../midend/lib/Conversion/MatMulOptimization/CMakeLists.txt) 与 [buddy-opt.cpp](../tools/buddy-opt/buddy-opt.cpp)。
 
-### Test Pass
+### 测试 Pass
 
-In the makefile, add the pass(`-batchmatmul-optimize`) corresponding to BatchMatMulOptimize.cpp to the build rule of the source mlir file (linalg-batchmatmul-f32.mlir), run the instructions and verify the correctness of the pass.
+在 makefile 中，将 `BatchMatMulOptimize.cpp` 对应的 pass（`-batchmatmul-optimize`）加入源 MLIR 文件（`linalg-batchmatmul-f32.mlir`）的构建规则，执行后验证 Pass 的正确性。
 
 ```makefile
 linalg-batchmatmul-f32-run:
@@ -383,11 +383,11 @@ linalg-batchmatmul-f32-run:
 		-shared-libs=${LIB_OMP}
 ```
 
-### Implementing Benchmark performance tests
+### 实现 Benchmark 性能测试
 
-#### Adding a New Pass Test to an Existing Op Benchmark
+#### 在现有 Op Benchmark 中增加新的 Pass 测试
 
-1. In CMakeLists.txt, add a custom compilation command to generate the target file (`add_custom_command`), compile the MLIR source code, and encapsulate the generated arithmetic as a static library (`add_library`), and link to the executable target afterwards.
+1. 在 `CMakeLists.txt` 中添加自定义编译命令（`add_custom_command`）生成目标文件，编译 MLIR 源码，并将生成结果封装为静态库（`add_library`）后链接到可执行目标。
 
    ```cmake
    // CMakeLists.txt
@@ -442,9 +442,9 @@ linalg-batchmatmul-f32-run:
    )
    ```
 
-   The above two implementations are practically the same, `batch_matmul_vectorization` is compiled by adding the `-batchmatmul-optimize` pass to the source mlir file, while `batch_matmul_vectorization0`compiles the target mlir file directly without using this pass. file without this pass, but this requires the implementation of a handwritten mlir file.
+   以上两种实现本质上接近：`batch_matmul_vectorization` 通过在源 MLIR 上添加 `-batchmatmul-optimize` pass 得到；而 `batch_matmul_vectorization0` 则不使用该 pass，直接编译目标 MLIR 文件（这需要先手写实现优化版 MLIR）。
 
-2. In the main file, the interface to the compiled and generated MLIR function is declared in `extern “C” {}`, using the auto-vectorization(*Just pass with MLIR core and enable `-O3` optimization.*) as a baseline, and the Google Benchmark library is used to implement the correctness verification and performance testing of Pass.
+2. 在主文件中通过 `extern "C"` 声明编译后 MLIR 函数接口，以自动向量化（仅使用 MLIR 核心 pass 并开启 `-O3`）作为基线，并使用 Google Benchmark 完成 Pass 的正确性验证与性能测试。
 
    ```cpp
    // main.cpp
@@ -502,9 +502,9 @@ linalg-batchmatmul-f32-run:
    }
    ```
 
-#### Added new Op Benchmark test
+#### 新增 Op Benchmark 测试
 
-1. Completes the `kernel` function, but the main function is no longer needed.
+1. 先补全 `kernel` 函数，此时可不再需要 `main` 函数。
 
    ```mlir
    // BatchMatMul.mlir
@@ -519,9 +519,9 @@ linalg-batchmatmul-f32-run:
    }
    ```
 
-2. Create and complete CMakeLists.txt and main.cpp.
+2. 创建并补全 `CMakeLists.txt` 与 `main.cpp`。
 
-3. Implement auxiliary utility functions, mainly for data initialization and memory allocation and result correctness verification.
+3. 实现辅助工具函数，主要用于数据初始化、内存分配与结果正确性校验。
 
    ```hpp
    // Utils.hpp
@@ -553,7 +553,7 @@ linalg-batchmatmul-f32-run:
      return array;
    }
 
-   // Verifies two arrays for equality within a specified tolerance.
+   // 在指定误差范围内验证两个数组是否一致。
    template <typename DATA_TYPE>
    void verify(DATA_TYPE *A, DATA_TYPE *B, int batch, int size,
                const std::string &name) {
@@ -593,7 +593,7 @@ linalg-batchmatmul-f32-run:
    #endif // BATCH_MATMUL_UTILS_HPP
    ```
 
-4. Add a subdirectory to CMakeLists.txt in the parent folder, and add case information for the corresponding Op to README.md in the `DeepLearning` folder.
+4. 在父目录的 `CMakeLists.txt` 中添加子目录，并在 `DeepLearning` 目录的 `README.md` 中增加对应 Op 的用例说明。
 
    ```cmake
    // CMakeLists.txt
@@ -607,13 +607,13 @@ linalg-batchmatmul-f32-run:
    // README.md
 
    ...
-   ### Operation Level Benchmark
+   ### 算子级 Benchmark
 
-   The table below lists the benchmark cases at the operation level.
+   下表列出了算子级别的 benchmark 用例。
 
-   | Name  | Build Target | Introduction |
+   | Name  | Build Target | 说明 |
    | -------------- | ------------- | ------------- |
    ...
-   | Linalg Batch Matmul Benchmark | `ninja dl-op-linalg-batch-matmul-benchmark`  | This benchmark compares multiple optimization strategies targeting the `batch matmul` operation. You can adjust the size of the benchmark in [this file](./Ops/BatchMatMulOp/Main.cpp). |
+   | Linalg Batch Matmul Benchmark | `ninja dl-op-linalg-batch-matmul-benchmark`  | 该 benchmark 对 `batch matmul` 的多种优化策略进行对比。可在 [此文件](./Ops/BatchMatMulOp/Main.cpp) 调整测试规模。 |
    ...
    ```
