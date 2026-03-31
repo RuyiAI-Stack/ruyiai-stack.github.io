@@ -53,7 +53,7 @@
       markdownUrl: "docs/compiler/compiler.md"
     },
     "rvv-environment": {
-      title: "RVV Environment",
+      title: "RVV 环境",
       titleEn: "RVV Environment",
       desc: "MLIR 与 RVV 测试实验环境搭建指南",
       descEn: "Environment setup for MLIR and RVV testing",
@@ -67,9 +67,9 @@
       markdownUrl: "docs/about/about.md"
     },
     "ime-dialect": {
-      title: "SpacemiT IME Dialect",
+      title: "SpacemiT IME 方言",
       titleEn: "SpacemiT IME Dialect",
-      desc: "This document provides a comprehensive guide for using the IME (Integrated Matrix Extension) dialect in buddy-mlir.",
+      desc: "本文提供在 buddy-mlir 中使用 IME（Integrated Matrix Extension）方言的完整指南。",
       descEn: "This document provides a comprehensive guide for using the IME (Integrated Matrix Extension) dialect in buddy-mlir.",
       markdownUrl: "docs/compiler/IMEDialect.md"
     },
@@ -81,7 +81,7 @@
       markdownUrl: "docs/compiler/Gemmini.md"
     },
     "add-pass": {
-      title: "Add Pass",
+      title: "添加 Pass",
       titleEn: "Add Pass",
       desc: "以 BatchMatMul 为例，在中端实现并集成优化 Pass 的完整流程。",
       descEn: "End-to-end guide to adding an optimization pass in the midend using BatchMatMul as an example.",
@@ -116,8 +116,10 @@
       markdownUrl: "docs/compiler/AddingOperatorsAndModelIntegration.md"
     },
     "convolution-vectorization": {
-      title: "Convolution Vectorization",
-      desc: "Convolution vectorization documentation",
+      title: "卷积向量化",
+      titleEn: "Convolution Vectorization",
+      desc: "卷积向量化相关文档",
+      descEn: "Convolution vectorization documentation",
       markdownUrl: "docs/compiler/ConvolutionVectorization.md"
     },
     "triton-on-riscv": {
@@ -133,14 +135,16 @@
       desc: "使用 ASan/TSan 检测 Triton 程序中的内存安全与并发问题。",
       descEn: "Use ASan/TSan to detect memory safety and concurrency issues in Triton programs.",
       markdownUrl: "docs/operator-lang/Debug.md"
+    },
     "ir-output": {
       title: "中间表示输出",
       titleEn: "Intermediate Representation (IR) Output",
       desc: "Triton 共享中间表示（IR）转储：通过环境变量控制输出目录。",
       descEn: "Triton shared IR dumping: control the output directory via environment variables.",
       markdownUrl: "docs/operator-lang/IR.md"
+    },
     "triton-riscv-overview": {
-      title: "triton-riscv 总览",
+      title: "Triton RISC-V 总览",
       titleEn: "Triton RISC-V Overview",
       desc: "Triton 中间层在独立使用、后端集成与参考 CPU 后端方面的整体介绍。",
       descEn: "Overview of Triton middle layer usage in stand-alone mode, backend integration, and reference CPU backend.",
@@ -215,13 +219,227 @@
     return docItems[hash] ? hash : defaultDocId;
   }
 
+  function escapeHtml(text) {
+    return String(text || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
+  function parseInlineMarkdown(text) {
+    var html = escapeHtml(text);
+    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+    html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+    html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    html = html.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+    return html;
+  }
+
+  function simpleMarkdownToHtml(md) {
+    var lines = String(md || "").replace(/\r\n?/g, "\n").split("\n");
+    var out = [];
+    var inCode = false;
+    var inHtmlComment = false;
+    var codeBuf = [];
+    var paraBuf = [];
+    var listBuf = [];
+    var listType = null;
+
+    function flushParagraph() {
+      if (!paraBuf.length) return;
+      out.push("<p>" + parseInlineMarkdown(paraBuf.join(" ")) + "</p>");
+      paraBuf = [];
+    }
+
+    function flushList() {
+      if (!listBuf.length) return;
+      var tag = listType === "ol" ? "ol" : "ul";
+      out.push("<" + tag + ">");
+      listBuf.forEach(function (item) {
+        out.push("<li>" + parseInlineMarkdown(item) + "</li>");
+      });
+      out.push("</" + tag + ">");
+      listBuf = [];
+      listType = null;
+    }
+
+    function flushCode() {
+      if (!inCode) return;
+      out.push("<pre><code>" + escapeHtml(codeBuf.join("\n")) + "</code></pre>");
+      inCode = false;
+      codeBuf = [];
+    }
+
+    function isTableSeparator(line) {
+      return /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?\s*$/.test(line || "");
+    }
+
+    function parseTableCells(line) {
+      var text = String(line || "").trim();
+      if (text.startsWith("|")) text = text.slice(1);
+      if (text.endsWith("|")) text = text.slice(0, -1);
+      return text.split("|").map(function (c) { return c.trim(); });
+    }
+
+    function isLikelyTableRow(line) {
+      return /^\s*\|.*\|\s*$/.test(line || "");
+    }
+
+    function isHtmlStartWithoutClose(line) {
+      return /^\s*<[A-Za-z][^>]*$/.test(line || "");
+    }
+
+    for (var i = 0; i < lines.length; i += 1) {
+      var line = lines[i];
+      if (!inCode) {
+        if (inHtmlComment) {
+          if (line.indexOf("-->") !== -1) inHtmlComment = false;
+          continue;
+        }
+        if (line.indexOf("<!--") !== -1) {
+          if (line.indexOf("-->") === -1 || line.indexOf("<!--") > line.indexOf("-->")) {
+            inHtmlComment = true;
+          }
+          // Ignore HTML comments in fallback mode.
+          continue;
+        }
+      }
+
+      if (/^\s*```/.test(line)) {
+        flushParagraph();
+        flushList();
+        if (inCode) {
+          flushCode();
+        } else {
+          inCode = true;
+          codeBuf = [];
+        }
+        continue;
+      }
+
+      if (inCode) {
+        codeBuf.push(line);
+        continue;
+      }
+
+      var heading = line.match(/^(#{1,6})\s+(.*)$/);
+      if (heading) {
+        flushParagraph();
+        flushList();
+        var level = heading[1].length;
+        out.push("<h" + level + ">" + parseInlineMarkdown(heading[2]) + "</h" + level + ">");
+        continue;
+      }
+
+      // Horizontal rules like --- *** ___
+      if (/^\s*([-*_]\s*){3,}\s*$/.test(line)) {
+        flushParagraph();
+        flushList();
+        out.push("<hr>");
+        continue;
+      }
+
+      // Blockquote lines like: > note
+      var blockquote = line.match(/^\s*>\s?(.*)$/);
+      if (blockquote) {
+        flushParagraph();
+        flushList();
+        out.push("<blockquote><p>" + parseInlineMarkdown(blockquote[1]) + "</p></blockquote>");
+        continue;
+      }
+
+      // Keep raw HTML blocks (e.g. <img ... />) as-is in fallback mode.
+      if (/^\s*<[^>]+>\s*$/.test(line)) {
+        flushParagraph();
+        flushList();
+        out.push(line.trim());
+        continue;
+      }
+
+      // Keep multi-line raw HTML tags (e.g. <iframe ... \n ... >) in fallback mode.
+      if (isHtmlStartWithoutClose(line)) {
+        flushParagraph();
+        flushList();
+        var htmlBuf = [line];
+        while (i + 1 < lines.length) {
+          i += 1;
+          htmlBuf.push(lines[i]);
+          if (lines[i].indexOf(">") !== -1) break;
+        }
+        out.push(htmlBuf.join("\n"));
+        continue;
+      }
+
+      // GitHub-style markdown table:
+      // | h1 | h2 |
+      // |----|----|
+      // | c1 | c2 |
+      if (isLikelyTableRow(line) && i + 1 < lines.length && isTableSeparator(lines[i + 1])) {
+        flushParagraph();
+        flushList();
+        var headers = parseTableCells(line);
+        out.push("<table>");
+        out.push("<thead><tr>");
+        headers.forEach(function (h) {
+          out.push("<th>" + parseInlineMarkdown(h) + "</th>");
+        });
+        out.push("</tr></thead>");
+        out.push("<tbody>");
+        i += 2;
+        while (i < lines.length && isLikelyTableRow(lines[i])) {
+          var cells = parseTableCells(lines[i]);
+          out.push("<tr>");
+          for (var c = 0; c < headers.length; c += 1) {
+            out.push("<td>" + parseInlineMarkdown(cells[c] || "") + "</td>");
+          }
+          out.push("</tr>");
+          i += 1;
+        }
+        out.push("</tbody></table>");
+        i -= 1;
+        continue;
+      }
+
+      var listItem = line.match(/^\s*[-*+]\s+(.*)$/);
+      var orderedItem = line.match(/^\s*\d+\.\s+(.*)$/);
+      if (listItem) {
+        flushParagraph();
+        if (listType && listType !== "ul") flushList();
+        listType = "ul";
+        listBuf.push(listItem[1]);
+        continue;
+      }
+      if (orderedItem) {
+        flushParagraph();
+        if (listType && listType !== "ol") flushList();
+        listType = "ol";
+        listBuf.push(orderedItem[1]);
+        continue;
+      }
+
+      if (!line.trim()) {
+        flushParagraph();
+        flushList();
+        continue;
+      }
+
+      paraBuf.push(line.trim());
+    }
+
+    flushParagraph();
+    flushList();
+    flushCode();
+    return out.join("\n");
+  }
+
   function parseMarkdown(md) {
-    if (typeof marked === "undefined") return null;
     var raw = (md || "").trim();
     if (!raw) return "";
+    if (typeof marked === "undefined") return simpleMarkdownToHtml(raw);
     if (typeof marked.parse === "function") return marked.parse(raw);
     if (typeof marked === "function") return marked(raw);
-    return null;
+    return simpleMarkdownToHtml(raw);
   }
 
   function setBodyHtml(bodyEl, md) {

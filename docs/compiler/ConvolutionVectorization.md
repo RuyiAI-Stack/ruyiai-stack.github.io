@@ -1,29 +1,29 @@
-# Convolution Optimization Tool - conv - opt
+# 卷积向量化
 
-## Covolution Optimization Algorithm
+## 卷积优化算法
 
-### Coefficient Broadcasting Algorithm
+### 系数广播（Coefficient Broadcasting）算法
 
-Coefficients broadcasting (CB) algorithm is a high-performance implementation of 2D convolution.
-The algorithm has been implemented with the intrinsic programming model and evaluated on Intel’s advanced vector extensions. [[Ref]](https://ieeexplore.ieee.org/abstract/document/8324097)
-However, the intrinsic programming model is specific to ISA extensions,
-which means other targets cannot reuse the vectorization.
-Thus, we explored implementing the CB algorithm using MLIR.
-In this case, we can take advantage of the reusable and extensible features of MLIR and LLVM IR.
+系数广播（CB）算法是一种高性能二维卷积实现。
+该算法最初通过 intrinsic 编程模型实现，并在 Intel 高级向量扩展平台上进行了评估。[[参考]](https://ieeexplore.ieee.org/abstract/document/8324097)
 
-Let’s first introduce the MLIR dialects and operations that are needed by the algorithm.
+由于 intrinsic 编程模型与 ISA 扩展紧耦合，向量化实现难以在不同目标间复用。
+因此我们尝试用 MLIR 实现 CB 算法，借助 MLIR 与 LLVM IR 的可复用、可扩展特性提高可移植性。
 
-- `affine.for`: executes loop body for specific times iterating from a lower bound to an upper bound by a stride.
-- `affine.vector_load`:returns a vector from a specific slice of buffer (MLIR MemRef).
-- `affine.vector_store`: writes a vector into a specific slice of buffer (MLIR MemRef).
-- `vector.broadcast`: broadcasts a scalar or vector value to an n-D result vector.
-- `vector.fma`: performs fused multiply-add (FMA) on the vector type.
+该算法涉及的主要 MLIR 方言与操作包括：
+
+- `affine.for`：按给定上下界与步长执行循环体。
+- `affine.vector_load`：从缓冲区（MLIR MemRef）指定切片加载向量。
+- `affine.vector_store`：将向量写回缓冲区（MLIR MemRef）指定切片。
+- `vector.broadcast`：将标量或向量广播为 n 维结果向量。
+- `vector.fma`：执行向量融合乘加（FMA）运算。
 
 ![Graph of the Coefficients Broadcasting Algorithm](./Images/CoefficientsBroadcasting.png)
 
-The figure shows the steps of the algorithm:
-- Iterate over each kernel element and broadcast it to vector1.
-- Load a slice of the input into the vector2 with the iteration index.
-- Load a slice of the output into the vector3 with the outermost loop iteration index.
-- Multiply and accumulate the vector1, vector2, and vector3.
-- Store the result vector into the output buffer with the outermost loop iteration index.
+上图展示了算法流程：
+
+- 迭代卷积核元素，并广播到 `vector1`。
+- 按当前迭代索引将输入切片加载到 `vector2`。
+- 按最外层循环索引将输出切片加载到 `vector3`。
+- 对 `vector1`、`vector2`、`vector3` 执行乘加累积。
+- 将结果向量写回输出缓冲区对应位置。
