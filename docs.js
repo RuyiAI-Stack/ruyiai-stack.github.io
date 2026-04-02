@@ -200,6 +200,10 @@
   };
 
   var defaultDocId = "overview";
+  var searchState = {
+    indexByLang: { zh: null, en: null },
+    buildingByLang: { zh: null, en: null }
+  };
 
   /** 解析文档 URL：相对路径以当前页面地址为基准，与 fetch 默认行为一致 */
   function resolveDocUrl(relativePath) {
@@ -217,6 +221,10 @@
       hash = (parts[1] || "").split("?")[0];
     }
     return docItems[hash] ? hash : defaultDocId;
+  }
+
+  function getCurrentLang() {
+    return (typeof window.ruyiaiLang !== "undefined" && window.ruyiaiLang === "en") ? "en" : "zh";
   }
 
   function escapeHtml(text) {
@@ -452,6 +460,267 @@
     }
   }
 
+  function stripMarkdownForSearch(md) {
+    var text = String(md || "");
+    text = text.replace(/```[\s\S]*?```/g, " ");
+    text = text.replace(/`([^`]+)`/g, " $1 ");
+    text = text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, " $1 ");
+    text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, " $1 ");
+    text = text.replace(/<[^>]+>/g, " ");
+    text = text.replace(/^#{1,6}\s+/gm, "");
+    text = text.replace(/^\s*>\s?/gm, "");
+    text = text.replace(/^\s*[-*+]\s+/gm, "");
+    text = text.replace(/^\s*\d+\.\s+/gm, "");
+    text = text.replace(/\|/g, " ");
+    text = text.replace(/\s+/g, " ").trim();
+    return text;
+  }
+
+  function resolveDocMarkdown(item, lang) {
+    var inline = (lang === "en" && item.markdownEn != null) ? item.markdownEn : item.markdown;
+    if (inline != null && !item.markdownUrl) {
+      return Promise.resolve(inline);
+    }
+    if (!item.markdownUrl) {
+      return Promise.resolve("");
+    }
+    var mdUrl = item.markdownUrl;
+    var mdUrlEn = mdUrl.replace(/\.md$/, ".en.md");
+    var primaryUrl = (lang === "en" && mdUrlEn) ? mdUrlEn : mdUrl;
+    var fallbackUrl = (lang === "en" && mdUrlEn) ? mdUrl : null;
+    return fetch(resolveDocUrl(primaryUrl), { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error(String(r.status))); })
+      .catch(function () {
+        if (!fallbackUrl) return "";
+        return fetch(resolveDocUrl(fallbackUrl), { cache: "no-store" })
+          .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error(String(r.status))); })
+          .catch(function () { return ""; });
+      });
+  }
+
+  function buildSearchIndex(lang) {
+    if (searchState.indexByLang[lang]) {
+      return Promise.resolve(searchState.indexByLang[lang]);
+    }
+    if (searchState.buildingByLang[lang]) {
+      return searchState.buildingByLang[lang];
+    }
+    var ids = Object.keys(docItems);
+    searchState.buildingByLang[lang] = Promise.all(ids.map(function (id) {
+      var item = docItems[id];
+      var title = (lang === "en" && item.titleEn) ? item.titleEn : item.title;
+      var desc = (lang === "en" && item.descEn) ? item.descEn : item.desc;
+      return resolveDocMarkdown(item, lang).then(function (md) {
+        var body = stripMarkdownForSearch(md);
+        var plain = [title || "", desc || "", body || ""].join(" ").trim();
+        return {
+          id: id,
+          title: title || "",
+          desc: desc || "",
+          body: body || "",
+          plain: plain,
+          plainLower: plain.toLowerCase()
+        };
+      });
+    })).then(function (entries) {
+      searchState.indexByLang[lang] = entries;
+      searchState.buildingByLang[lang] = null;
+      return entries;
+    }).catch(function () {
+      searchState.buildingByLang[lang] = null;
+      return [];
+    });
+    return searchState.buildingByLang[lang];
+  }
+
+  function containsAllTerms(textLower, terms) {
+    for (var i = 0; i < terms.length; i += 1) {
+      if (textLower.indexOf(terms[i]) === -1) return false;
+    }
+    return true;
+  }
+
+  function extractSnippet(entry, query) {
+    var q = String(query || "").trim().toLowerCase();
+    var source = entry.body || entry.desc || "";
+    if (!source) return "";
+    if (!q) return source.slice(0, 120);
+    var lower = source.toLowerCase();
+    var idx = lower.indexOf(q);
+    if (idx === -1) return source.slice(0, 120);
+    var start = Math.max(0, idx - 24);
+    var end = Math.min(source.length, idx + q.length + 48);
+    var prefix = start > 0 ? "..." : "";
+    var suffix = end < source.length ? "..." : "";
+    return prefix + source.slice(start, end) + suffix;
+  }
+
+  function searchDocs(entries, query, limit) {
+    var q = String(query || "").trim();
+    if (!q) return [];
+    var qLower = q.toLowerCase();
+    var terms = qLower.split(/\s+/).filter(function (t) { return !!t; });
+    if (!terms.length) return [];
+    var ranked = entries.map(function (entry) {
+      var titleLower = (entry.title || "").toLowerCase();
+      var plainLower = entry.plainLower || "";
+      var titleMatched = containsAllTerms(titleLower, terms);
+      var plainMatched = containsAllTerms(plainLower, terms);
+      if (!titleMatched && !plainMatched) return { entry: entry, score: -1 };
+
+      // Ranking: title hits first, then earlier exact position in full text.
+      var score = 0;
+      if (titleMatched) score += 2000;
+      var firstIdx = plainLower.indexOf(qLower);
+      if (firstIdx !== -1) {
+        score += 1200 - Math.min(firstIdx, 1000);
+      } else {
+        // Multi-term query: favor entries where terms appear earlier overall.
+        var posSum = 0;
+        for (var i = 0; i < terms.length; i += 1) {
+          var p = plainLower.indexOf(terms[i]);
+          posSum += (p === -1 ? 1000 : Math.min(p, 1000));
+        }
+        score += 600 - Math.min(posSum, 550);
+      }
+      return { entry: entry, score: score };
+    }).filter(function (r) { return r.score >= 0; });
+    ranked.sort(function (a, b) { return b.score - a.score; });
+    return ranked.slice(0, limit || 8).map(function (r) {
+      return {
+        id: r.entry.id,
+        title: r.entry.title,
+        snippet: extractSnippet(r.entry, q)
+      };
+    });
+  }
+
+  function escapeRegExp(text) {
+    return String(text || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
+  function highlightText(text, query) {
+    var t = String(text || "");
+    var q = String(query || "").trim();
+    if (!q) return escapeHtml(t);
+    var safe = escapeHtml(t);
+    var re = new RegExp("(" + escapeRegExp(q) + ")", "ig");
+    return safe.replace(re, '<mark class="docs-search__hl">$1</mark>');
+  }
+
+  function initSearch() {
+    var input = document.getElementById("docsSearchInput");
+    if (!input) return;
+    var container = input.closest(".docs-search");
+    if (!container) return;
+
+    var panel = document.createElement("div");
+    panel.className = "docs-search__results";
+    panel.style.display = "none";
+    container.appendChild(panel);
+    var selectedIndex = -1;
+
+    function hideResults() {
+      panel.style.display = "none";
+      panel.innerHTML = "";
+      selectedIndex = -1;
+    }
+
+    function setActiveItem(index) {
+      var nodes = panel.querySelectorAll(".docs-search__item");
+      nodes.forEach(function (n, i) {
+        n.classList.toggle("docs-search__item--active", i === index);
+      });
+    }
+
+    function renderResults(items, lang, query) {
+      selectedIndex = -1;
+      if (!items.length) {
+        panel.innerHTML = '<div class="docs-search__empty">' + (lang === "en" ? "No matching documents" : "未找到匹配文档") + "</div>";
+        panel.style.display = "block";
+        return;
+      }
+      panel.innerHTML = items.map(function (item) {
+        return (
+          '<button type="button" class="docs-search__item" data-doc="' + item.id + '">' +
+            '<span class="docs-search__item-title">' + highlightText(item.title, query) + "</span>" +
+            '<span class="docs-search__item-snippet">' + highlightText(item.snippet, query) + "</span>" +
+          "</button>"
+        );
+      }).join("");
+      panel.style.display = "block";
+      var btns = panel.querySelectorAll(".docs-search__item");
+      btns.forEach(function (btn, idx) {
+        btn.addEventListener("click", function () {
+          var id = btn.getAttribute("data-doc");
+          if (id) renderDoc(id);
+          hideResults();
+          closeMobileNav();
+        });
+        btn.addEventListener("mouseenter", function () {
+          selectedIndex = idx;
+          setActiveItem(selectedIndex);
+        });
+      });
+    }
+
+    function runSearch() {
+      var query = input.value || "";
+      var lang = getCurrentLang();
+      if (!query.trim()) {
+        hideResults();
+        return;
+      }
+      buildSearchIndex(lang).then(function (entries) {
+        if ((input.value || "").trim() !== query.trim()) return;
+        var items = searchDocs(entries, query, 8);
+        renderResults(items, lang, query);
+      });
+    }
+
+    var timer = null;
+    input.addEventListener("input", function () {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(runSearch, 120);
+    });
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        hideResults();
+        return;
+      }
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        var nodes = panel.querySelectorAll(".docs-search__item");
+        if (!nodes.length) return;
+        e.preventDefault();
+        if (e.key === "ArrowDown") {
+          selectedIndex = (selectedIndex + 1 + nodes.length) % nodes.length;
+        } else {
+          selectedIndex = (selectedIndex - 1 + nodes.length) % nodes.length;
+        }
+        setActiveItem(selectedIndex);
+        if (nodes[selectedIndex] && typeof nodes[selectedIndex].scrollIntoView === "function") {
+          nodes[selectedIndex].scrollIntoView({ block: "nearest" });
+        }
+        return;
+      }
+      if (e.key === "Enter") {
+        var items = panel.querySelectorAll(".docs-search__item");
+        if (!items.length) return;
+        e.preventDefault();
+        if (selectedIndex < 0) selectedIndex = 0;
+        if (items[selectedIndex]) items[selectedIndex].click();
+      }
+    });
+    document.addEventListener("click", function (e) {
+      if (!container.contains(e.target)) hideResults();
+    });
+    window.addEventListener("languagechange", function () {
+      searchState.indexByLang.zh = null;
+      searchState.indexByLang.en = null;
+      if ((input.value || "").trim()) runSearch();
+    });
+  }
+
   function renderDoc(id) {
     var item = docItems[id];
     if (!item) return;
@@ -657,9 +926,11 @@
     document.addEventListener("DOMContentLoaded", function () {
       initNav();
       initHash();
+      initSearch();
     });
   } else {
     initNav();
     initHash();
+    initSearch();
   }
 })();
