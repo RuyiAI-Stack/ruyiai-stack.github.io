@@ -1,8 +1,14 @@
-/* Docs layout: sidebar + main */
+/* Docs layout: sidebar + main — centered as one block on wide viewports */
 .docs-layout{
   display: flex;
   min-height: calc(100vh - 120px);
-  max-width: none;
+  width: 100%;
+  max-width: 1560px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+  box-sizing: border-box;
   background: var(--bg);
 }
 .docs-footer{
@@ -354,7 +360,13 @@
 .markdown-body blockquote{ border-left: 4px solid var(--line); margin: 14px 0; padding-left: 16px; color: var(--muted); }
 
 @media (max-width: 768px){
-  .docs-layout{ flex-direction: column; min-height: auto; position: relative; }
+  .docs-layout{
+    flex-direction: column;
+    min-height: auto;
+    position: relative;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
   .docs-nav-toggle{
     display: inline-flex;
     align-items: center;
