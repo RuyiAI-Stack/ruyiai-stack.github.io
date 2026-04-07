@@ -139,6 +139,81 @@
   background: rgba(17,24,39,0.06);
 }
 
+/* Main + in-page TOC column */
+.docs-stage{
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 36px;
+}
+.docs-toc{
+  width: 232px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 72px;
+  align-self: flex-start;
+  max-height: calc(100vh - 88px);
+  overflow-y: auto;
+  padding: 8px 0 24px 20px;
+  border-left: 1px solid var(--line);
+  -webkit-overflow-scrolling: touch;
+}
+.docs-toc[hidden]{
+  display: none !important;
+}
+.docs-toc__title{
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+.docs-toc__nav{
+  margin: 0;
+  padding: 0;
+}
+.docs-toc__list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.docs-toc__list--nested{
+  margin-top: 4px;
+  margin-bottom: 2px;
+  padding-left: 12px;
+  border-left: 1px solid rgba(17,24,39,0.1);
+}
+.docs-toc__item{
+  margin: 2px 0;
+}
+.docs-toc__link{
+  display: block;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+  text-decoration: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  margin-left: -6px;
+  border: 0;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+}
+.docs-toc__link:hover{
+  color: var(--text);
+  background: rgba(17,24,39,0.05);
+}
+.docs-toc__link--active{
+  color: var(--text);
+  font-weight: 500;
+  background: rgba(17,24,39,0.07);
+}
+
 /* Main content */
 .docs-main{
   flex: 1;
@@ -227,11 +302,21 @@
   padding: 0 2px;
   border-radius: 4px;
 }
+
+@media (max-width: 1100px){
+  .docs-stage{
+    gap: 0;
+  }
+  .docs-toc{
+    display: none !important;
+  }
+}
 .docs-content__title{
   font-size: 32px;
   font-weight: 700;
   margin: 0 0 8px;
   letter-spacing: -0.02em;
+  scroll-margin-top: 80px;
 }
 .docs-content__desc{
   font-size: 16px;
@@ -253,8 +338,11 @@
   display: block;
   margin: 14px 0;
 }
-.markdown-body h2{ font-size: 22px; margin: 28px 0 12px; font-weight: 600; }
-.markdown-body h3{ font-size: 18px; margin: 22px 0 10px; font-weight: 600; }
+.markdown-body h1{ font-size: 28px; margin: 32px 0 14px; font-weight: 600; scroll-margin-top: 80px; }
+.markdown-body h2{ font-size: 22px; margin: 28px 0 12px; font-weight: 600; scroll-margin-top: 80px; }
+.markdown-body h3{ font-size: 18px; margin: 22px 0 10px; font-weight: 600; scroll-margin-top: 80px; }
+.markdown-body h4{ font-size: 16px; margin: 18px 0 8px; font-weight: 600; scroll-margin-top: 80px; }
+.markdown-body h5, .markdown-body h6{ font-size: 15px; margin: 16px 0 6px; font-weight: 600; scroll-margin-top: 80px; }
 .markdown-body p{ margin: 0 0 14px; }
 .markdown-body ul, .markdown-body ol{ margin: 0 0 14px; padding-left: 24px; }
 .markdown-body li{ margin: 4px 0; }

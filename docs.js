@@ -205,6 +205,8 @@
     buildingByLang: { zh: null, en: null }
   };
 
+  var inPageTocScrollCleanup = null;
+
   /** 解析文档 URL：相对路径以当前页面地址为基准，与 fetch 默认行为一致 */
   function resolveDocUrl(relativePath) {
     try {
@@ -458,6 +460,155 @@
     } else {
       bodyEl.textContent = md || "";
     }
+    refreshInPageToc();
+  }
+
+  function slugifyHeadingId(text) {
+    var s = String(text || "")
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9\u4e00-\u9fff_-]+/g, "");
+    if (!s) s = "section";
+    if (s.length > 80) s = s.slice(0, 80);
+    return s;
+  }
+
+  function ensureHeadingIds(bodyEl) {
+    if (!bodyEl) return;
+    var used = {};
+    var headings = bodyEl.querySelectorAll("h1, h2, h3, h4, h5, h6");
+    for (var i = 0; i < headings.length; i += 1) {
+      var h = headings[i];
+      if (h.id) {
+        used[h.id] = true;
+        continue;
+      }
+      var base = slugifyHeadingId(h.textContent || "");
+      var id = base;
+      var n = 0;
+      while (used[id] || document.getElementById(id)) {
+        n += 1;
+        id = base + "-" + n;
+      }
+      used[id] = true;
+      h.id = id;
+    }
+  }
+
+  function scrollToDocHeading(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function pruneEmptyTocLists(ul) {
+    Array.prototype.forEach.call(ul.children, function (li) {
+      var nested = null;
+      for (var j = 0; j < li.children.length; j += 1) {
+        if (li.children[j].tagName === "UL") {
+          nested = li.children[j];
+          break;
+        }
+      }
+      if (nested) {
+        pruneEmptyTocLists(nested);
+        if (!nested.children.length) nested.remove();
+      }
+    });
+  }
+
+  function refreshInPageToc() {
+    var bodyEl = document.getElementById("docsBody");
+    var tocAside = document.getElementById("docsToc");
+    var tocNav = document.getElementById("docsTocNav");
+    if (!bodyEl || !tocAside || !tocNav) return;
+
+    if (typeof window.ruyiaiGetText === "function") {
+      tocAside.setAttribute("aria-label", window.ruyiaiGetText("doc.onThisPage"));
+    }
+
+    if (inPageTocScrollCleanup) {
+      inPageTocScrollCleanup();
+      inPageTocScrollCleanup = null;
+    }
+
+    ensureHeadingIds(bodyEl);
+    var headings = Array.prototype.slice.call(bodyEl.querySelectorAll("h1, h2, h3, h4, h5, h6"));
+    if (!headings.length) {
+      tocNav.innerHTML = "";
+      tocAside.hidden = true;
+      return;
+    }
+
+    var rootUl = document.createElement("ul");
+    rootUl.className = "docs-toc__list";
+    var stack = [{ level: 0, ul: rootUl }];
+
+    headings.forEach(function (h) {
+      var level = parseInt(h.tagName.slice(1), 10);
+      while (stack.length > 1 && stack[stack.length - 1].level >= level) {
+        stack.pop();
+      }
+      var parentUl = stack[stack.length - 1].ul;
+      var li = document.createElement("li");
+      li.className = "docs-toc__item";
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "docs-toc__link docs-toc__link--depth-" + level;
+      btn.textContent = (h.textContent || "").trim();
+      btn.setAttribute("data-toc-target", h.id);
+      (function (hid) {
+        btn.addEventListener("click", function () {
+          scrollToDocHeading(hid);
+        });
+      })(h.id);
+      li.appendChild(btn);
+      parentUl.appendChild(li);
+      var subUl = document.createElement("ul");
+      subUl.className = "docs-toc__list docs-toc__list--nested";
+      li.appendChild(subUl);
+      stack.push({ level: level, ul: subUl });
+    });
+
+    pruneEmptyTocLists(rootUl);
+    tocNav.innerHTML = "";
+    tocNav.appendChild(rootUl);
+    tocAside.hidden = false;
+
+    var links = tocNav.querySelectorAll("button.docs-toc__link");
+    var offset = 88;
+    function updateActiveHeading() {
+      var activeId = null;
+      for (var i = headings.length - 1; i >= 0; i -= 1) {
+        var top = headings[i].getBoundingClientRect().top;
+        if (top <= offset) {
+          activeId = headings[i].id;
+          break;
+        }
+      }
+      if (!activeId && headings.length) activeId = headings[0].id;
+      links.forEach(function (a) {
+        a.classList.toggle("docs-toc__link--active", a.getAttribute("data-toc-target") === activeId);
+      });
+    }
+
+    var ticking = false;
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(function () {
+          updateActiveHeading();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    updateActiveHeading();
+    inPageTocScrollCleanup = function () {
+      window.removeEventListener("scroll", onScroll);
+    };
   }
 
   function stripMarkdownForSearch(md) {

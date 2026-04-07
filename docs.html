@@ -145,19 +145,27 @@
         </nav>
       </aside>
 
-      <!-- Right content -->
-      <main class="docs-main">
-        <button type="button" class="docs-nav-toggle" id="docsNavToggle" aria-label="展开或收起目录" data-i18n="doc.toc">目录</button>
-        <div class="docs-search">
-          <span class="docs-search__icon" aria-hidden="true">🔍</span>
-          <input type="search" class="docs-search__input" placeholder="搜索文档" aria-label="搜索文档" id="docsSearchInput" data-i18n="doc.search" />
-        </div>
-        <article class="docs-content" id="docsContent">
-          <h1 class="docs-content__title" id="docsTitle">总览</h1>
-          <p class="docs-content__desc" id="docsDesc">Ruyi AI 文档总览</p>
-          <div class="docs-content__body markdown-body" id="docsBody"></div>
-        </article>
-      </main>
+      <!-- Main + in-page TOC -->
+      <div class="docs-stage">
+        <main class="docs-main">
+          <button type="button" class="docs-nav-toggle" id="docsNavToggle" aria-label="展开或收起目录" data-i18n="doc.toc">目录</button>
+          <div class="docs-search">
+            <span class="docs-search__icon" aria-hidden="true">🔍</span>
+            <input type="search" class="docs-search__input" placeholder="搜索文档" aria-label="搜索文档" id="docsSearchInput" data-i18n="doc.search" />
+          </div>
+          <article class="docs-content" id="docsContent">
+            <h1 class="docs-content__title" id="docsTitle">总览</h1>
+            <p class="docs-content__desc" id="docsDesc">Ruyi AI 文档总览</p>
+            <div class="docs-content__body markdown-body" id="docsBody"></div>
+          </article>
+        </main>
+        <aside class="docs-toc" id="docsToc" aria-label="本页目录" hidden>
+          <div class="docs-toc__inner">
+            <div class="docs-toc__title" id="docsTocTitle" data-i18n="doc.onThisPage">本页目录</div>
+            <nav class="docs-toc__nav" id="docsTocNav"></nav>
+          </div>
+        </aside>
+      </div>
     </div>
 
     <footer class="footer docs-footer">
