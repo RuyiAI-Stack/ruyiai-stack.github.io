@@ -64,7 +64,8 @@
       titleEn: "About",
       desc: "了解 Ruyi AI 项目的背景、愿景与团队。",
       descEn: "About Ruyi AI project and team",
-      markdownUrl: "docs/about/about.md"
+      markdownUrl: "docs/about/about.md",
+      useFirstHeadingAsTitle: true
     },
     "ime-dialect": {
       title: "SpacemiT IME 方言",
@@ -214,6 +215,13 @@
     } catch (e) {
       return relativePath;
     }
+  }
+
+  function getEnglishDocUrlCandidates(mdUrl) {
+    if (!mdUrl || !/\.md$/i.test(mdUrl)) return [];
+    var a = mdUrl.replace(/\.md$/i, ".en.md");
+    var b = mdUrl.replace(/\.md$/i, "-en.md");
+    return a === b ? [a] : [a, b];
   }
 
   function getDocIdFromHash() {
@@ -463,6 +471,17 @@
     refreshInPageToc();
   }
 
+  function promoteBodyHeadingToPageTitle(item, titleEl, bodyEl) {
+    if (!item || !item.useFirstHeadingAsTitle || !titleEl || !bodyEl) return;
+    var heading = bodyEl.querySelector("h1, h2, h3, h4, h5, h6");
+    if (!heading) return;
+    var text = (heading.textContent || "").trim();
+    if (!text) return;
+    titleEl.textContent = text;
+    heading.remove();
+    refreshInPageToc();
+  }
+
   function slugifyHeadingId(text) {
     var s = String(text || "")
       .trim()
@@ -636,17 +655,14 @@
       return Promise.resolve("");
     }
     var mdUrl = item.markdownUrl;
-    var mdUrlEn = mdUrl.replace(/\.md$/, ".en.md");
-    var primaryUrl = (lang === "en" && mdUrlEn) ? mdUrlEn : mdUrl;
-    var fallbackUrl = (lang === "en" && mdUrlEn) ? mdUrl : null;
-    return fetch(resolveDocUrl(primaryUrl), { cache: "no-store" })
-      .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error(String(r.status))); })
-      .catch(function () {
-        if (!fallbackUrl) return "";
-        return fetch(resolveDocUrl(fallbackUrl), { cache: "no-store" })
-          .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error(String(r.status))); })
-          .catch(function () { return ""; });
-      });
+    var candidates = (lang === "en") ? getEnglishDocUrlCandidates(mdUrl).concat([mdUrl]) : [mdUrl];
+    function tryFetchAt(idx) {
+      if (idx >= candidates.length) return Promise.resolve("");
+      return fetch(resolveDocUrl(candidates[idx]), { cache: "no-store" })
+        .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error(String(r.status))); })
+        .catch(function () { return tryFetchAt(idx + 1); });
+    }
+    return tryFetchAt(0);
   }
 
   function buildSearchIndex(lang) {
@@ -890,41 +906,30 @@
     }
     var mdInline = (lang === "en" && item.markdownEn != null) ? item.markdownEn : item.markdown;
     var mdUrl = item.markdownUrl || null;
-    var mdUrlEn = null;
-    if (mdUrl) {
-      mdUrlEn = mdUrl.replace(/\.md$/, ".en.md");
-    }
-
     if (mdInline != null && !mdUrl) {
       setBodyHtml(bodyEl, mdInline);
+      promoteBodyHeadingToPageTitle(item, titleEl, bodyEl);
     } else if (mdUrl) {
       setBodyHtml(bodyEl, lang === "en" ? "Loading…" : "加载中…");
-      var primaryUrl = (lang === "en" && mdUrlEn) ? mdUrlEn : mdUrl;
-      var fallbackUrl = (lang === "en" && mdUrlEn) ? mdUrl : null;
-      fetch(resolveDocUrl(primaryUrl), { cache: "no-store" })
-        .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error(String(r.status))); })
+      var candidates = (lang === "en") ? getEnglishDocUrlCandidates(mdUrl).concat([mdUrl]) : [mdUrl];
+      function tryFetchAt(idx) {
+        if (idx >= candidates.length) return Promise.reject(new Error("all_failed"));
+        return fetch(resolveDocUrl(candidates[idx]), { cache: "no-store" })
+          .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error(String(r.status))); })
+          .catch(function () { return tryFetchAt(idx + 1); });
+      }
+      tryFetchAt(0)
         .then(function (md) {
-          if (getDocIdFromHash() === id) setBodyHtml(bodyEl, md);
+          if (getDocIdFromHash() === id) {
+            setBodyHtml(bodyEl, md);
+            promoteBodyHeadingToPageTitle(item, titleEl, bodyEl);
+          }
         })
         .catch(function () {
-          if (fallbackUrl) {
-            fetch(resolveDocUrl(fallbackUrl), { cache: "no-store" })
-              .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error(String(r.status))); })
-              .then(function (md) {
-                if (getDocIdFromHash() === id) setBodyHtml(bodyEl, md);
-              })
-              .catch(function () {
-                var msg = lang === "en"
-                  ? "Unable to load document. Please access via HTTP or the deployed site."
-                  : "无法加载文档。请通过 HTTP 访问本页（如本地运行 <code>python3 -m http.server</code> 后打开）或访问已部署的网站。";
-                if (getDocIdFromHash() === id) setBodyHtml(bodyEl, "<p>" + msg + "</p>");
-              });
-          } else {
-            var msg = lang === "en"
-              ? "Unable to load document. Please access via HTTP or the deployed site."
-              : "无法加载文档。请通过 HTTP 访问本页（如本地运行 <code>python3 -m http.server</code> 后打开）或访问已部署的网站。";
-            if (getDocIdFromHash() === id) setBodyHtml(bodyEl, "<p>" + msg + "</p>");
-          }
+          var msg = lang === "en"
+            ? "Unable to load document. Please access via HTTP or the deployed site."
+            : "无法加载文档。请通过 HTTP 访问本页（如本地运行 <code>python3 -m http.server</code> 后打开）或访问已部署的网站。";
+          if (getDocIdFromHash() === id) setBodyHtml(bodyEl, "<p>" + msg + "</p>");
         });
     } else {
       setBodyHtml(bodyEl, "");
