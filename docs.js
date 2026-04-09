@@ -28,8 +28,8 @@
       titleEn: "Contributor Guide",
       desc: "如何参与 Ruyi AI 项目贡献",
       descEn: "How to contribute to Ruyi AI",
-      markdown: "欢迎参与 Ruyi AI 贡献。\n\n（待补充 TBD）",
-      markdownEn: "Welcome to contribute to Ruyi AI.\n\n(TBD)"
+      markdownUrl: "docs/contributor-guide/contributor-guide.md",
+      useFirstHeadingAsTitle: true
     },
     "code-style": {
       title: "代码规范",
