@@ -18,9 +18,9 @@ RuyiAI's vision is to build an open, efficient, and unified RISC-V AI software e
 
 RuyiAI provides full-stack technical support ranging from underlying hardware adaptation to upper-layer framework integration, covering the following core areas:
 
-*   **Ruyi AI Compiler**: A high-performance AI compiler based on MLIR. It encompasses RVV environment setup, IME Dialect extensions, Gemmini support, and various Pass developments (such as dynamic vector representation and convolution vectorization), providing deep compilation optimization capabilities for the RISC-V backend.
-*   **Ruyi AI Operator Programming Language**: Provides Triton's RISC-V adaptation and TileLang support. Through custom intermediate representation output and debugging tools, it enhances the programmability and flexibility of operator development.
-*   **Ruyi AI Operator Library & Runtime**: Constructs a high-performance operator library (Ruyi DNN) and a unified runtime environment. It handles hardware abstraction, memory management, and scheduled execution, ensuring the efficient operation of the software stack on heterogeneous hardware.
+*   **RuyiAI Compiler**: A high-performance AI compiler based on MLIR. It encompasses RVV environment setup, IME Dialect extensions, Gemmini support, and various Pass developments (such as dynamic vector representation and convolution vectorization), providing deep compilation optimization capabilities for the RISC-V backend.
+*   **RuyiAI Operator Programming Language**: Provides Triton's RISC-V adaptation and TileLang support. Through custom intermediate representation output and debugging tools, it enhances the programmability and flexibility of operator development.
+*   **RuyiAI Operator Library & Runtime**: Constructs a high-performance operator library (Ruyi DNN) and a unified runtime environment. It handles hardware abstraction, memory management, and scheduled execution, ensuring the efficient operation of the software stack on heterogeneous hardware.
 
 ## Organization & Team
 
