@@ -15,10 +15,10 @@
 | 安装方式       | `docs/install/`            |
 | 使用教程       | `docs/tutorial/`           |
 | 贡献者指引     | `docs/contributor-guide/`  |
-| Ruyi AI 编译器 | `docs/compiler/`           |
-| Ruyi AI 算子编程语言 | `docs/operator-lang/` |
-| Ruyi AI 算子库 | `docs/operator-lib/`       |
-| Ruyi AI 运行时环境 | `docs/runtime/`        |
+| RuyiAI 编译器 | `docs/compiler/`           |
+| RuyiAI 算子编程语言 | `docs/operator-lang/` |
+| RuyiAI 算子库 | `docs/operator-lib/`       |
+| RuyiAI 运行时环境 | `docs/runtime/`        |
 | 洞察           | `docs/insights/`            |
 
 - **上线 Markdown**：在对应文件夹内编写或放置 `.md` 文件，并在 `docs.js` 中为该菜单项配置 `markdownUrl` 指向该文件路径。

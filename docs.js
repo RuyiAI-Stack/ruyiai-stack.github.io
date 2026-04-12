@@ -3,38 +3,38 @@
     overview: {
       title: "总览",
       titleEn: "Overview",
-      desc: "Ruyi AI 文档总览",
-      descEn: "Ruyi AI documentation overview",
-      markdown: "欢迎查阅 Ruyi AI 文档。\n\n（待补充 TBD）",
-      markdownEn: "Welcome to Ruyi AI documentation.\n\n(TBD)"
+      desc: "RuyiAI 文档总览",
+      descEn: "RuyiAI documentation overview",
+      markdown: "欢迎查阅 RuyiAI 文档。\n\n（待补充 TBD）",
+      markdownEn: "Welcome to RuyiAI documentation.\n\n(TBD)"
     },
     install: {
       title: "安装方式",
       titleEn: "Install",
-      desc: "Ruyi AI 的安装与配置",
+      desc: "RuyiAI 的安装与配置",
       descEn: "Installation and configuration",
       markdownUrl: "docs/install/install.md"
     },
     tutorial: {
       title: "使用教程",
       titleEn: "Tutorial",
-      desc: "Ruyi AI 使用教程与示例",
+      desc: "RuyiAI 使用教程与示例",
       descEn: "Tutorial and examples",
-      markdown: "欢迎查阅 Ruyi AI 使用教程。\n\n（待补充 TBD）",
-      markdownEn: "Welcome to Ruyi AI tutorial.\n\n(TBD)"
+      markdown: "欢迎查阅 RuyiAI 使用教程。\n\n（待补充 TBD）",
+      markdownEn: "Welcome to RuyiAI tutorial.\n\n(TBD)"
     },
     "contributor-guide": {
       title: "贡献者指引",
       titleEn: "Contributor Guide",
-      desc: "如何参与 Ruyi AI 项目贡献",
-      descEn: "How to contribute to Ruyi AI",
+      desc: "如何参与 RuyiAI 项目贡献",
+      descEn: "How to contribute to RuyiAI",
       markdownUrl: "docs/contributor-guide/contributor-guide.md",
       useFirstHeadingAsTitle: true
     },
     "code-style": {
       title: "代码规范",
       titleEn: "Code Style",
-      desc: "Ruyi AI 项目代码规范与约定",
+      desc: "RuyiAI 项目代码规范与约定",
       descEn: "Code style and conventions",
       markdownUrl: "docs/contributor-guide/code-style.md"
     },
@@ -46,8 +46,8 @@
       markdownUrl: "docs/contributor-guide/git-workflow.md"
     },
     compiler: {
-      title: "Ruyi AI 编译器",
-      titleEn: "Ruyi AI Compiler",
+      title: "RuyiAI 编译器",
+      titleEn: "RuyiAI Compiler",
       desc: "基于 MLIR 桥接 PyTorch 和 RISC-V",
       descEn: "MLIR-based bridge between PyTorch and RISC-V",
       markdownUrl: "docs/compiler/compiler.md"
@@ -62,8 +62,8 @@
     about: {
       title: "关于",
       titleEn: "About",
-      desc: "了解 Ruyi AI 项目的背景、愿景与团队。",
-      descEn: "About Ruyi AI project and team",
+      desc: "了解 RuyiAI 项目的背景、愿景与团队。",
+      descEn: "About RuyiAI project and team",
       markdownUrl: "docs/about/about.md",
       useFirstHeadingAsTitle: true
     },
@@ -159,36 +159,36 @@
       markdownUrl: "docs/operator-lang/Implementation.md"
     },
     "operator-lang": {
-      title: "Ruyi AI 算子编程语言",
-      titleEn: "Ruyi AI Operator Language",
+      title: "RuyiAI 算子编程语言",
+      titleEn: "RuyiAI Operator Language",
       desc: "面向 RISC-V 适配 Triton / TileLang",
       descEn: "Triton / TileLang for RISC-V",
-      markdown: "欢迎查阅 Ruyi AI 算子编程语言文档。\n\n（待补充 TBD）",
-      markdownEn: "Welcome to Ruyi AI Operator Language documentation.\n\n(TBD)"
+      markdown: "欢迎查阅 RuyiAI 算子编程语言文档。\n\n（待补充 TBD）",
+      markdownEn: "Welcome to RuyiAI Operator Language documentation.\n\n(TBD)"
     },
     "operator-lib": {
-      title: "Ruyi AI 算子库",
-      titleEn: "Ruyi AI Operator Library",
+      title: "RuyiAI 算子库",
+      titleEn: "RuyiAI Operator Library",
       desc: "面向 RISC-V 的原生高性能算子库",
       descEn: "Native high-performance operator library for RISC-V",
-      markdown: "欢迎查阅 Ruyi AI 算子库文档。\n\n（待补充 TBD）",
-      markdownEn: "Welcome to Ruyi AI Operator Library documentation.\n\n(TBD)"
+      markdown: "欢迎查阅 RuyiAI 算子库文档。\n\n（待补充 TBD）",
+      markdownEn: "Welcome to RuyiAI Operator Library documentation.\n\n(TBD)"
     },
     runtime: {
-      title: "Ruyi AI 运行时环境",
-      titleEn: "Ruyi AI Runtime",
+      title: "RuyiAI 运行时环境",
+      titleEn: "RuyiAI Runtime",
       desc: "面向 RISC-V 各类扩展的统一运行时环境",
       descEn: "Unified runtime for RISC-V extensions",
-      markdown: "欢迎查阅 Ruyi AI 运行时环境文档。\n\n（待补充 TBD）",
-      markdownEn: "Welcome to Ruyi AI Runtime documentation.\n\n(TBD)"
+      markdown: "欢迎查阅 RuyiAI 运行时环境文档。\n\n（待补充 TBD）",
+      markdownEn: "Welcome to RuyiAI Runtime documentation.\n\n(TBD)"
     },
     insights: {
       title: "洞察",
       titleEn: "Insights",
-      desc: "了解 Ruyi AI 的愿景与团队",
-      descEn: "Ruyi AI insights and team",
-      markdown: "欢迎了解 Ruyi AI 洞察与分享。\n\n（待补充 TBD）",
-      markdownEn: "Welcome to Ruyi AI insights.\n\n(TBD)"
+      desc: "了解 RuyiAI 的愿景与团队",
+      descEn: "RuyiAI insights and team",
+      markdown: "欢迎了解 RuyiAI 洞察与分享。\n\n（待补充 TBD）",
+      markdownEn: "Welcome to RuyiAI insights.\n\n(TBD)"
     },
     C4ML2024: {
       title: "C4ML2024",
