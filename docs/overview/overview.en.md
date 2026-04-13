@@ -10,11 +10,11 @@ At the same time, RISC-V platforms still face clear software-fragmentation chall
 
 The RuyiAI system software stack is oriented to RISC-V hardware platforms and is committed to building unified foundational AI system software capabilities. On the one hand, RuyiAI follows the "Ruyi-native" path, carrying out systematic design and optimization with RISC-V as the primary target architecture to form a native software stack for AI computing. On the other hand, RuyiAI also supports the "Ruyi-adaptation" path for mainstream AI software ecosystems, enabling efficient migration, adaptation, and execution on RISC-V platforms, thereby supporting continuous landing and evolution of AI applications in different scenarios.
 
-![RuyiAI system stack construction scope](./overview-1.png)
+![RuyiAI system stack construction scope](/docs/overview/overview-1.png)
 
 At the overall architecture level, RuyiAI is built on mainstream AI development ecosystems and open compilation infrastructure. Centered on PyTorch and LLVM/MLIR, it builds a native AI software stack for RISC-V, providing systematic capabilities that cover model onboarding, graph and tensor representations, multi-level compilation optimization, programming languages, operator libraries, runtime, and unified hardware abstraction. This enables efficient deployment, execution, and continuous evolution of AI models on RISC-V platforms.
 
-![RuyiAI system stack overall architecture](./overview-2.png)
+![RuyiAI system stack overall architecture](/docs/overview/overview-2.png)
 
 # Objectives
 
