@@ -5,8 +5,8 @@
       titleEn: "Overview",
       desc: "RuyiAI 文档总览",
       descEn: "RuyiAI documentation overview",
-      markdown: "欢迎查阅 RuyiAI 文档。\n\n（待补充 TBD）",
-      markdownEn: "Welcome to RuyiAI documentation.\n\n(TBD)"
+      markdownUrl: "docs/overview/overview.md",
+      bodyOnly: true
     },
     install: {
       title: "安装方式",
