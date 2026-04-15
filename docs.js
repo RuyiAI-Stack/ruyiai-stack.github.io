@@ -20,8 +20,8 @@
       titleEn: "Tutorial",
       desc: "RuyiAI 使用教程与示例",
       descEn: "Tutorial and examples",
-      markdown: "欢迎查阅 RuyiAI 使用教程。\n\n（待补充 TBD）",
-      markdownEn: "Welcome to RuyiAI tutorial.\n\n(TBD)"
+      markdownUrl: "docs/tutorial/tutorial.md",
+      bodyOnly: true
     },
     "contributor-guide": {
       title: "贡献者指引",
