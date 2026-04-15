@@ -163,8 +163,8 @@
       titleEn: "RuyiAI Operator Language",
       desc: "面向 RISC-V 适配 Triton / TileLang",
       descEn: "Triton / TileLang for RISC-V",
-      markdown: "欢迎查阅 RuyiAI 算子编程语言文档。\n\n（待补充 TBD）",
-      markdownEn: "Welcome to RuyiAI Operator Language documentation.\n\n(TBD)"
+      markdownUrl: "docs/operator-lang/operator-lang.md",
+      bodyOnly: true
     },
     "operator-lib": {
       title: "RuyiAI 算子库",
