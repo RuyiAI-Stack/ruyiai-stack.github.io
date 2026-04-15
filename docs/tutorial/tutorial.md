@@ -93,7 +93,7 @@ python3 tools/buddy-codegen/build_model.py \
   --prompt "Tell me a joke in 200 words."
 ```
 
-如果需要绑定 NUMA 节点和 CPU 核心:
+如果需要绑定 NUMA 节点和 CPU 核心：
 
 ```bash
 # Equivalent to: numactl --cpunodebind=0,1,2,3 --interleave=0,1,2,3 taskset -c 0-47
@@ -104,4 +104,4 @@ python3 tools/buddy-codegen/build_model.py \
   --prompt "Tell me a joke in 200 words."
 ```
 
-RuyiAI 当前的基本使用方式可以明确概括Buddy Compiler 负责模型编译并生成 RAX，`buddy-cli` 负责加载 RAX 并完成推理执行。
+RuyiAI 当前的基本使用方式可以明确概括 Buddy Compiler 负责模型编译并生成 RAX，`buddy-cli` 负责加载 RAX 并完成推理执行。
