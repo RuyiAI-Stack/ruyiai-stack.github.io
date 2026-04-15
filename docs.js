@@ -171,8 +171,8 @@
       titleEn: "RuyiAI Operator Library",
       desc: "面向 RISC-V 的原生高性能算子库",
       descEn: "Native high-performance operator library for RISC-V",
-      markdown: "欢迎查阅 RuyiAI 算子库文档。\n\n（待补充 TBD）",
-      markdownEn: "Welcome to RuyiAI Operator Library documentation.\n\n(TBD)"
+      markdownUrl: "docs/operator-lib/operator-lib.md",
+      bodyOnly: true
     },
     runtime: {
       title: "RuyiAI 运行时环境",
