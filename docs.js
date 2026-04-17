@@ -187,8 +187,8 @@
       titleEn: "Insights",
       desc: "了解 RuyiAI 的愿景与团队",
       descEn: "RuyiAI insights and team",
-      markdown: "欢迎了解 RuyiAI 洞察与分享。\n\n（待补充 TBD）",
-      markdownEn: "Welcome to RuyiAI insights.\n\n(TBD)"
+      markdownUrl: "docs/insights/insights.md",
+      bodyOnly: true
     },
     C4ML2024: {
       title: "C4ML2024",
