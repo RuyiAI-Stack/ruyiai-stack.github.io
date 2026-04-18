@@ -7,5 +7,6 @@ repos:
         args: [--markdown-linebreak-ext=md]
       - id: check-merge-conflict
       - id: check-yaml
+      # Default 1MB blocks large PNG/PDF in assets/ and docs/. Raise limit for static site assets.
       - id: check-added-large-files
-        args: ["--maxkb=1000"]
+        args: ["--maxkb=8192"]
