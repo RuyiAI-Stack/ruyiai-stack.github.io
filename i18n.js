@@ -57,6 +57,7 @@
       "hero.install": "立即安装",
       "hero.tutorial": "使用教程",
       "hero.overview": "项目架构",
+      "hero.overviewImgAlt": "RuyiAI 架构概览",
       "footer.privacy": "Privacy",
       "footer.terms": "Terms"
     },
@@ -112,6 +113,7 @@
       "hero.install": "Get Started",
       "hero.tutorial": "Tutorial",
       "hero.overview": "Project Overview",
+      "hero.overviewImgAlt": "RuyiAI architecture overview",
       "footer.privacy": "Privacy",
       "footer.terms": "Terms"
     }

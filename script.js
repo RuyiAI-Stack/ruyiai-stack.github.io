@@ -49,6 +49,30 @@ if (communityTrack) {
   communityTrack.insertAdjacentHTML("beforeend", items);
 }
 
+// Overview diagram: language-specific asset (index.html)
+function updateOverviewImage() {
+  var img = document.getElementById("overviewImg");
+  if (!img) return;
+  var lang =
+    typeof window.ruyiaiLang !== "undefined" && window.ruyiaiLang === "en"
+      ? "en"
+      : "zh";
+  img.src =
+    lang === "en"
+      ? "./assets/ruyiai-overview_en.png"
+      : "./assets/ruyiai-overview.png";
+  if (typeof window.ruyiaiGetText === "function") {
+    img.alt = window.ruyiaiGetText("hero.overviewImgAlt");
+  }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", updateOverviewImage);
+} else {
+  updateOverviewImage();
+}
+window.addEventListener("languagechange", updateOverviewImage);
+
 copyBtn?.addEventListener("click", async () => {
   const text = codeBlock?.innerText || "";
   try {
