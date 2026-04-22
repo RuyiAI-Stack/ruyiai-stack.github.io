@@ -18,7 +18,7 @@
 - `vector.broadcast`：将标量或向量广播为 n 维结果向量。
 - `vector.fma`：执行向量融合乘加（FMA）运算。
 
-![Graph of the Coefficients Broadcasting Algorithm](./Images/CoefficientsBroadcasting.png)
+![Graph of the Coefficients Broadcasting Algorithm](/docs/compiler/ConvolutionVectorization-CoefficientsBroadcasting.png)
 
 上图展示了算法流程：
 

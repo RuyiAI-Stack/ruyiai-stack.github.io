@@ -123,7 +123,8 @@
       titleEn: "Convolution Vectorization",
       desc: "卷积向量化相关文档",
       descEn: "Convolution vectorization documentation",
-      markdownUrl: "docs/compiler/ConvolutionVectorization.md"
+      markdownUrl: "docs/compiler/ConvolutionVectorization.md",
+      bodyOnly: true
     },
     "triton-on-riscv": {
       title: "Triton 的 RISC-V 适配",
