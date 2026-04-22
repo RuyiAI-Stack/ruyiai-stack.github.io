@@ -19,7 +19,7 @@ Let’s first introduce the MLIR dialects and operations that are needed by the 
 - `vector.broadcast`: broadcasts a scalar or vector value to an n-D result vector.
 - `vector.fma`: performs fused multiply-add (FMA) on the vector type.
 
-![Graph of the Coefficients Broadcasting Algorithm](./Images/CoefficientsBroadcasting.png)
+![Graph of the Coefficients Broadcasting Algorithm](/docs/compiler/conv-opt-CoefficientsBroadcasting.png)
 
 The figure shows the steps of the algorithm:
 - Iterate over each kernel element and broadcast it to vector1.
