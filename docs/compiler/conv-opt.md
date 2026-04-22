@@ -19,7 +19,7 @@
 - `vector.broadcast`：将标量或向量广播为 n 维结果向量。
 - `vector.fma`：在向量类型上执行融合乘加（FMA）运算。
 
-![Graph of the Coefficients Broadcasting Algorithm](./Images/CoefficientsBroadcasting.png)
+![Graph of the Coefficients Broadcasting Algorithm](/docs/compiler/conv-opt-CoefficientsBroadcasting.png)
 
 上图展示了系数广播算法的大致执行流程：
 - 遍历卷积核中的每个元素，并将其广播到向量 `vector1`；
