@@ -100,7 +100,8 @@
       titleEn: "Dynamic Vector Representation",
       desc: "为 MLIR Vector Dialect 引入动态向量：类型、操作与语义。",
       descEn: "Dynamic vectors for the MLIR Vector dialect: types, operations, and semantics.",
-      markdownUrl: "docs/compiler/DynamicVector.md"
+      markdownUrl: "docs/compiler/DynamicVector.md",
+      bodyOnly: true
     },
     "conv-opt": {
       title: "卷积优化",
