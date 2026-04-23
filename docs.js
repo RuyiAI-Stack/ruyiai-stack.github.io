@@ -62,8 +62,8 @@
     about: {
       title: "关于",
       titleEn: "About",
-      desc: "了解 RuyiAI 项目的背景、愿景与团队。",
-      descEn: "About RuyiAI project and team",
+      desc: "",
+      descEn: "",
       markdownUrl: "docs/about/about.md",
       useFirstHeadingAsTitle: true
     },
@@ -897,7 +897,11 @@
       if (descEl) { descEl.style.display = "none"; descEl.textContent = ""; }
     } else {
       if (titleEl) { titleEl.style.display = ""; titleEl.textContent = title; }
-      if (descEl) { descEl.style.display = ""; descEl.textContent = desc; }
+      if (descEl) {
+        var hasDesc = !!(desc && String(desc).trim());
+        descEl.style.display = hasDesc ? "" : "none";
+        descEl.textContent = hasDesc ? desc : "";
+      }
     }
     var mdInline = (lang === "en" && item.markdownEn != null) ? item.markdownEn : item.markdown;
     var mdUrl = item.markdownUrl || null;
