@@ -1,8 +1,7 @@
 ;(function () {
   var STORAGE_KEY = "ruyiai-lang";
   var LANG =
-    localStorage.getItem(STORAGE_KEY) ||
-    (navigator.language && navigator.language.startsWith("zh") ? "zh" : "en");
+    localStorage.getItem(STORAGE_KEY) || "zh";
 
   var i18n = {
     zh: {
