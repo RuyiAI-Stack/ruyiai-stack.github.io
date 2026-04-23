@@ -103,14 +103,6 @@
       markdownUrl: "docs/compiler/DynamicVector.md",
       bodyOnly: true
     },
-    "conv-opt": {
-      title: "卷积优化",
-      titleEn: "Convolution Optimization",
-      desc: "卷积优化工具 conv-opt：系数广播算法与所需 Vector/affine 操作概览。",
-      descEn: "Convolution optimization tool conv-opt: coefficients broadcasting algorithm and required Vector/affine ops.",
-      markdownUrl: "docs/compiler/conv-opt.md",
-      bodyOnly: true
-    },
     "adding-operators": {
       title: "增加算子支持",
       titleEn: "Adding Operators",
