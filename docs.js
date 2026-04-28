@@ -65,7 +65,8 @@
       desc: "",
       descEn: "",
       markdownUrl: "docs/about/about.md",
-      useFirstHeadingAsTitle: true
+      useFirstHeadingAsTitle: true,
+      bodyOnly: true
     },
     "ime-dialect": {
       title: "SpacemiT IME 方言",
