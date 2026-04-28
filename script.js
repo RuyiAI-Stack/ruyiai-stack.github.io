@@ -3,7 +3,7 @@ const copyBtn = document.getElementById("copyBtn");
 const codeBlock = document.getElementById("codeBlock");
 const year = document.getElementById("year");
 
-year.textContent = String(new Date().getFullYear());
+if (year) year.textContent = String(new Date().getFullYear());
 
 // Mobile nav: hamburger toggle
 const navToggle = document.getElementById("navToggle");
