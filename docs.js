@@ -193,6 +193,14 @@
       descEn: "Buddy Compiler at C4ML 2024",
       markdownUrl: "docs/insights/C4ML2024.md",
       bodyOnly: true
+    },
+    EuroLLVM2023: {
+      title: "EuroLLVM2023",
+      titleEn: "EuroLLVM2023",
+      desc: "EuroLLVM 2023 演讲视频",
+      descEn: "EuroLLVM 2023 talk video",
+      markdownUrl: "docs/insights/EuroLLVM2023.md",
+      bodyOnly: true
     }
   };
 
@@ -964,7 +972,7 @@
         operatorLangBtn.setAttribute("aria-expanded", "true");
       }
     }
-    if (id === "insights" || id === "C4ML2024") {
+    if (id === "insights" || id === "C4ML2024" || id === "EuroLLVM2023") {
       var groups = document.querySelectorAll(".docs-nav__group");
       var insightsBtn = document.getElementById("docsNavInsights");
       var insightsGroup = insightsBtn ? insightsBtn.closest(".docs-nav__group") : null;
