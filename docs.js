@@ -948,6 +948,7 @@
     document.querySelectorAll(".docs-nav__child").forEach(function (a) {
       a.classList.toggle("docs-nav__child--active", a.getAttribute("data-doc") === id);
     });
+    closeAllDocsNavGroups();
     if (id === "contributor-guide" || id === "code-style" || id === "git-workflow") {
       var contributorBtn = document.getElementById("docsNavContributor");
       var contributorGroup = contributorBtn ? contributorBtn.closest(".docs-nav__group") : null;
@@ -956,7 +957,7 @@
         contributorBtn.setAttribute("aria-expanded", "true");
       }
     }
-    if (id === "compiler" || id === "rvv-environment" || id === "ime-dialect" || id === "gemmini" || id === "adding-operators" || id === "convolution-vectorization") {
+    if (id === "compiler" || id === "rvv-environment" || id === "ime-dialect" || id === "gemmini" || id === "add-pass" || id === "build-methods" || id === "dynamic-vector" || id === "adding-operators" || id === "convolution-vectorization") {
       var compilerBtn = document.getElementById("docsNavCompiler");
       var compilerGroup = compilerBtn ? compilerBtn.closest(".docs-nav__group") : null;
       if (compilerGroup && compilerBtn) {
@@ -973,7 +974,6 @@
       }
     }
     if (id === "insights" || id === "C4ML2024" || id === "EuroLLVM2023") {
-      var groups = document.querySelectorAll(".docs-nav__group");
       var insightsBtn = document.getElementById("docsNavInsights");
       var insightsGroup = insightsBtn ? insightsBtn.closest(".docs-nav__group") : null;
       if (insightsGroup && insightsBtn) {
@@ -989,51 +989,36 @@
     if (layout) layout.classList.remove("docs-nav-open");
   }
 
+  /** 收起侧栏中所有可展开的一级菜单分组 */
+  function closeAllDocsNavGroups() {
+    document.querySelectorAll(".docs-nav .docs-nav__group").forEach(function (g) {
+      g.classList.remove("docs-nav__group--open");
+      var t = g.querySelector(".docs-nav__group-toggle");
+      if (t) t.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  /** 手风琴：展开某一组前先收起其余分组；若该组已展开则整体收起 */
+  function bindDocsNavGroupAccordion(btn) {
+    if (!btn) return;
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      var group = btn.closest(".docs-nav__group");
+      if (!group) return;
+      var wasOpen = group.classList.contains("docs-nav__group--open");
+      closeAllDocsNavGroups();
+      if (!wasOpen) {
+        group.classList.add("docs-nav__group--open");
+        btn.setAttribute("aria-expanded", "true");
+      }
+    });
+  }
+
   function initNav() {
-    var contributorBtn = document.getElementById("docsNavContributor");
-    if (contributorBtn) {
-      contributorBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        var group = contributorBtn.closest(".docs-nav__group");
-        if (group) {
-          var open = group.classList.toggle("docs-nav__group--open");
-          contributorBtn.setAttribute("aria-expanded", open);
-        }
-      });
-    }
-    var compilerBtn = document.getElementById("docsNavCompiler");
-    if (compilerBtn) {
-      compilerBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        var group = compilerBtn.closest(".docs-nav__group");
-        if (group) {
-          var open = group.classList.toggle("docs-nav__group--open");
-          compilerBtn.setAttribute("aria-expanded", open);
-        }
-      });
-    }
-    var operatorLangBtn = document.getElementById("docsNavOperatorLang");
-    if (operatorLangBtn) {
-      operatorLangBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        var group = operatorLangBtn.closest(".docs-nav__group");
-        if (group) {
-          var open = group.classList.toggle("docs-nav__group--open");
-          operatorLangBtn.setAttribute("aria-expanded", open);
-        }
-      });
-    }
-    var insightsBtn = document.getElementById("docsNavInsights");
-    if (insightsBtn) {
-      insightsBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        var group = insightsBtn.closest(".docs-nav__group");
-        if (group) {
-          var open = group.classList.toggle("docs-nav__group--open");
-          insightsBtn.setAttribute("aria-expanded", open);
-        }
-      });
-    }
+    bindDocsNavGroupAccordion(document.getElementById("docsNavContributor"));
+    bindDocsNavGroupAccordion(document.getElementById("docsNavCompiler"));
+    bindDocsNavGroupAccordion(document.getElementById("docsNavOperatorLang"));
+    bindDocsNavGroupAccordion(document.getElementById("docsNavInsights"));
     var docsLayout = document.getElementById("docsLayout");
     var docsNavToggle = document.getElementById("docsNavToggle");
     var docsSidebarOverlay = document.getElementById("docsSidebarOverlay");
