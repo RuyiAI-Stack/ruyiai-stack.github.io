@@ -892,6 +892,88 @@
     });
   }
 
+  var buddyContributorsState = { data: null, promise: null };
+
+  function fetchAllBuddyContributors(repo) {
+    if (buddyContributorsState.data) {
+      return Promise.resolve(buddyContributorsState.data);
+    }
+    if (buddyContributorsState.promise) {
+      return buddyContributorsState.promise;
+    }
+    var all = [];
+    function fetchPage(page) {
+      return fetch("https://api.github.com/repos/" + repo + "/contributors?per_page=100&anon=1&page=" + page)
+        .then(function (r) {
+          if (!r.ok) throw new Error(String(r.status));
+          return r.json();
+        })
+        .then(function (list) {
+          if (!list.length) return all;
+          all = all.concat(list);
+          if (list.length < 100) return all;
+          return fetchPage(page + 1);
+        });
+    }
+    buddyContributorsState.promise = fetchPage(1)
+      .then(function (data) {
+        buddyContributorsState.data = data;
+        buddyContributorsState.promise = null;
+        return data;
+      })
+      .catch(function (err) {
+        buddyContributorsState.promise = null;
+        throw err;
+      });
+    return buddyContributorsState.promise;
+  }
+
+  function renderBuddyContributorsGrid(container, contributors) {
+    if (!container || !contributors.length) return;
+    var html = '<div class="buddy-contributors__grid">';
+    contributors.forEach(function (c) {
+      var login = c.login;
+      var profileUrl = c.html_url || (login ? "https://github.com/" + login : "");
+      var avatarUrl = c.avatar_url || "";
+      var alt = login || "Anonymous contributor";
+      if (profileUrl) {
+        html += '<a class="buddy-contributors__link" href="' + escapeHtml(profileUrl) + '" target="_blank" rel="noopener noreferrer" title="' + escapeHtml(login || alt) + '">';
+        html += '<img class="buddy-contributors__avatar" src="' + escapeHtml(avatarUrl) + '" alt="' + escapeHtml(alt) + '" width="64" height="64" loading="lazy" />';
+        html += "</a>";
+      } else {
+        html += '<span class="buddy-contributors__anon" title="Anonymous contributor">';
+        html += '<img class="buddy-contributors__avatar" src="' + escapeHtml(avatarUrl) + '" alt="' + escapeHtml(alt) + '" width="64" height="64" loading="lazy" />';
+        html += "</span>";
+      }
+    });
+    html += "</div>";
+    container.innerHTML = html;
+  }
+
+  function loadBuddyContributors(bodyEl) {
+    var container = bodyEl ? bodyEl.querySelector("#buddyContributors") : null;
+    if (!container) return;
+    var repo = container.getAttribute("data-repo") || "buddy-compiler/buddy-mlir";
+    var lang = getCurrentLang();
+    container.innerHTML = '<p class="buddy-contributors__status">' + (lang === "en" ? "Loading contributors…" : "加载贡献者中…") + "</p>";
+    fetchAllBuddyContributors(repo)
+      .then(function (contributors) {
+        if (!bodyEl.querySelector("#buddyContributors")) return;
+        renderBuddyContributorsGrid(container, contributors);
+        refreshInPageToc();
+      })
+      .catch(function () {
+        if (!bodyEl.querySelector("#buddyContributors")) return;
+        container.innerHTML = '<p class="buddy-contributors__status buddy-contributors__status--error">' +
+          (lang === "en" ? "Unable to load contributors. Please try again later." : "无法加载贡献者列表，请稍后重试。") +
+          "</p>";
+      });
+  }
+
+  function afterDocBodyRendered(id, bodyEl) {
+    if (id === "about") loadBuddyContributors(bodyEl);
+  }
+
   function renderDoc(id) {
     var item = docItems[id];
     if (!item) return;
@@ -917,6 +999,7 @@
     if (mdInline != null && !mdUrl) {
       setBodyHtml(bodyEl, mdInline);
       promoteBodyHeadingToPageTitle(item, titleEl, bodyEl);
+      afterDocBodyRendered(id, bodyEl);
     } else if (mdUrl) {
       setBodyHtml(bodyEl, lang === "en" ? "Loading…" : "加载中…");
       var candidates = (lang === "en") ? getEnglishDocUrlCandidates(mdUrl).concat([mdUrl]) : [mdUrl];
@@ -931,13 +1014,17 @@
           if (getDocIdFromHash() === id) {
             setBodyHtml(bodyEl, md);
             promoteBodyHeadingToPageTitle(item, titleEl, bodyEl);
+            afterDocBodyRendered(id, bodyEl);
           }
         })
         .catch(function () {
           var msg = lang === "en"
             ? "Unable to load document. Please access via HTTP or the deployed site."
             : "无法加载文档。请通过 HTTP 访问本页（如本地运行 <code>python3 -m http.server</code> 后打开）或访问已部署的网站。";
-          if (getDocIdFromHash() === id) setBodyHtml(bodyEl, "<p>" + msg + "</p>");
+          if (getDocIdFromHash() === id) {
+            setBodyHtml(bodyEl, "<p>" + msg + "</p>");
+            afterDocBodyRendered(id, bodyEl);
+          }
         });
     } else {
       setBodyHtml(bodyEl, "");

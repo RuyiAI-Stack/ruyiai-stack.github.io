@@ -29,3 +29,7 @@ RuyiAI is initiated and led by the **Intelligent Software Research Center, Insti
 Relying on ISCAS's profound heritage in system software and compilers, we have assembled a core team composed of senior system architects, compiler experts, and AI engineers. The team possesses solid accumulation and rich experience in AI compilation technology, high-performance computing, and open-source ecosystem construction, with full-stack R&D capabilities ranging from underlying toolchain development to upper-layer system optimization.
 
 Upholding the philosophy of open collaboration, we are committed to working with global developers and industry partners to jointly promote the prosperous development of the RISC-V AI software ecosystem.
+
+## Contributors
+
+<div id="buddyContributors" class="buddy-contributors" data-repo="buddy-compiler/buddy-mlir"></div>

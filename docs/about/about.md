@@ -25,3 +25,7 @@ RuyiAI 由 **中国科学院软件研究所（ISCAS）智能软件研究中心**
 依托 ISCAS 在系统软件与编译器领域的深厚底蕴，我们组建了一支由资深系统架构师、编译器专家及 AI 工程师组成的核心团队。团队在 AI 编译技术、高性能计算及开源生态建设方面拥有扎实的积累与丰富经验，具备从底层工具链开发到上层系统优化的全栈研发能力。
 
 我们秉持开放协作的理念，致力于与全球开发者及产业伙伴共同推动 RISC-V AI 软件生态的繁荣发展。
+
+## 贡献者
+
+<div id="buddyContributors" class="buddy-contributors" data-repo="buddy-compiler/buddy-mlir"></div>

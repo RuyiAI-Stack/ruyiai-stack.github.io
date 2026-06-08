@@ -443,3 +443,45 @@
   .docs-main{ padding: 16px 12px 40px; }
   .docs-content__title{ font-size: 22px; }
 }
+
+/* buddy-mlir contributors (About page) */
+.buddy-contributors{
+  margin-top: 0.5rem;
+}
+.buddy-contributors__grid{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 0.75rem;
+}
+.buddy-contributors__link,
+.buddy-contributors__anon{
+  display: block;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  line-height: 0;
+}
+.buddy-contributors__link{
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.buddy-contributors__link:hover{
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(17, 24, 39, 0.15);
+  text-decoration: none;
+}
+.buddy-contributors__avatar{
+  width: 64px;
+  height: 64px;
+  display: block;
+  border-radius: 50%;
+  background: rgba(17, 24, 39, 0.06);
+}
+.buddy-contributors__status{
+  margin: 0.75rem 0 0;
+  color: var(--muted, #6b7280);
+  font-size: 14px;
+}
+.buddy-contributors__status--error{
+  color: #b45309;
+}
