@@ -448,6 +448,12 @@
 .buddy-contributors{
   margin-top: 0.5rem;
 }
+.buddy-contributors__summary{
+  margin: 0.5rem 0 0;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+}
 .buddy-contributors__grid{
   display: flex;
   flex-wrap: wrap;

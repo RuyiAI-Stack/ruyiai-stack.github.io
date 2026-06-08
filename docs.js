@@ -928,9 +928,25 @@
     return buddyContributorsState.promise;
   }
 
+  function contributorStatsText(count, lang) {
+    if (lang === "en") {
+      return "Nothing, not even mountains and seas, can separate people with common goals and ideals. Let's build something meaningful together. Thank you to our " + count + " contributor" + (count === 1 ? "" : "s") + ":";
+    }
+    return "志合者，不以山海为远。让我们一起做出有意思的事情，感谢 " + count + " 位贡献者：";
+  }
+
   function renderBuddyContributorsGrid(container, contributors) {
-    if (!container || !contributors.length) return;
-    var html = '<div class="buddy-contributors__grid">';
+    if (!container) return;
+    var lang = getCurrentLang();
+    var count = contributors ? contributors.length : 0;
+    if (!count) {
+      container.innerHTML = '<p class="buddy-contributors__status">' +
+        (lang === "en" ? "No contributor data available." : "暂无贡献者数据。") +
+        "</p>";
+      return;
+    }
+    var html = '<p class="buddy-contributors__summary">' + contributorStatsText(count, lang) + "</p>";
+    html += '<div class="buddy-contributors__grid">';
     contributors.forEach(function (c) {
       var login = c.login;
       var profileUrl = c.html_url || (login ? "https://github.com/" + login : "");
