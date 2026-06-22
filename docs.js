@@ -201,6 +201,14 @@
       descEn: "EuroLLVM 2023 talk video",
       markdownUrl: "docs/insights/EuroLLVM2023.md",
       bodyOnly: true
+    },
+    "RISC-V-EU-2026": {
+      title: "RISC-V EU 2026",
+      titleEn: "RISC-V EU 2026",
+      desc: "RISC-V EU 2026 演示材料",
+      descEn: "RISC-V EU 2026 presentation materials",
+      markdownUrl: "docs/insights/RISC-V-EU-2026.md",
+      bodyOnly: true
     }
   };
 
@@ -1076,7 +1084,7 @@
         operatorLangBtn.setAttribute("aria-expanded", "true");
       }
     }
-    if (id === "insights" || id === "C4ML2024" || id === "EuroLLVM2023") {
+    if (id === "insights" || id === "C4ML2024" || id === "EuroLLVM2023" || id === "RISC-V-EU-2026") {
       var insightsBtn = document.getElementById("docsNavInsights");
       var insightsGroup = insightsBtn ? insightsBtn.closest(".docs-nav__group") : null;
       if (insightsGroup && insightsBtn) {
