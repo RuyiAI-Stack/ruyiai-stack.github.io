@@ -203,10 +203,10 @@
       bodyOnly: true
     },
     "RISC-V-EU-2026": {
-      title: "RISC-V EU 2026",
-      titleEn: "RISC-V EU 2026",
-      desc: "RISC-V EU 2026 演示材料",
-      descEn: "RISC-V EU 2026 presentation materials",
+      title: "RISC-V Summit Europe 2026",
+      titleEn: "RISC-V Summit Europe 2026",
+      desc: "RISC-V Summit Europe 2026 演示材料",
+      descEn: "RISC-V Summit Europe 2026 presentation materials",
       markdownUrl: "docs/insights/RISC-V-EU-2026.md",
       bodyOnly: true
     }
