@@ -28,4 +28,4 @@ RuyiAI 由 **中国科学院软件研究所（ISCAS）智能软件研究中心**
 
 ## 贡献者
 
-<div id="buddyContributors" class="buddy-contributors" data-repo="buddy-compiler/buddy-mlir"></div>
+<div id="buddyContributors" class="buddy-contributors"></div>

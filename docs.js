@@ -900,40 +900,119 @@
     });
   }
 
-  var buddyContributorsState = { data: null, promise: null };
+  var contributorsState = { data: null, promise: null };
 
-  function fetchAllBuddyContributors(repo) {
-    if (buddyContributorsState.data) {
-      return Promise.resolve(buddyContributorsState.data);
-    }
-    if (buddyContributorsState.promise) {
-      return buddyContributorsState.promise;
-    }
+  var CONTRIBUTOR_REPOS = [
+    "buddy-compiler/buddy-mlir",
+    "RuyiAI-Stack/ruyiai-stack.github.io",
+    "RuyiAI-Stack/triton-riscv",
+    "RuyiAI-Stack/tilelang-riscv",
+    "RuyiAI-Stack/pytorch",
+    "RuyiAI-Stack/llvm-project"
+  ];
+
+  var CONTRIBUTORS_JSON_URL = "./assets/contributors.json";
+
+  function fetchAllContributorsForRepo(repo) {
     var all = [];
     function fetchPage(page) {
       return fetch("https://api.github.com/repos/" + repo + "/contributors?per_page=100&anon=1&page=" + page)
         .then(function (r) {
+          if (r.status === 403) {
+            return Promise.reject(new Error("rate_limit"));
+          }
           if (!r.ok) throw new Error(String(r.status));
           return r.json();
         })
         .then(function (list) {
+          if (!Array.isArray(list)) throw new Error("invalid_response");
           if (!list.length) return all;
           all = all.concat(list);
           if (list.length < 100) return all;
           return fetchPage(page + 1);
         });
     }
-    buddyContributorsState.promise = fetchPage(1)
-      .then(function (data) {
-        buddyContributorsState.data = data;
-        buddyContributorsState.promise = null;
-        return data;
+    return fetchPage(1);
+  }
+
+  function contributorKey(c) {
+    if (c.login) return "login:" + String(c.login).toLowerCase();
+    if (c.id != null) return "id:" + c.id;
+    return "anon:" + (c.avatar_url || "");
+  }
+
+  /** 按仓库顺序合并贡献者，login/id 去重，保留首次出现顺序 */
+  function mergeContributorsDedup(repoLists) {
+    var seen = {};
+    var merged = [];
+    repoLists.forEach(function (list) {
+      (list || []).forEach(function (c) {
+        var key = contributorKey(c);
+        if (seen[key]) return;
+        seen[key] = true;
+        merged.push(c);
+      });
+    });
+    return merged;
+  }
+
+  function loadContributorsFromStaticJson() {
+    return fetch(resolveDocUrl(CONTRIBUTORS_JSON_URL), { cache: "no-store" })
+      .then(function (r) {
+        if (!r.ok) throw new Error(String(r.status));
+        return r.json();
+      })
+      .then(function (payload) {
+        if (payload && Array.isArray(payload.contributors)) return payload.contributors;
+        if (Array.isArray(payload)) return payload;
+        throw new Error("invalid_json");
+      });
+  }
+
+  /** 逐仓库拉取，单个失败不影响其余仓库 */
+  function fetchMergedContributorsFromApi(repos) {
+    function fetchRepoAt(idx, acc) {
+      if (idx >= repos.length) return Promise.resolve(acc);
+      return fetchAllContributorsForRepo(repos[idx])
+        .then(function (list) {
+          acc.push(list);
+          return fetchRepoAt(idx + 1, acc);
+        })
+        .catch(function () {
+          acc.push([]);
+          return fetchRepoAt(idx + 1, acc);
+        });
+    }
+    return fetchRepoAt(0, []).then(function (repoLists) {
+      var merged = mergeContributorsDedup(repoLists);
+      if (!merged.length) {
+        return Promise.reject(new Error("all_failed"));
+      }
+      return merged;
+    });
+  }
+
+  function fetchMergedContributors(repos) {
+    if (contributorsState.data) {
+      return Promise.resolve(contributorsState.data);
+    }
+    if (contributorsState.promise) {
+      return contributorsState.promise;
+    }
+    contributorsState.promise = loadContributorsFromStaticJson()
+      .catch(function () {
+        return fetchMergedContributorsFromApi(repos);
+      })
+      .then(function (merged) {
+        contributorsState.data = merged;
+        contributorsState.promise = null;
+        return merged;
       })
       .catch(function (err) {
-        buddyContributorsState.promise = null;
+        contributorsState.promise = null;
         throw err;
       });
-    return buddyContributorsState.promise;
+    return contributorsState.promise;
   }
 
   function contributorStatsText(count, lang) {
@@ -977,10 +1056,9 @@
   function loadBuddyContributors(bodyEl) {
     var container = bodyEl ? bodyEl.querySelector("#buddyContributors") : null;
     if (!container) return;
-    var repo = container.getAttribute("data-repo") || "buddy-compiler/buddy-mlir";
     var lang = getCurrentLang();
     container.innerHTML = '<p class="buddy-contributors__status">' + (lang === "en" ? "Loading contributors…" : "加载贡献者中…") + "</p>";
-    fetchAllBuddyContributors(repo)
+    fetchMergedContributors(CONTRIBUTOR_REPOS)
       .then(function (contributors) {
         if (!bodyEl.querySelector("#buddyContributors")) return;
         renderBuddyContributorsGrid(container, contributors);

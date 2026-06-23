@@ -32,4 +32,4 @@ Upholding the philosophy of open collaboration, we are committed to working with
 
 ## Contributors
 
-<div id="buddyContributors" class="buddy-contributors" data-repo="buddy-compiler/buddy-mlir"></div>
+<div id="buddyContributors" class="buddy-contributors"></div>
