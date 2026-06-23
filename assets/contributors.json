@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-23T14:20:28.410Z",
+  "generatedAt": "2026-06-23T17:54:50.102Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -8,7 +8,7 @@
     "RuyiAI-Stack/pytorch",
     "RuyiAI-Stack/llvm-project"
   ],
-  "count": 911,
+  "count": 912,
   "contributors": [
     {
       "login": "zhanghb97",
@@ -499,6 +499,12 @@
       "id": 12019860,
       "avatar_url": "https://avatars.githubusercontent.com/u/12019860?v=4",
       "html_url": "https://github.com/yinjiayi"
+    },
+    {
+      "login": "github-actions[bot]",
+      "id": 41898282,
+      "avatar_url": "https://avatars.githubusercontent.com/in/15368?v=4",
+      "html_url": "https://github.com/apps/github-actions"
     },
     {
       "login": "nhat-nguyen",
