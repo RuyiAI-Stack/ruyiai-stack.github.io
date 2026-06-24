@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T08:50:06.467Z",
+  "generatedAt": "2026-06-24T14:53:34.228Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -492,16 +492,16 @@
       "html_url": "https://github.com/zhaowt96"
     },
     {
-      "login": "yinjiayi",
-      "id": 12019860,
-      "avatar_url": "https://avatars.githubusercontent.com/u/12019860?v=4",
-      "html_url": "https://github.com/yinjiayi"
-    },
-    {
       "login": "github-actions[bot]",
       "id": 41898282,
       "avatar_url": "https://avatars.githubusercontent.com/in/15368?v=4",
       "html_url": "https://github.com/apps/github-actions"
+    },
+    {
+      "login": "yinjiayi",
+      "id": 12019860,
+      "avatar_url": "https://avatars.githubusercontent.com/u/12019860?v=4",
+      "html_url": "https://github.com/yinjiayi"
     },
     {
       "login": "web-flow",
