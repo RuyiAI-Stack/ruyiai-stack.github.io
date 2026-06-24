@@ -339,6 +339,22 @@ html[lang="zh-CN"] .nav__dropbtn{ letter-spacing: 0.15em; }
   gap: 12px;
   margin-top: 22px;
   flex-wrap: wrap;
+  align-items: center;
+}
+.cta .btn{
+  background: rgba(17, 24, 39, 0.08);
+  color: var(--text);
+  border-color: rgba(15, 23, 42, 0.14);
+  box-shadow: 0 4px 14px rgba(17, 24, 39, 0.06);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+.cta .btn:hover{
+  background: var(--primary);
+  color: var(--primaryText);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 30px rgba(17, 24, 39, 0.18);
+  filter: brightness(1.02);
+  transform: translateY(-1px);
 }
 
 /* Buttons */
@@ -364,10 +380,12 @@ html[lang="zh-CN"] .nav__dropbtn{ letter-spacing: 0.15em; }
 }
 .btn--primary:hover{ filter: brightness(1.02); transform: translateY(-1px); }
 .btn--ghost{
-  background: rgba(255,255,255,0.6);
+  background: rgba(17, 24, 39, 0.08);
   color: var(--text);
+  border-color: rgba(15, 23, 42, 0.14);
+  box-shadow: 0 4px 14px rgba(17, 24, 39, 0.06);
 }
-.btn--ghost:hover{ background: rgba(17,24,39,0.04); }
+.btn--ghost:hover{ background: rgba(17, 24, 39, 0.12); }
 
 /* Code card */
 .codecard{
