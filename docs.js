@@ -913,14 +913,31 @@
 
   var CONTRIBUTORS_JSON_URL = "./assets/contributors.json";
 
-  function fetchAllContributorsForRepo(repo) {
+  function normalizeContributorUser(user) {
+    if (!user || !user.login) return null;
+    return {
+      login: user.login,
+      id: user.id,
+      avatar_url: user.avatar_url,
+      html_url: user.html_url || "https://github.com/" + user.login
+    };
+  }
+
+  function fetchRepoMeta(repo) {
+    return fetch("https://api.github.com/repos/" + repo, { headers: { Accept: "application/vnd.github+json" } })
+      .then(function (r) {
+        if (r.status === 403) return Promise.reject(new Error("rate_limit"));
+        if (!r.ok) throw new Error(String(r.status));
+        return r.json();
+      });
+  }
+
+  function fetchStandardContributorsForRepo(repo) {
     var all = [];
     function fetchPage(page) {
       return fetch("https://api.github.com/repos/" + repo + "/contributors?per_page=100&anon=1&page=" + page)
         .then(function (r) {
-          if (r.status === 403) {
-            return Promise.reject(new Error("rate_limit"));
-          }
+          if (r.status === 403) return Promise.reject(new Error("rate_limit"));
           if (!r.ok) throw new Error(String(r.status));
           return r.json();
         })
@@ -932,7 +949,65 @@
           return fetchPage(page + 1);
         });
     }
-    return fetchPage(1);
+    return fetchPage(1).then(function (list) {
+      return list.map(normalizeContributorUser).filter(Boolean);
+    });
+  }
+
+  /** fork 仓库：compare 上游与 fork 默认分支，仅统计新增提交作者 */
+  function fetchForkContributorsForRepo(repo, meta) {
+    var parent = meta.parent;
+    if (!parent || !parent.owner) return Promise.resolve([]);
+    var parentOwner = parent.owner.login;
+    var parentBranch = parent.default_branch || "main";
+    var forkBranch = meta.default_branch || "main";
+    var contributors = new Map();
+
+    function addFromCommits(commits) {
+      commits.forEach(function (commit) {
+        [commit.author, commit.committer].forEach(function (user) {
+          var c = normalizeContributorUser(user);
+          if (!c) return;
+          var key = contributorKey(c);
+          if (!contributors.has(key)) contributors.set(key, c);
+        });
+      });
+    }
+
+    function comparePage(basehead) {
+      return fetch("https://api.github.com/repos/" + repo + "/compare/" + basehead, {
+        headers: { Accept: "application/vnd.github+json" }
+      })
+        .then(function (r) {
+          if (r.status === 403) return Promise.reject(new Error("rate_limit"));
+          if (!r.ok) throw new Error(String(r.status));
+          return r.json();
+        })
+        .then(function (data) {
+          var commits = data.commits || [];
+          addFromCommits(commits);
+          if (data.total_commits > commits.length && commits.length > 0) {
+            var lastSha = commits[commits.length - 1].sha;
+            return comparePage(lastSha + "..." + forkBranch);
+          }
+          return Array.from(contributors.values());
+        });
+    }
+
+    return comparePage(parentOwner + ":" + parentBranch + "..." + forkBranch);
+  }
+
+  function fetchContributorsForRepo(repo) {
+    return fetchRepoMeta(repo).then(function (meta) {
+      if (meta.fork && meta.parent) {
+        return fetchForkContributorsForRepo(repo, meta);
+      }
+      return fetchStandardContributorsForRepo(repo);
+    });
+  }
+
+  function fetchAllContributorsForRepo(repo) {
+    return fetchContributorsForRepo(repo);
   }
 
   function contributorKey(c) {

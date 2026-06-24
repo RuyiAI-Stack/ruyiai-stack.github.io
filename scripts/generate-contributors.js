@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 /**
  * 拉取各仓库贡献者并生成 assets/contributors.json（去重、保留首次出现顺序）。
+ * 非 fork 仓库：使用 GitHub Contributors API。
+ * fork 仓库：仅统计相对上游仓库新增提交中的作者（不含上游历史贡献者）。
  * 用法：node scripts/generate-contributors.js
- * 未认证 GitHub API 限流 60 次/小时；若失败请稍后重试或设置 GITHUB_TOKEN。
  */
 "use strict";
 
@@ -48,24 +49,85 @@ function ghGet(url) {
   });
 }
 
-function fetchRepoContributors(repo) {
-  var all = [];
-  function page(n) {
-    var url = "https://api.github.com/repos/" + repo + "/contributors?per_page=100&anon=1&page=" + n;
-    return ghGet(url).then(function (list) {
-      if (!list.length) return all;
-      all = all.concat(list);
-      if (list.length < 100) return all;
-      return page(n + 1);
-    });
-  }
-  return page(1);
-}
-
 function contributorKey(c) {
   if (c.login) return "login:" + String(c.login).toLowerCase();
   if (c.id != null) return "id:" + c.id;
   return "anon:" + (c.avatar_url || "");
+}
+
+function normalizeContributor(user) {
+  if (!user || !user.login) return null;
+  return {
+    login: user.login,
+    id: user.id,
+    avatar_url: user.avatar_url,
+    html_url: user.html_url || "https://github.com/" + user.login
+  };
+}
+
+function fetchRepoMeta(repo) {
+  return ghGet("https://api.github.com/repos/" + repo);
+}
+
+function fetchStandardContributors(repo) {
+  var all = [];
+  function page(n) {
+    return ghGet("https://api.github.com/repos/" + repo + "/contributors?per_page=100&anon=1&page=" + n)
+      .then(function (list) {
+        if (!list.length) return all;
+        all = all.concat(list);
+        if (list.length < 100) return all;
+        return page(n + 1);
+      });
+  }
+  return page(1).then(function (list) {
+    return list.map(normalizeContributor).filter(Boolean);
+  });
+}
+
+/** fork 仓库：compare 上游默认分支与 fork 默认分支，只取新增提交中的作者 */
+function fetchForkContributors(repo, meta) {
+  var parent = meta.parent;
+  if (!parent || !parent.owner || !parent.full_name) return Promise.resolve([]);
+  var parentOwner = parent.owner.login;
+  var parentBranch = parent.default_branch || "main";
+  var forkBranch = meta.default_branch || "main";
+  var contributors = new Map();
+
+  function addFromCommits(commits) {
+    commits.forEach(function (commit) {
+      [commit.author, commit.committer].forEach(function (user) {
+        var c = normalizeContributor(user);
+        if (!c) return;
+        var key = contributorKey(c);
+        if (!contributors.has(key)) contributors.set(key, c);
+      });
+    });
+  }
+
+  function comparePage(basehead) {
+    return ghGet("https://api.github.com/repos/" + repo + "/compare/" + basehead)
+      .then(function (data) {
+        var commits = data.commits || [];
+        addFromCommits(commits);
+        if (data.total_commits > commits.length && commits.length > 0) {
+          var lastSha = commits[commits.length - 1].sha;
+          return comparePage(lastSha + "..." + forkBranch);
+        }
+        return Array.from(contributors.values());
+      });
+  }
+
+  return comparePage(parentOwner + ":" + parentBranch + "..." + forkBranch);
+}
+
+function fetchContributorsForRepo(repo) {
+  return fetchRepoMeta(repo).then(function (meta) {
+    if (meta.fork && meta.parent) {
+      return fetchForkContributors(repo, meta);
+    }
+    return fetchStandardContributors(repo);
+  });
 }
 
 function mergeDedup(repoLists) {
@@ -76,12 +138,7 @@ function mergeDedup(repoLists) {
       var key = contributorKey(c);
       if (seen[key]) return;
       seen[key] = true;
-      merged.push({
-        login: c.login || null,
-        id: c.id,
-        avatar_url: c.avatar_url,
-        html_url: c.html_url || (c.login ? "https://github.com/" + c.login : null)
-      });
+      merged.push(c);
     });
   });
   return merged;
@@ -93,7 +150,7 @@ function fetchAllSequential(repos) {
     if (i >= repos.length) return Promise.resolve(results);
     var repo = repos[i];
     process.stderr.write("Fetching " + repo + "…\n");
-    return fetchRepoContributors(repo)
+    return fetchContributorsForRepo(repo)
       .then(function (list) {
         process.stderr.write("  " + list.length + " contributors\n");
         results.push(list);
@@ -109,6 +166,7 @@ fetchAllSequential(REPOS)
     var payload = {
       generatedAt: new Date().toISOString(),
       repos: REPOS,
+      forkPolicy: "fork repos count only commits ahead of upstream parent",
       count: contributors.length,
       contributors: contributors
     };
