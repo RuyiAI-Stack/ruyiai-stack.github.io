@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-01T07:15:14.584Z",
+  "generatedAt": "2026-07-01T17:54:29.618Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -198,6 +198,12 @@
       "html_url": "https://github.com/ArCyanic"
     },
     {
+      "login": "Yranger",
+      "id": 102284075,
+      "avatar_url": "https://avatars.githubusercontent.com/u/102284075?v=4",
+      "html_url": "https://github.com/Yranger"
+    },
+    {
       "login": "EllisLambda",
       "id": 18545102,
       "avatar_url": "https://avatars.githubusercontent.com/u/18545102?v=4",
@@ -232,12 +238,6 @@
       "id": 146434027,
       "avatar_url": "https://avatars.githubusercontent.com/u/146434027?v=4",
       "html_url": "https://github.com/guessmewho123888"
-    },
-    {
-      "login": "Yranger",
-      "id": 102284075,
-      "avatar_url": "https://avatars.githubusercontent.com/u/102284075?v=4",
-      "html_url": "https://github.com/Yranger"
     },
     {
       "login": "BBuf",
