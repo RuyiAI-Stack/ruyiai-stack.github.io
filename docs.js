@@ -209,6 +209,14 @@
       descEn: "RISC-V Summit Europe 2026 presentation materials",
       markdownUrl: "docs/insights/RISC-V-EU-2026.md",
       bodyOnly: true
+    },
+    RuyiAI2026: {
+      title: "RuyiAI2026",
+      titleEn: "RuyiAI2026",
+      desc: "RuyiAI：面向 RISC-V 架构的人工智能系统软件栈",
+      descEn: "RuyiAI: AI System Software Stack for RISC-V Architecture",
+      markdownUrl: "docs/insights/RuyiAI2026.md",
+      bodyOnly: true
     }
   };
 
@@ -1237,7 +1245,7 @@
         operatorLangBtn.setAttribute("aria-expanded", "true");
       }
     }
-    if (id === "insights" || id === "C4ML2024" || id === "EuroLLVM2023" || id === "RISC-V-EU-2026") {
+    if (id === "insights" || id === "C4ML2024" || id === "EuroLLVM2023" || id === "RISC-V-EU-2026" || id === "RuyiAI2026") {
       var insightsBtn = document.getElementById("docsNavInsights");
       var insightsGroup = insightsBtn ? insightsBtn.closest(".docs-nav__group") : null;
       if (insightsGroup && insightsBtn) {
