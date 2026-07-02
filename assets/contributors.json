@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-01T17:54:29.618Z",
+  "generatedAt": "2026-07-02T17:46:28.938Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -84,16 +84,16 @@
       "html_url": "https://github.com/Jiajun-Ji"
     },
     {
-      "login": "Guan-schoolmate",
-      "id": 63309391,
-      "avatar_url": "https://avatars.githubusercontent.com/u/63309391?v=4",
-      "html_url": "https://github.com/Guan-schoolmate"
-    },
-    {
       "login": "WuXintong123",
       "id": 56297184,
       "avatar_url": "https://avatars.githubusercontent.com/u/56297184?v=4",
       "html_url": "https://github.com/WuXintong123"
+    },
+    {
+      "login": "Guan-schoolmate",
+      "id": 63309391,
+      "avatar_url": "https://avatars.githubusercontent.com/u/63309391?v=4",
+      "html_url": "https://github.com/Guan-schoolmate"
     },
     {
       "login": "SForeKeeper",
