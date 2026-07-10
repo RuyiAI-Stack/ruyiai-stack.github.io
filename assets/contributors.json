@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-09T17:54:47.966Z",
+  "generatedAt": "2026-07-10T17:46:56.070Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -18,16 +18,16 @@
       "html_url": "https://github.com/zhanghb97"
     },
     {
-      "login": "meshtag",
-      "id": 63031630,
-      "avatar_url": "https://avatars.githubusercontent.com/u/63031630?v=4",
-      "html_url": "https://github.com/meshtag"
-    },
-    {
       "login": "trdthg",
       "id": 69898423,
       "avatar_url": "https://avatars.githubusercontent.com/u/69898423?v=4",
       "html_url": "https://github.com/trdthg"
+    },
+    {
+      "login": "meshtag",
+      "id": 63031630,
+      "avatar_url": "https://avatars.githubusercontent.com/u/63031630?v=4",
+      "html_url": "https://github.com/meshtag"
     },
     {
       "login": "shirohasuki",
