@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-15T17:15:53.772Z",
+  "generatedAt": "2026-07-16T17:14:14.702Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -9,7 +9,7 @@
     "RuyiAI-Stack/llvm-project"
   ],
   "forkPolicy": "fork repos count only commits ahead of upstream parent",
-  "count": 85,
+  "count": 86,
   "contributors": [
     {
       "login": "zhanghb97",
@@ -72,6 +72,12 @@
       "html_url": "https://github.com/axmat"
     },
     {
+      "login": "GuoningHuang",
+      "id": 75004653,
+      "avatar_url": "https://avatars.githubusercontent.com/u/75004653?v=4",
+      "html_url": "https://github.com/GuoningHuang"
+    },
+    {
       "login": "sdh1014",
       "id": 99593005,
       "avatar_url": "https://avatars.githubusercontent.com/u/99593005?v=4",
@@ -94,12 +100,6 @@
       "id": 63309391,
       "avatar_url": "https://avatars.githubusercontent.com/u/63309391?v=4",
       "html_url": "https://github.com/Guan-schoolmate"
-    },
-    {
-      "login": "GuoningHuang",
-      "id": 75004653,
-      "avatar_url": "https://avatars.githubusercontent.com/u/75004653?v=4",
-      "html_url": "https://github.com/GuoningHuang"
     },
     {
       "login": "SForeKeeper",
@@ -520,6 +520,12 @@
       "id": 230684461,
       "avatar_url": "https://avatars.githubusercontent.com/u/230684461?v=4",
       "html_url": "https://github.com/maochuanjun"
+    },
+    {
+      "login": "laz-tang",
+      "id": 131972872,
+      "avatar_url": "https://avatars.githubusercontent.com/u/131972872?v=4",
+      "html_url": "https://github.com/laz-tang"
     }
   ]
 }
