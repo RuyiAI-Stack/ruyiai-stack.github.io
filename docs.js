@@ -217,6 +217,14 @@
       descEn: "RuyiAI: AI System Software Stack for RISC-V Architecture",
       markdownUrl: "docs/insights/RuyiAI2026.md",
       bodyOnly: true
+    },
+    "WAIC-2026": {
+      title: "WAIC 2026",
+      titleEn: "WAIC 2026",
+      desc: "RuyiAI at WAIC 2026",
+      descEn: "RuyiAI at WAIC 2026",
+      markdownUrl: "docs/insights/WAIC-2026.md",
+      bodyOnly: true
     }
   };
 
@@ -1245,7 +1253,7 @@
         operatorLangBtn.setAttribute("aria-expanded", "true");
       }
     }
-    if (id === "insights" || id === "C4ML2024" || id === "EuroLLVM2023" || id === "RISC-V-EU-2026" || id === "RuyiAI2026") {
+    if (id === "insights" || id === "C4ML2024" || id === "EuroLLVM2023" || id === "RISC-V-EU-2026" || id === "RuyiAI2026" || id === "WAIC-2026") {
       var insightsBtn = document.getElementById("docsNavInsights");
       var insightsGroup = insightsBtn ? insightsBtn.closest(".docs-nav__group") : null;
       if (insightsGroup && insightsBtn) {
