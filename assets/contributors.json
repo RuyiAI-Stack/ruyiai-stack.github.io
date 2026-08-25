@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T16:35:17.397Z",
+  "generatedAt": "2026-08-25T16:35:15.875Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -9,7 +9,7 @@
     "RuyiAI-Stack/llvm-project"
   ],
   "forkPolicy": "fork repos count only commits ahead of upstream parent",
-  "count": 86,
+  "count": 87,
   "contributors": [
     {
       "login": "zhanghb97",
@@ -150,6 +150,12 @@
       "html_url": "https://github.com/Lester-1"
     },
     {
+      "login": "Hanyonggong",
+      "id": 80840407,
+      "avatar_url": "https://avatars.githubusercontent.com/u/80840407?v=4",
+      "html_url": "https://github.com/Hanyonggong"
+    },
+    {
       "login": "JuniMay",
       "id": 79239815,
       "avatar_url": "https://avatars.githubusercontent.com/u/79239815?v=4",
@@ -160,12 +166,6 @@
       "id": 81592570,
       "avatar_url": "https://avatars.githubusercontent.com/u/81592570?v=4",
       "html_url": "https://github.com/Ris-Bali"
-    },
-    {
-      "login": "Hanyonggong",
-      "id": 80840407,
-      "avatar_url": "https://avatars.githubusercontent.com/u/80840407?v=4",
-      "html_url": "https://github.com/Hanyonggong"
     },
     {
       "login": "wujing215",
@@ -186,30 +186,6 @@
       "html_url": "https://github.com/Old-cpu"
     },
     {
-      "login": "amanchhaparia",
-      "id": 64468582,
-      "avatar_url": "https://avatars.githubusercontent.com/u/64468582?v=4",
-      "html_url": "https://github.com/amanchhaparia"
-    },
-    {
-      "login": "ArCyanic",
-      "id": 59227699,
-      "avatar_url": "https://avatars.githubusercontent.com/u/59227699?v=4",
-      "html_url": "https://github.com/ArCyanic"
-    },
-    {
-      "login": "Yranger",
-      "id": 102284075,
-      "avatar_url": "https://avatars.githubusercontent.com/u/102284075?v=4",
-      "html_url": "https://github.com/Yranger"
-    },
-    {
-      "login": "EllisLambda",
-      "id": 18545102,
-      "avatar_url": "https://avatars.githubusercontent.com/u/18545102?v=4",
-      "html_url": "https://github.com/EllisLambda"
-    },
-    {
       "login": "yuzibo",
       "id": 7083056,
       "avatar_url": "https://avatars.githubusercontent.com/u/7083056?v=4",
@@ -222,16 +198,34 @@
       "html_url": "https://github.com/CBalaa"
     },
     {
-      "login": "weilinquan",
-      "id": 58080862,
-      "avatar_url": "https://avatars.githubusercontent.com/u/58080862?v=4",
-      "html_url": "https://github.com/weilinquan"
+      "login": "EllisLambda",
+      "id": 18545102,
+      "avatar_url": "https://avatars.githubusercontent.com/u/18545102?v=4",
+      "html_url": "https://github.com/EllisLambda"
     },
     {
-      "login": "LiuYang328",
-      "id": 58350195,
-      "avatar_url": "https://avatars.githubusercontent.com/u/58350195?v=4",
-      "html_url": "https://github.com/LiuYang328"
+      "login": "Yranger",
+      "id": 102284075,
+      "avatar_url": "https://avatars.githubusercontent.com/u/102284075?v=4",
+      "html_url": "https://github.com/Yranger"
+    },
+    {
+      "login": "ArCyanic",
+      "id": 59227699,
+      "avatar_url": "https://avatars.githubusercontent.com/u/59227699?v=4",
+      "html_url": "https://github.com/ArCyanic"
+    },
+    {
+      "login": "amanchhaparia",
+      "id": 64468582,
+      "avatar_url": "https://avatars.githubusercontent.com/u/64468582?v=4",
+      "html_url": "https://github.com/amanchhaparia"
+    },
+    {
+      "login": "BBuf",
+      "id": 35585791,
+      "avatar_url": "https://avatars.githubusercontent.com/u/35585791?v=4",
+      "html_url": "https://github.com/BBuf"
     },
     {
       "login": "guessmewho123888",
@@ -240,10 +234,16 @@
       "html_url": "https://github.com/guessmewho123888"
     },
     {
-      "login": "BBuf",
-      "id": 35585791,
-      "avatar_url": "https://avatars.githubusercontent.com/u/35585791?v=4",
-      "html_url": "https://github.com/BBuf"
+      "login": "LiuYang328",
+      "id": 58350195,
+      "avatar_url": "https://avatars.githubusercontent.com/u/58350195?v=4",
+      "html_url": "https://github.com/LiuYang328"
+    },
+    {
+      "login": "weilinquan",
+      "id": 58080862,
+      "avatar_url": "https://avatars.githubusercontent.com/u/58080862?v=4",
+      "html_url": "https://github.com/weilinquan"
     },
     {
       "login": "Xinyu302",
@@ -262,6 +262,12 @@
       "id": 17826327,
       "avatar_url": "https://avatars.githubusercontent.com/u/17826327?v=4",
       "html_url": "https://github.com/xbwcan"
+    },
+    {
+      "login": "jiaan-clone",
+      "id": 257489803,
+      "avatar_url": "https://avatars.githubusercontent.com/u/257489803?v=4",
+      "html_url": "https://github.com/jiaan-clone"
     },
     {
       "login": "effrey-liu",
@@ -330,6 +336,12 @@
       "html_url": "https://github.com/BrokenArrow1404"
     },
     {
+      "login": "cmx-Y",
+      "id": 74349932,
+      "avatar_url": "https://avatars.githubusercontent.com/u/74349932?v=4",
+      "html_url": "https://github.com/cmx-Y"
+    },
+    {
       "login": "BHbean",
       "id": 66934674,
       "avatar_url": "https://avatars.githubusercontent.com/u/66934674?v=4",
@@ -358,12 +370,6 @@
       "id": 36667224,
       "avatar_url": "https://avatars.githubusercontent.com/u/36667224?v=4",
       "html_url": "https://github.com/inclyc"
-    },
-    {
-      "login": "jiaan-clone",
-      "id": 257489803,
-      "avatar_url": "https://avatars.githubusercontent.com/u/257489803?v=4",
-      "html_url": "https://github.com/jiaan-clone"
     },
     {
       "login": "matrix72c",
@@ -412,12 +418,6 @@
       "id": 37210982,
       "avatar_url": "https://avatars.githubusercontent.com/u/37210982?v=4",
       "html_url": "https://github.com/AkunCube"
-    },
-    {
-      "login": "cmx-Y",
-      "id": 74349932,
-      "avatar_url": "https://avatars.githubusercontent.com/u/74349932?v=4",
-      "html_url": "https://github.com/cmx-Y"
     },
     {
       "login": "NK-MXD",
@@ -520,6 +520,12 @@
       "id": 230684461,
       "avatar_url": "https://avatars.githubusercontent.com/u/230684461?v=4",
       "html_url": "https://github.com/maochuanjun"
+    },
+    {
+      "login": "renovate[bot]",
+      "id": 29139614,
+      "avatar_url": "https://avatars.githubusercontent.com/in/2740?v=4",
+      "html_url": "https://github.com/apps/renovate"
     },
     {
       "login": "laz-tang",
