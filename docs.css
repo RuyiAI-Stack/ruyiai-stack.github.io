@@ -362,6 +362,27 @@
 .markdown-body a{ color: #2563eb; text-decoration: none; }
 .markdown-body a:hover{ text-decoration: underline; }
 .markdown-body blockquote{ border-left: 4px solid var(--line); margin: 14px 0; padding-left: 16px; color: var(--muted); }
+.markdown-body table{
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0 20px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.markdown-body thead th{
+  text-align: left;
+  font-weight: 600;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.18);
+}
+.markdown-body tbody td{
+  padding: 10px 12px;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.12);
+}
+.markdown-body tbody tr:last-child td{
+  border-bottom: 1px solid rgba(15, 23, 42, 0.18);
+}
 
 @media (max-width: 768px){
   .docs-layout{
