@@ -1,7 +1,5 @@
 # Triton RISC-V Adaptation
 
-## TL;DR
-
 If you'd rather skip the story behind it, go ahead and try the repository directly:
 
 https://github.com/RuyiAI-Stack/triton-riscv

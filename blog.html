@@ -12,10 +12,11 @@
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>立即安装 - RuyiAI</title>
-    <meta name="description" content="RuyiAI 安装指南" />
+    <title>博客 - RuyiAI</title>
+    <meta name="description" content="RuyiAI 博客" />
     <link rel="icon" href="./assets/logo-ruyi-nav.png" type="image/png" />
     <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./docs.css" />
   </head>
 
   <body>
@@ -70,22 +71,45 @@
       </div>
     </header>
 
-    <main class="page">
-      <section class="hero">
-        <div class="hero__left">
-          <h1 class="h1">立即安装</h1>
-          <p class="lead">
-            安装 RuyiAI 的步骤与说明。（内容待补充）
-          </p>
-        </div>
-      </section>
-    </main>
+    <div class="docs-layout" id="docsLayout">
+      <div class="docs-sidebar-overlay" id="docsSidebarOverlay" aria-hidden="true"></div>
+      <!-- Left sidebar -->
+      <aside class="docs-sidebar">
+        <nav class="docs-nav">
+          <a href="blog.html#triton-on-riscv" class="docs-nav__item" data-doc="triton-on-riscv" data-i18n="doc.tritonOnRiscv">Triton 的 RISC-V 适配</a>
+        </nav>
+      </aside>
 
-    <footer class="footer">
+      <!-- Main + in-page TOC -->
+      <div class="docs-stage">
+        <main class="docs-main">
+          <button type="button" class="docs-nav-toggle" id="docsNavToggle" aria-label="展开或收起目录" data-i18n="doc.toc">目录</button>
+          <div class="docs-search">
+            <span class="docs-search__icon" aria-hidden="true">🔍</span>
+            <input type="search" class="docs-search__input" placeholder="搜索博客" aria-label="搜索博客" id="docsSearchInput" data-i18n="blog.search" />
+          </div>
+          <article class="docs-content" id="docsContent">
+            <h1 class="docs-content__title" id="docsTitle">博客</h1>
+            <p class="docs-content__desc" id="docsDesc"></p>
+            <div class="docs-content__body markdown-body" id="docsBody"></div>
+          </article>
+        </main>
+        <aside class="docs-toc" id="docsToc" aria-label="本页目录" hidden>
+          <div class="docs-toc__inner">
+            <div class="docs-toc__title" id="docsTocTitle" data-i18n="doc.onThisPage">本页目录</div>
+            <nav class="docs-toc__nav" id="docsTocNav"></nav>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <footer class="footer docs-footer">
       <div class="footer__inner"></div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
     <script src="./script.js"></script>
     <script src="./i18n.js"></script>
+    <script src="./blog.js"></script>
   </body>
 </html>
