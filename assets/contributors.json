@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-30T09:58:00.255Z",
+  "generatedAt": "2026-08-30T19:03:09.177Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -492,16 +492,16 @@
       "html_url": "https://github.com/GradientRipple"
     },
     {
-      "login": "zhaowt96",
-      "id": 58215575,
-      "avatar_url": "https://avatars.githubusercontent.com/u/58215575?v=4",
-      "html_url": "https://github.com/zhaowt96"
-    },
-    {
       "login": "github-actions[bot]",
       "id": 41898282,
       "avatar_url": "https://avatars.githubusercontent.com/in/15368?v=4",
       "html_url": "https://github.com/apps/github-actions"
+    },
+    {
+      "login": "zhaowt96",
+      "id": 58215575,
+      "avatar_url": "https://avatars.githubusercontent.com/u/58215575?v=4",
+      "html_url": "https://github.com/zhaowt96"
     },
     {
       "login": "yinjiayi",
