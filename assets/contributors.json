@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T21:18:28.493Z",
+  "generatedAt": "2026-09-01T19:12:54.856Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -66,6 +66,12 @@
       "html_url": "https://github.com/linuxlonelyeagle"
     },
     {
+      "login": "GuoningHuang",
+      "id": 75004653,
+      "avatar_url": "https://avatars.githubusercontent.com/u/75004653?v=4",
+      "html_url": "https://github.com/GuoningHuang"
+    },
+    {
       "login": "axmat",
       "id": 45193605,
       "avatar_url": "https://avatars.githubusercontent.com/u/45193605?v=4",
@@ -76,12 +82,6 @@
       "id": 99593005,
       "avatar_url": "https://avatars.githubusercontent.com/u/99593005?v=4",
       "html_url": "https://github.com/sdh1014"
-    },
-    {
-      "login": "GuoningHuang",
-      "id": 75004653,
-      "avatar_url": "https://avatars.githubusercontent.com/u/75004653?v=4",
-      "html_url": "https://github.com/GuoningHuang"
     },
     {
       "login": "taiqzheng",
