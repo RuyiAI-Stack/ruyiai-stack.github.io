@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-09T19:07:18.283Z",
+  "generatedAt": "2026-09-10T18:57:21.995Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -84,12 +84,6 @@
       "html_url": "https://github.com/sdh1014"
     },
     {
-      "login": "taiqzheng",
-      "id": 56971484,
-      "avatar_url": "https://avatars.githubusercontent.com/u/56971484?v=4",
-      "html_url": "https://github.com/taiqzheng"
-    },
-    {
       "login": "Jiajun-Ji",
       "id": 80234127,
       "avatar_url": "https://avatars.githubusercontent.com/u/80234127?v=4",
@@ -100,6 +94,12 @@
       "id": 63309391,
       "avatar_url": "https://avatars.githubusercontent.com/u/63309391?v=4",
       "html_url": "https://github.com/Guan-schoolmate"
+    },
+    {
+      "login": "taiqzheng",
+      "id": 56971484,
+      "avatar_url": "https://avatars.githubusercontent.com/u/56971484?v=4",
+      "html_url": "https://github.com/taiqzheng"
     },
     {
       "login": "SForeKeeper",
@@ -144,6 +144,12 @@
       "html_url": "https://github.com/Origami404"
     },
     {
+      "login": "jiaan-clone",
+      "id": 257489803,
+      "avatar_url": "https://avatars.githubusercontent.com/u/257489803?v=4",
+      "html_url": "https://github.com/jiaan-clone"
+    },
+    {
       "login": "Lester-1",
       "id": 44289481,
       "avatar_url": "https://avatars.githubusercontent.com/u/44289481?v=4",
@@ -166,12 +172,6 @@
       "id": 80840407,
       "avatar_url": "https://avatars.githubusercontent.com/u/80840407?v=4",
       "html_url": "https://github.com/Hanyonggong"
-    },
-    {
-      "login": "jiaan-clone",
-      "id": 257489803,
-      "avatar_url": "https://avatars.githubusercontent.com/u/257489803?v=4",
-      "html_url": "https://github.com/jiaan-clone"
     },
     {
       "login": "Yranger",
