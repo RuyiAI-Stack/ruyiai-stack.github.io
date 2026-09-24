@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-23T19:26:42.858Z",
+  "generatedAt": "2026-09-24T19:48:00.340Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -198,6 +198,24 @@
       "html_url": "https://github.com/Old-cpu"
     },
     {
+      "login": "amanchhaparia",
+      "id": 64468582,
+      "avatar_url": "https://avatars.githubusercontent.com/u/64468582?v=4",
+      "html_url": "https://github.com/amanchhaparia"
+    },
+    {
+      "login": "ArCyanic",
+      "id": 59227699,
+      "avatar_url": "https://avatars.githubusercontent.com/u/59227699?v=4",
+      "html_url": "https://github.com/ArCyanic"
+    },
+    {
+      "login": "EllisLambda",
+      "id": 18545102,
+      "avatar_url": "https://avatars.githubusercontent.com/u/18545102?v=4",
+      "html_url": "https://github.com/EllisLambda"
+    },
+    {
       "login": "yuzibo",
       "id": 7083056,
       "avatar_url": "https://avatars.githubusercontent.com/u/7083056?v=4",
@@ -210,34 +228,10 @@
       "html_url": "https://github.com/CBalaa"
     },
     {
-      "login": "EllisLambda",
-      "id": 18545102,
-      "avatar_url": "https://avatars.githubusercontent.com/u/18545102?v=4",
-      "html_url": "https://github.com/EllisLambda"
-    },
-    {
-      "login": "ArCyanic",
-      "id": 59227699,
-      "avatar_url": "https://avatars.githubusercontent.com/u/59227699?v=4",
-      "html_url": "https://github.com/ArCyanic"
-    },
-    {
-      "login": "amanchhaparia",
-      "id": 64468582,
-      "avatar_url": "https://avatars.githubusercontent.com/u/64468582?v=4",
-      "html_url": "https://github.com/amanchhaparia"
-    },
-    {
-      "login": "BBuf",
-      "id": 35585791,
-      "avatar_url": "https://avatars.githubusercontent.com/u/35585791?v=4",
-      "html_url": "https://github.com/BBuf"
-    },
-    {
-      "login": "guessmewho123888",
-      "id": 146434027,
-      "avatar_url": "https://avatars.githubusercontent.com/u/146434027?v=4",
-      "html_url": "https://github.com/guessmewho123888"
+      "login": "weilinquan",
+      "id": 58080862,
+      "avatar_url": "https://avatars.githubusercontent.com/u/58080862?v=4",
+      "html_url": "https://github.com/weilinquan"
     },
     {
       "login": "LiuYang328",
@@ -246,10 +240,16 @@
       "html_url": "https://github.com/LiuYang328"
     },
     {
-      "login": "weilinquan",
-      "id": 58080862,
-      "avatar_url": "https://avatars.githubusercontent.com/u/58080862?v=4",
-      "html_url": "https://github.com/weilinquan"
+      "login": "guessmewho123888",
+      "id": 146434027,
+      "avatar_url": "https://avatars.githubusercontent.com/u/146434027?v=4",
+      "html_url": "https://github.com/guessmewho123888"
+    },
+    {
+      "login": "BBuf",
+      "id": 35585791,
+      "avatar_url": "https://avatars.githubusercontent.com/u/35585791?v=4",
+      "html_url": "https://github.com/BBuf"
     },
     {
       "login": "Xinyu302",
@@ -274,6 +274,12 @@
       "id": 64138454,
       "avatar_url": "https://avatars.githubusercontent.com/u/64138454?v=4",
       "html_url": "https://github.com/effrey-liu"
+    },
+    {
+      "login": "caihanyi111",
+      "id": 318832319,
+      "avatar_url": "https://avatars.githubusercontent.com/u/318832319?v=4",
+      "html_url": "https://github.com/caihanyi111"
     },
     {
       "login": "ShiHaoGao",
@@ -336,6 +342,12 @@
       "html_url": "https://github.com/BrokenArrow1404"
     },
     {
+      "login": "cmx-Y",
+      "id": 74349932,
+      "avatar_url": "https://avatars.githubusercontent.com/u/74349932?v=4",
+      "html_url": "https://github.com/cmx-Y"
+    },
+    {
       "login": "BHbean",
       "id": 66934674,
       "avatar_url": "https://avatars.githubusercontent.com/u/66934674?v=4",
@@ -352,12 +364,6 @@
       "id": 90297911,
       "avatar_url": "https://avatars.githubusercontent.com/u/90297911?v=4",
       "html_url": "https://github.com/c8ef"
-    },
-    {
-      "login": "caihanyi111",
-      "id": 318832319,
-      "avatar_url": "https://avatars.githubusercontent.com/u/318832319?v=4",
-      "html_url": "https://github.com/caihanyi111"
     },
     {
       "login": "hanbbn",
@@ -418,12 +424,6 @@
       "id": 37210982,
       "avatar_url": "https://avatars.githubusercontent.com/u/37210982?v=4",
       "html_url": "https://github.com/AkunCube"
-    },
-    {
-      "login": "cmx-Y",
-      "id": 74349932,
-      "avatar_url": "https://avatars.githubusercontent.com/u/74349932?v=4",
-      "html_url": "https://github.com/cmx-Y"
     },
     {
       "login": "NK-MXD",
