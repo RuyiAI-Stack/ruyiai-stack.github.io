@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-29T20:27:21.420Z",
+  "generatedAt": "2026-09-30T20:33:20.604Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -534,10 +534,10 @@
       "html_url": "https://github.com/apps/renovate"
     },
     {
-      "login": "laz-tang",
+      "login": "laz174",
       "id": 131972872,
       "avatar_url": "https://avatars.githubusercontent.com/u/131972872?v=4",
-      "html_url": "https://github.com/laz-tang"
+      "html_url": "https://github.com/laz174"
     }
   ]
 }
