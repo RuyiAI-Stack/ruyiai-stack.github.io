@@ -6,6 +6,14 @@
       desc: "发布时间：2026-2-26 | 作者：张洪滨",
       descEn: "Published: 2026-2-26 | Author: Hongbin Zhang",
       markdownUrl: "blog/triton-on-riscv.md"
+    },
+    "pytorch-riscv-ci": {
+      title: "PyTorch RISC‑V CI 实践",
+      titleEn: "PyTorch CI on RISC-V",
+      desc: "",
+      descEn: "",
+      markdownUrl: "blog/pytorch-riscv-ci.md",
+      bodyOnly: true
     }
   };
 
