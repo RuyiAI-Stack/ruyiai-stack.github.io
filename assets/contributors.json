@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-13T20:59:42.083Z",
+  "generatedAt": "2026-10-14T19:58:59.640Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -120,6 +120,12 @@
       "html_url": "https://github.com/FloatingcloudKnight"
     },
     {
+      "login": "jiaan-clone",
+      "id": 257489803,
+      "avatar_url": "https://avatars.githubusercontent.com/u/257489803?v=4",
+      "html_url": "https://github.com/jiaan-clone"
+    },
+    {
       "login": "6somehow",
       "id": 73006005,
       "avatar_url": "https://avatars.githubusercontent.com/u/73006005?v=4",
@@ -136,12 +142,6 @@
       "id": 56477950,
       "avatar_url": "https://avatars.githubusercontent.com/u/56477950?v=4",
       "html_url": "https://github.com/asdf1113"
-    },
-    {
-      "login": "jiaan-clone",
-      "id": 257489803,
-      "avatar_url": "https://avatars.githubusercontent.com/u/257489803?v=4",
-      "html_url": "https://github.com/jiaan-clone"
     },
     {
       "login": "Origami404",
