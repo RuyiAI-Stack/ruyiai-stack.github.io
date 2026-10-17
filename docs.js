@@ -24,10 +24,10 @@
       bodyOnly: true
     },
     "contributor-guide": {
-      title: "贡献者指引",
-      titleEn: "Contributor Guide",
-      desc: "如何参与 RuyiAI 项目贡献",
-      descEn: "How to contribute to RuyiAI",
+      title: "贡献与合作指引",
+      titleEn: "Contribution and Collaboration Guide",
+      desc: "开源贡献、机构合作与学生实习",
+      descEn: "Open-source contribution, collaboration, and student internships",
       markdownUrl: "docs/contributor-guide/contributor-guide.md",
       useFirstHeadingAsTitle: true
     },
