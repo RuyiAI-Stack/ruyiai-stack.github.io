@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-24T18:35:25.879Z",
+  "generatedAt": "2026-10-25T18:44:00.505Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -9,7 +9,7 @@
     "RuyiAI-Stack/llvm-project"
   ],
   "forkPolicy": "fork repos count only commits ahead of upstream parent",
-  "count": 88,
+  "count": 89,
   "contributors": [
     {
       "login": "zhanghb97",
@@ -342,12 +342,6 @@
       "html_url": "https://github.com/BrokenArrow1404"
     },
     {
-      "login": "cmx-Y",
-      "id": 74349932,
-      "avatar_url": "https://avatars.githubusercontent.com/u/74349932?v=4",
-      "html_url": "https://github.com/cmx-Y"
-    },
-    {
       "login": "BHbean",
       "id": 66934674,
       "avatar_url": "https://avatars.githubusercontent.com/u/66934674?v=4",
@@ -382,6 +376,12 @@
       "id": 60974665,
       "avatar_url": "https://avatars.githubusercontent.com/u/60974665?v=4",
       "html_url": "https://github.com/matrix72c"
+    },
+    {
+      "login": "muen912",
+      "id": 201455063,
+      "avatar_url": "https://avatars.githubusercontent.com/u/201455063?v=4",
+      "html_url": "https://github.com/muen912"
     },
     {
       "login": "wdjyd",
@@ -424,6 +424,12 @@
       "id": 37210982,
       "avatar_url": "https://avatars.githubusercontent.com/u/37210982?v=4",
       "html_url": "https://github.com/AkunCube"
+    },
+    {
+      "login": "cmx-Y",
+      "id": 74349932,
+      "avatar_url": "https://avatars.githubusercontent.com/u/74349932?v=4",
+      "html_url": "https://github.com/cmx-Y"
     },
     {
       "login": "NK-MXD",
