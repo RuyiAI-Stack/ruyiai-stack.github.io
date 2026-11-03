@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T23:18:34.656Z",
+  "generatedAt": "2026-11-03T21:29:50.900Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -9,7 +9,7 @@
     "RuyiAI-Stack/llvm-project"
   ],
   "forkPolicy": "fork repos count only commits ahead of upstream parent",
-  "count": 90,
+  "count": 91,
   "contributors": [
     {
       "login": "zhanghb97",
@@ -258,6 +258,12 @@
       "html_url": "https://github.com/Xinyu302"
     },
     {
+      "login": "XYenChi",
+      "id": 22620017,
+      "avatar_url": "https://avatars.githubusercontent.com/u/22620017?v=4",
+      "html_url": "https://github.com/XYenChi"
+    },
+    {
       "login": "stomfaig",
       "id": 55883018,
       "avatar_url": "https://avatars.githubusercontent.com/u/55883018?v=4",
@@ -288,6 +294,30 @@
       "html_url": "https://github.com/ShiHaoGao"
     },
     {
+      "login": "BrokenArrow1404",
+      "id": 43647008,
+      "avatar_url": "https://avatars.githubusercontent.com/u/43647008?v=4",
+      "html_url": "https://github.com/BrokenArrow1404"
+    },
+    {
+      "login": "harrisonGPU",
+      "id": 57025411,
+      "avatar_url": "https://avatars.githubusercontent.com/u/57025411?v=4",
+      "html_url": "https://github.com/harrisonGPU"
+    },
+    {
+      "login": "hharryz",
+      "id": 122276274,
+      "avatar_url": "https://avatars.githubusercontent.com/u/122276274?v=4",
+      "html_url": "https://github.com/hharryz"
+    },
+    {
+      "login": "LHY-24",
+      "id": 61965761,
+      "avatar_url": "https://avatars.githubusercontent.com/u/61965761?v=4",
+      "html_url": "https://github.com/LHY-24"
+    },
+    {
       "login": "SJM946",
       "id": 146961359,
       "avatar_url": "https://avatars.githubusercontent.com/u/146961359?v=4",
@@ -306,40 +336,16 @@
       "html_url": "https://github.com/NaOHCC"
     },
     {
-      "login": "LeiWang1999",
-      "id": 34334180,
-      "avatar_url": "https://avatars.githubusercontent.com/u/34334180?v=4",
-      "html_url": "https://github.com/LeiWang1999"
-    },
-    {
       "login": "WLFJ",
       "id": 49600975,
       "avatar_url": "https://avatars.githubusercontent.com/u/49600975?v=4",
       "html_url": "https://github.com/WLFJ"
     },
     {
-      "login": "LHY-24",
-      "id": 61965761,
-      "avatar_url": "https://avatars.githubusercontent.com/u/61965761?v=4",
-      "html_url": "https://github.com/LHY-24"
-    },
-    {
-      "login": "hharryz",
-      "id": 122276274,
-      "avatar_url": "https://avatars.githubusercontent.com/u/122276274?v=4",
-      "html_url": "https://github.com/hharryz"
-    },
-    {
-      "login": "harrisonGPU",
-      "id": 57025411,
-      "avatar_url": "https://avatars.githubusercontent.com/u/57025411?v=4",
-      "html_url": "https://github.com/harrisonGPU"
-    },
-    {
-      "login": "BrokenArrow1404",
-      "id": 43647008,
-      "avatar_url": "https://avatars.githubusercontent.com/u/43647008?v=4",
-      "html_url": "https://github.com/BrokenArrow1404"
+      "login": "LeiWang1999",
+      "id": 34334180,
+      "avatar_url": "https://avatars.githubusercontent.com/u/34334180?v=4",
+      "html_url": "https://github.com/LeiWang1999"
     },
     {
       "login": "BHbean",
@@ -444,12 +450,6 @@
       "html_url": "https://github.com/NK-MXD"
     },
     {
-      "login": "XYenChi",
-      "id": 22620017,
-      "avatar_url": "https://avatars.githubusercontent.com/u/22620017?v=4",
-      "html_url": "https://github.com/XYenChi"
-    },
-    {
       "login": "breezejh",
       "id": 69778179,
       "avatar_url": "https://avatars.githubusercontent.com/u/69778179?v=4",
@@ -484,6 +484,12 @@
       "id": 96034746,
       "avatar_url": "https://avatars.githubusercontent.com/u/96034746?v=4",
       "html_url": "https://github.com/Panhaolin2001"
+    },
+    {
+      "login": "enanandesu",
+      "id": 146453031,
+      "avatar_url": "https://avatars.githubusercontent.com/u/146453031?v=4",
+      "html_url": "https://github.com/enanandesu"
     },
     {
       "login": "MbjYjbpivj",
