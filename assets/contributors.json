@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T21:42:55.138Z",
+  "generatedAt": "2026-11-05T21:46:14.371Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -318,6 +318,12 @@
       "html_url": "https://github.com/LHY-24"
     },
     {
+      "login": "WLFJ",
+      "id": 49600975,
+      "avatar_url": "https://avatars.githubusercontent.com/u/49600975?v=4",
+      "html_url": "https://github.com/WLFJ"
+    },
+    {
       "login": "SJM946",
       "id": 146961359,
       "avatar_url": "https://avatars.githubusercontent.com/u/146961359?v=4",
@@ -330,16 +336,10 @@
       "html_url": "https://github.com/jackfiled"
     },
     {
-      "login": "NaOHCC",
-      "id": 46294137,
-      "avatar_url": "https://avatars.githubusercontent.com/u/46294137?v=4",
-      "html_url": "https://github.com/NaOHCC"
-    },
-    {
-      "login": "WLFJ",
-      "id": 49600975,
-      "avatar_url": "https://avatars.githubusercontent.com/u/49600975?v=4",
-      "html_url": "https://github.com/WLFJ"
+      "login": "enanandesu",
+      "id": 146453031,
+      "avatar_url": "https://avatars.githubusercontent.com/u/146453031?v=4",
+      "html_url": "https://github.com/enanandesu"
     },
     {
       "login": "LeiWang1999",
@@ -348,10 +348,10 @@
       "html_url": "https://github.com/LeiWang1999"
     },
     {
-      "login": "BHbean",
-      "id": 66934674,
-      "avatar_url": "https://avatars.githubusercontent.com/u/66934674?v=4",
-      "html_url": "https://github.com/BHbean"
+      "login": "NaOHCC",
+      "id": 46294137,
+      "avatar_url": "https://avatars.githubusercontent.com/u/46294137?v=4",
+      "html_url": "https://github.com/NaOHCC"
     },
     {
       "login": "Anchen798",
@@ -438,6 +438,12 @@
       "html_url": "https://github.com/AkunCube"
     },
     {
+      "login": "BHbean",
+      "id": 66934674,
+      "avatar_url": "https://avatars.githubusercontent.com/u/66934674?v=4",
+      "html_url": "https://github.com/BHbean"
+    },
+    {
       "login": "cmx-Y",
       "id": 74349932,
       "avatar_url": "https://avatars.githubusercontent.com/u/74349932?v=4",
@@ -484,12 +490,6 @@
       "id": 96034746,
       "avatar_url": "https://avatars.githubusercontent.com/u/96034746?v=4",
       "html_url": "https://github.com/Panhaolin2001"
-    },
-    {
-      "login": "enanandesu",
-      "id": 146453031,
-      "avatar_url": "https://avatars.githubusercontent.com/u/146453031?v=4",
-      "html_url": "https://github.com/enanandesu"
     },
     {
       "login": "MbjYjbpivj",
