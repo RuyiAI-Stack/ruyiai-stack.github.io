@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T21:46:14.371Z",
+  "generatedAt": "2026-11-06T21:16:22.233Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -246,6 +246,12 @@
       "html_url": "https://github.com/guessmewho123888"
     },
     {
+      "login": "caihanyi111",
+      "id": 318832319,
+      "avatar_url": "https://avatars.githubusercontent.com/u/318832319?v=4",
+      "html_url": "https://github.com/caihanyi111"
+    },
+    {
       "login": "BBuf",
       "id": 35585791,
       "avatar_url": "https://avatars.githubusercontent.com/u/35585791?v=4",
@@ -282,16 +288,16 @@
       "html_url": "https://github.com/effrey-liu"
     },
     {
-      "login": "caihanyi111",
-      "id": 318832319,
-      "avatar_url": "https://avatars.githubusercontent.com/u/318832319?v=4",
-      "html_url": "https://github.com/caihanyi111"
-    },
-    {
       "login": "ShiHaoGao",
       "id": 61191871,
       "avatar_url": "https://avatars.githubusercontent.com/u/61191871?v=4",
       "html_url": "https://github.com/ShiHaoGao"
+    },
+    {
+      "login": "SJM946",
+      "id": 146961359,
+      "avatar_url": "https://avatars.githubusercontent.com/u/146961359?v=4",
+      "html_url": "https://github.com/SJM946"
     },
     {
       "login": "BrokenArrow1404",
@@ -318,18 +324,6 @@
       "html_url": "https://github.com/LHY-24"
     },
     {
-      "login": "WLFJ",
-      "id": 49600975,
-      "avatar_url": "https://avatars.githubusercontent.com/u/49600975?v=4",
-      "html_url": "https://github.com/WLFJ"
-    },
-    {
-      "login": "SJM946",
-      "id": 146961359,
-      "avatar_url": "https://avatars.githubusercontent.com/u/146961359?v=4",
-      "html_url": "https://github.com/SJM946"
-    },
-    {
       "login": "jackfiled",
       "id": 66121838,
       "avatar_url": "https://avatars.githubusercontent.com/u/66121838?v=4",
@@ -342,16 +336,22 @@
       "html_url": "https://github.com/enanandesu"
     },
     {
-      "login": "LeiWang1999",
-      "id": 34334180,
-      "avatar_url": "https://avatars.githubusercontent.com/u/34334180?v=4",
-      "html_url": "https://github.com/LeiWang1999"
-    },
-    {
       "login": "NaOHCC",
       "id": 46294137,
       "avatar_url": "https://avatars.githubusercontent.com/u/46294137?v=4",
       "html_url": "https://github.com/NaOHCC"
+    },
+    {
+      "login": "WLFJ",
+      "id": 49600975,
+      "avatar_url": "https://avatars.githubusercontent.com/u/49600975?v=4",
+      "html_url": "https://github.com/WLFJ"
+    },
+    {
+      "login": "LeiWang1999",
+      "id": 34334180,
+      "avatar_url": "https://avatars.githubusercontent.com/u/34334180?v=4",
+      "html_url": "https://github.com/LeiWang1999"
     },
     {
       "login": "Anchen798",
