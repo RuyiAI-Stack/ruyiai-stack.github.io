@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-09T23:57:51.553Z",
+  "generatedAt": "2026-11-10T21:39:18.446Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -9,7 +9,7 @@
     "RuyiAI-Stack/llvm-project"
   ],
   "forkPolicy": "fork repos count only commits ahead of upstream parent",
-  "count": 91,
+  "count": 92,
   "contributors": [
     {
       "login": "zhanghb97",
@@ -550,6 +550,12 @@
       "id": 29139614,
       "avatar_url": "https://avatars.githubusercontent.com/in/2740?v=4",
       "html_url": "https://github.com/apps/renovate"
+    },
+    {
+      "login": "Sakura286",
+      "id": 22614226,
+      "avatar_url": "https://avatars.githubusercontent.com/u/22614226?v=4",
+      "html_url": "https://github.com/Sakura286"
     },
     {
       "login": "laz174",
