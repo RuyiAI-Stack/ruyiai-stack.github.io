@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-18T22:50:56.811Z",
+  "generatedAt": "2026-11-19T22:54:19.890Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -144,16 +144,16 @@
       "html_url": "https://github.com/6somehow"
     },
     {
-      "login": "Origami404",
-      "id": 29816865,
-      "avatar_url": "https://avatars.githubusercontent.com/u/29816865?v=4",
-      "html_url": "https://github.com/Origami404"
-    },
-    {
       "login": "Yranger",
       "id": 102284075,
       "avatar_url": "https://avatars.githubusercontent.com/u/102284075?v=4",
       "html_url": "https://github.com/Yranger"
+    },
+    {
+      "login": "Origami404",
+      "id": 29816865,
+      "avatar_url": "https://avatars.githubusercontent.com/u/29816865?v=4",
+      "html_url": "https://github.com/Origami404"
     },
     {
       "login": "Lester-1",
@@ -300,30 +300,6 @@
       "html_url": "https://github.com/SJM946"
     },
     {
-      "login": "BrokenArrow1404",
-      "id": 43647008,
-      "avatar_url": "https://avatars.githubusercontent.com/u/43647008?v=4",
-      "html_url": "https://github.com/BrokenArrow1404"
-    },
-    {
-      "login": "harrisonGPU",
-      "id": 57025411,
-      "avatar_url": "https://avatars.githubusercontent.com/u/57025411?v=4",
-      "html_url": "https://github.com/harrisonGPU"
-    },
-    {
-      "login": "hharryz",
-      "id": 122276274,
-      "avatar_url": "https://avatars.githubusercontent.com/u/122276274?v=4",
-      "html_url": "https://github.com/hharryz"
-    },
-    {
-      "login": "LHY-24",
-      "id": 61965761,
-      "avatar_url": "https://avatars.githubusercontent.com/u/61965761?v=4",
-      "html_url": "https://github.com/LHY-24"
-    },
-    {
       "login": "jackfiled",
       "id": 66121838,
       "avatar_url": "https://avatars.githubusercontent.com/u/66121838?v=4",
@@ -342,16 +318,40 @@
       "html_url": "https://github.com/NaOHCC"
     },
     {
+      "login": "LeiWang1999",
+      "id": 34334180,
+      "avatar_url": "https://avatars.githubusercontent.com/u/34334180?v=4",
+      "html_url": "https://github.com/LeiWang1999"
+    },
+    {
       "login": "WLFJ",
       "id": 49600975,
       "avatar_url": "https://avatars.githubusercontent.com/u/49600975?v=4",
       "html_url": "https://github.com/WLFJ"
     },
     {
-      "login": "LeiWang1999",
-      "id": 34334180,
-      "avatar_url": "https://avatars.githubusercontent.com/u/34334180?v=4",
-      "html_url": "https://github.com/LeiWang1999"
+      "login": "LHY-24",
+      "id": 61965761,
+      "avatar_url": "https://avatars.githubusercontent.com/u/61965761?v=4",
+      "html_url": "https://github.com/LHY-24"
+    },
+    {
+      "login": "hharryz",
+      "id": 122276274,
+      "avatar_url": "https://avatars.githubusercontent.com/u/122276274?v=4",
+      "html_url": "https://github.com/hharryz"
+    },
+    {
+      "login": "BrokenArrow1404",
+      "id": 43647008,
+      "avatar_url": "https://avatars.githubusercontent.com/u/43647008?v=4",
+      "html_url": "https://github.com/BrokenArrow1404"
+    },
+    {
+      "login": "harrisonGPU",
+      "id": 57025411,
+      "avatar_url": "https://avatars.githubusercontent.com/u/57025411?v=4",
+      "html_url": "https://github.com/harrisonGPU"
     },
     {
       "login": "Anchen798",
@@ -406,6 +406,12 @@
       "id": 216732950,
       "avatar_url": "https://avatars.githubusercontent.com/u/216732950?v=4",
       "html_url": "https://github.com/x12301450"
+    },
+    {
+      "login": "xyyy1420",
+      "id": 105905560,
+      "avatar_url": "https://avatars.githubusercontent.com/u/105905560?v=4",
+      "html_url": "https://github.com/xyyy1420"
     },
     {
       "login": "Yssx-g",
@@ -568,12 +574,6 @@
       "id": 131972872,
       "avatar_url": "https://avatars.githubusercontent.com/u/131972872?v=4",
       "html_url": "https://github.com/laz174"
-    },
-    {
-      "login": "xyyy1420",
-      "id": 105905560,
-      "avatar_url": "https://avatars.githubusercontent.com/u/105905560?v=4",
-      "html_url": "https://github.com/xyyy1420"
     }
   ]
 }
