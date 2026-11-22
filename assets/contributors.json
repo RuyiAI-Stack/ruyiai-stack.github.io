@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-21T21:27:04.599Z",
+  "generatedAt": "2026-11-22T21:32:45.206Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -84,16 +84,16 @@
       "html_url": "https://github.com/sdh1014"
     },
     {
-      "login": "Jiajun-Ji",
-      "id": 80234127,
-      "avatar_url": "https://avatars.githubusercontent.com/u/80234127?v=4",
-      "html_url": "https://github.com/Jiajun-Ji"
-    },
-    {
       "login": "taiqzheng",
       "id": 56971484,
       "avatar_url": "https://avatars.githubusercontent.com/u/56971484?v=4",
       "html_url": "https://github.com/taiqzheng"
+    },
+    {
+      "login": "Jiajun-Ji",
+      "id": 80234127,
+      "avatar_url": "https://avatars.githubusercontent.com/u/80234127?v=4",
+      "html_url": "https://github.com/Jiajun-Ji"
     },
     {
       "login": "Guan-schoolmate",
@@ -102,16 +102,16 @@
       "html_url": "https://github.com/Guan-schoolmate"
     },
     {
-      "login": "SForeKeeper",
-      "id": 5959588,
-      "avatar_url": "https://avatars.githubusercontent.com/u/5959588?v=4",
-      "html_url": "https://github.com/SForeKeeper"
-    },
-    {
       "login": "jiaan-clone",
       "id": 257489803,
       "avatar_url": "https://avatars.githubusercontent.com/u/257489803?v=4",
       "html_url": "https://github.com/jiaan-clone"
+    },
+    {
+      "login": "SForeKeeper",
+      "id": 5959588,
+      "avatar_url": "https://avatars.githubusercontent.com/u/5959588?v=4",
+      "html_url": "https://github.com/SForeKeeper"
     },
     {
       "login": "Joejiong",
@@ -126,10 +126,10 @@
       "html_url": "https://github.com/FloatingcloudKnight"
     },
     {
-      "login": "asdf1113",
-      "id": 56477950,
-      "avatar_url": "https://avatars.githubusercontent.com/u/56477950?v=4",
-      "html_url": "https://github.com/asdf1113"
+      "login": "6somehow",
+      "id": 73006005,
+      "avatar_url": "https://avatars.githubusercontent.com/u/73006005?v=4",
+      "html_url": "https://github.com/6somehow"
     },
     {
       "login": "FlagerLee",
@@ -138,10 +138,10 @@
       "html_url": "https://github.com/FlagerLee"
     },
     {
-      "login": "6somehow",
-      "id": 73006005,
-      "avatar_url": "https://avatars.githubusercontent.com/u/73006005?v=4",
-      "html_url": "https://github.com/6somehow"
+      "login": "asdf1113",
+      "id": 56477950,
+      "avatar_url": "https://avatars.githubusercontent.com/u/56477950?v=4",
+      "html_url": "https://github.com/asdf1113"
     },
     {
       "login": "Yranger",
