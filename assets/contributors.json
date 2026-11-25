@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T00:21:53.984Z",
+  "generatedAt": "2026-11-25T23:59:16.351Z",
   "repos": [
     "buddy-compiler/buddy-mlir",
     "RuyiAI-Stack/ruyiai-stack.github.io",
@@ -9,7 +9,7 @@
     "RuyiAI-Stack/llvm-project"
   ],
   "forkPolicy": "fork repos count only commits ahead of upstream parent",
-  "count": 94,
+  "count": 95,
   "contributors": [
     {
       "login": "zhanghb97",
@@ -568,6 +568,12 @@
       "id": 64242055,
       "avatar_url": "https://avatars.githubusercontent.com/u/64242055?v=4",
       "html_url": "https://github.com/jason-hue"
+    },
+    {
+      "login": "zzwwji-lab",
+      "id": 250313858,
+      "avatar_url": "https://avatars.githubusercontent.com/u/250313858?v=4",
+      "html_url": "https://github.com/zzwwji-lab"
     },
     {
       "login": "laz174",
